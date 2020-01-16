@@ -7,21 +7,21 @@
     </div>
     <div class="col-md-1 text-right">
       <button mat-mini-fab matTooltip="Add Domain" [ngClass]="(appSource==='open')?'add-domain-button-black':'add-domain-button-color'" (click)="addNewDomain()">
-        <mat-icon>add</mat-icon>
+        <mat-icon>Adicionar</mat-icon>
       </button>
     </div>
   </div>
   <div *ngIf="domains_json.length===0 && domains_json_backup.length===0" class="row empty-domains">
     <div class="col-md-12">
       <div class="alert alert-info">
-        <strong>Info!</strong> Currently there are no domains.
+        <strong>Info!</strong> Atualmente não existem ações.
       </div>
     </div>
   </div>
   <div *ngIf="domains_json.length===0 && domains_json_backup.length!==0" class="row empty-domains">
     <div class="col-md-12">
       <div class="alert alert-warning">
-        <strong>Info!</strong> No Matching Domains.
+        <strong>Info!</strong> Problema no Dominio.
       </div>
     </div>
   </div>

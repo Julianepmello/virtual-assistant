@@ -20,27 +20,27 @@
           </ng-container>
         
           <ng-container matColumnDef="project_name">
-            <th mat-header-cell *matHeaderCellDef> Project Name </th>
+            <th mat-header-cell *matHeaderCellDef> Nome do Projeto </th>
             <td mat-cell *matCellDef="let project" class="project_name_text"> {{project.project_name}} </td>
           </ng-container>
         
           <ng-container matColumnDef="source">
-            <th mat-header-cell *matHeaderCellDef> Source </th>
+            <th mat-header-cell *matHeaderCellDef> Fonte </th>
             <td mat-cell *matCellDef="let project"> {{project.source}} </td>
           </ng-container>
 
           <ng-container matColumnDef="model_name">
-            <th mat-header-cell *matHeaderCellDef> Model Name </th>
+            <th mat-header-cell *matHeaderCellDef> Nome do modelo </th>
             <td mat-cell *matCellDef="let project"> {{project.model_name}} </td>
           </ng-container>
         
           <ng-container matColumnDef="state">
-            <th mat-header-cell *matHeaderCellDef> State </th>
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
             <td mat-cell *matCellDef="let project"> {{project.state}} </td>
           </ng-container>
 
           <ng-container matColumnDef="deploy">
-            <th mat-header-cell *matHeaderCellDef> Deploy </th>
+            <th mat-header-cell *matHeaderCellDef> Ativação do Modelo </th>
             <td mat-cell *matCellDef="let project" class="deploy">
               <mat-icon *ngIf="appSource==='enterprise'" svgIcon="deploy" (click)="deployModel(project._id.$oid)"></mat-icon>
               <mat-icon *ngIf="appSource==='open'" svgIcon="deploy-black" (click)="deployModel(project._id.$oid)"></mat-icon>
