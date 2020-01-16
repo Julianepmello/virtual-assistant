@@ -34,14 +34,14 @@
   <div *ngIf="text_entities.length===0 && text_entities_backup.length===0" class="row empty-intent-text">
     <div class="col-md-12">
       <div class="alert alert-info">
-        <strong>Info!</strong> Atleast one intent should be defined.
+        <strong>Info!</strong> É necessário que ao menos uma Intenção esteja definida.
       </div>
     </div>
   </div>
   <div *ngIf="text_entities.length===0 && text_entities_backup.length!==0" class="row empty-intent-text">
     <div class="col-md-12">
       <div class="alert alert-warning">
-        <strong>Warning!</strong> No Matching Intent Texts.
+        <strong>Warning!</strong> Problemas na Intenções.
       </div>
     </div>
   </div>
@@ -74,10 +74,10 @@
               <table class="table table-striped" id="intent_text_table_{{i}}">
                 <thead>
                   <tr>
-                    <th class="mat-body-strong" scope="col">Parameter Name</th>
-                    <th class="mat-body-strong" scope="col">Entity</th>
-                    <th class="mat-body-strong" scope="col">Resolved Value</th>
-                    <th class="mat-body-strong" scope="col">Remove</th>
+                    <th class="mat-body-strong" scope="col">Nome do Parametro</th>
+                    <th class="mat-body-strong" scope="col">Entidade</th>
+                    <th class="mat-body-strong" scope="col">Valor</th>
+                    <th class="mat-body-strong" scope="col">Remover</th>
                   </tr>
                 </thead>
                 <tbody>
