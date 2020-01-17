@@ -1,14 +1,14 @@
 <div class="intent-container">
   <div class="row manage-response-row">
     <div class="col-md-12">
-      <span class="mat-subheading-2"><b>Response Description: </b></span> 
+      <span class="mat-subheading-2"><b>Descrição da resposta: </b></span> 
       <span *ngIf="currentResponse">{{currentResponse.response_description}}</span>
     </div>
   </div>
   <div class="row manage-response-row">
     <div class="col-md-6">
       <mat-form-field class="example-form-field" appearance="outline">
-        <mat-label>New Response Text</mat-label>
+        <mat-label>Novo Texto de Resposta</mat-label>
         <textarea matInput type="text" [(ngModel)]="new_response_text" (keyup)="populateEntities($event)" [readonly]="readonly" (keydown.enter)="addResponseTextElement($event)" #responseText="matInput"></textarea>
       </mat-form-field>
       <div *ngIf="showEntityDropdown===true" class="relative">
@@ -21,11 +21,11 @@
           </div>
         </mat-card>
       </div>
-      <div *ngIf="show_empty_entity_error" class="error">Kindly add entity first to access them.</div>
+      <div *ngIf="show_empty_entity_error" class="error">Por favor, adicione a entidade primeiro para acessá-las.</div>
     </div>
     <div class="col-md-6">
       <mat-form-field class="intent-response-filter" appearance="outline">
-        <mat-label>Filter Response Text</mat-label>
+        <mat-label> Filtrar Texto da Resposta</mat-label>
         <input matInput (keyup)="applyMapFilter($event.target.value)">
       </mat-form-field>
     </div>
@@ -33,14 +33,14 @@
   <div *ngIf="text_entities.length===0 && text_entities_backup.length===0" class="row empty-response-text">
     <div class="col-md-12">
       <div class="alert alert-info">
-        <strong>Info!</strong> Atleast one response should be defined.
+        <strong>Info!</strong> Pelo menos uma resposta deve ser definida.
       </div>
     </div>
   </div>
   <div *ngIf="text_entities.length===0 && text_entities_backup.length!==0" class="row empty-response-text">
     <div class="col-md-12">
       <div class="alert alert-warning">
-        <strong>Warning!</strong> No Matching Response Texts.
+        <strong>Warning!</strong> Nenhuma combinação para o texto das respostas.
       </div>
     </div>
   </div>

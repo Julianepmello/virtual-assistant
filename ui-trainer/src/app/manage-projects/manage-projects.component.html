@@ -7,14 +7,14 @@
     </div>
     <div class="col-md-1 text-right">
       <button mat-mini-fab matTooltip="Add Project" [ngClass]="(appSource==='open')?'add-project-button-black':'add-project-button-color'" (click)="addNewProject()">
-        <mat-icon>add</mat-icon>
+        <mat-icon>adicionar</mat-icon>
       </button>
     </div>
   </div>
   <div *ngIf="projects_json.length===0" class="row empty-projects">
     <div class="col-md-12">
       <div class="alert alert-info">
-        <strong>Info!</strong> Currently there are no projects.
+        <strong>Info!</strong> Atualmente não há projetos.
       </div>
     </div>
   </div>
@@ -29,7 +29,7 @@
           </ng-container>
         
           <ng-container matColumnDef="project_name">
-            <th mat-header-cell *matHeaderCellDef> Project Name </th>
+            <th mat-header-cell *matHeaderCellDef> Nome do Projeto </th>
             <td mat-cell *matCellDef="let project"><span *ngIf="project.state === ''" class="project_name_text" (click)="selectProject(project)">{{project.project_name}}</span> <span *ngIf="project.state !== ''" (click)="showErrorOnProject()">{{project.project_name}}</span></td>
           </ng-container>
 
@@ -39,7 +39,7 @@
           </ng-container>
         
           <ng-container matColumnDef="project_description">
-            <th mat-header-cell *matHeaderCellDef> Project Description </th>
+            <th mat-header-cell *matHeaderCellDef> Descrição do Projeto </th>
             <td mat-cell *matCellDef="let project"> {{project.project_description}} </td>
           </ng-container>
 
@@ -49,22 +49,22 @@
           </ng-container>
 
           <ng-container matColumnDef="created_by">
-            <th mat-header-cell *matHeaderCellDef> Created By </th>
+            <th mat-header-cell *matHeaderCellDef> Criado por: </th>
             <td mat-cell *matCellDef="let project"> {{project.created_by}} </td>
           </ng-container>
         
           <ng-container matColumnDef="state">
-            <th mat-header-cell *matHeaderCellDef> State </th>
+            <th mat-header-cell *matHeaderCellDef> Estado </th>
             <td mat-cell *matCellDef="let project"> {{project.state}} </td>
           </ng-container>
 
           <ng-container matColumnDef="source">
-            <th mat-header-cell *matHeaderCellDef> Source </th>
+            <th mat-header-cell *matHeaderCellDef> Fonte </th>
             <td mat-cell *matCellDef="let project"> {{project.source}} </td>
           </ng-container>
 
           <ng-container matColumnDef="edit">
-            <th mat-header-cell *matHeaderCellDef> Edit </th>
+            <th mat-header-cell *matHeaderCellDef> Editar </th>
             <td mat-cell *matCellDef="let project" class="edit_remove">
               <div *ngIf="project.state === 'Published' || project.state === 'Archived'">
                 <button mat-icon-button [disabled]="true">
