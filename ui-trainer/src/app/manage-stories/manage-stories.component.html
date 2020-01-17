@@ -48,7 +48,7 @@
                                   <div class="row intent-buttons-box">
                                     <div class="col-md-3">
                                       <button class="intent-buttons" [ngClass]="(appSource==='open')?'intent-black-button':'intent-color-button'" mat-mini-fab matTooltip="Add Intent" (click)="addIntentResponseDetailsToStory('intent', ind+1)">
-                                        <mat-icon *ngIf="appSource==='enterprise'">Adicionar</mat-icon>
+                                        <mat-icon *ngIf="appSource==='enterprise'">add</mat-icon>
                                         <mat-icon *ngIf="appSource==='open'">add_circle_outline</mat-icon>
                                       </button>
                                     </div>
@@ -118,7 +118,7 @@
                                     </div>
                                     <div class="col-md-3">
                                       <button class="response-buttons" [ngClass]="(appSource==='open')?'response-black-button':'response-color-button'" mat-mini-fab matTooltip="Add Response" (click)="addIntentResponseDetailsToStory('response', ind+1)">
-                                        <mat-icon *ngIf="appSource==='enterprise'">Adicionar</mat-icon>
+                                        <mat-icon *ngIf="appSource==='enterprise'">add</mat-icon>
                                         <mat-icon *ngIf="appSource==='open'">add_circle_outline</mat-icon>
                                       </button>
                                     </div>
@@ -165,12 +165,12 @@
             <div class="row story-buttons-box">
               <div class="col-md-6 text-left add-intent-button">
                 <button  mat-mini-fab [ngClass]="(appSource==='open')?'add-intent-black':'add-intent-color'" matTooltip="Add Intent" (click)="addIntentToStory()">
-                  <mat-icon>Adicionar</mat-icon>
+                  <mat-icon>add</mat-icon>
                 </button>
               </div>
               <div class="col-md-6 text-right add-response-button">
                 <button  mat-mini-fab [ngClass]="(appSource==='open')?'add-response-black':'add-response-color'" [disabled]="disable_response" matTooltip="Add Response" (click)="addResponseToStory()">
-                  <mat-icon>Adicionar</mat-icon>
+                  <mat-icon>add</mat-icon>
                 </button>
               </div>
             </div>
