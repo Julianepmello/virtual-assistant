@@ -53,10 +53,10 @@
             </span>
           </div>
           <div class="col-md-1 text-right refresh-send">
-            <span><mat-icon class="refresh-send-button" (click)="sendChat('/restart')">refresh</mat-icon></span>
+            <span><mat-icon class="refresh-send-button" (click)="sendChat('/restart')">Recarregar</mat-icon></span>
           </div>
           <div class="col-md-1 refresh-send">
-            <span><mat-icon class="refresh-send-button" (click)="sendChat()">send</mat-icon></span>
+            <span><mat-icon class="refresh-send-button" (click)="sendChat()">Envir</mat-icon></span>
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@
           <div mat-card-avatar color="white" font-size="4" class="bot">{{userBotCardType}}</div>
           <mat-card-title>{{userBotCardText}}</mat-card-title>
           <mat-card-subtitle>
-            {{userBotCardTime | date : 'shortTime'}} <span *ngIf="userBotCardIntent!==''">|</span> {{userBotCardIntent}} <span *ngIf="userBotCardConfidence!==''">|</span> {{userBotCardConfidence}}
+            {{userBotCardTime | data : 'shortTime'}} <span *ngIf="userBotCardIntent!==''">|</span> {{userBotCardIntent}} <span *ngIf="userBotCardConfidence!==''">|</span> {{userBotCardConfidence}}
           </mat-card-subtitle>
         </mat-card-header>
       </mat-card>
@@ -76,12 +76,12 @@
         <mat-expansion-panel [expanded]="true">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              <b>Story till now</b>
+              <b>Atual: </b>
             </mat-panel-title>
           </mat-expansion-panel-header>
           <div class="story-box">
             <div class="story-conversation-box">
-              <code *ngIf="!storyCode" class="story-conversation-code">No story yet</code>
+              <code *ngIf="!storyCode" class="story-conversation-code">Nenhuma historia ainda</code>
               <code *ngIf="storyCode" class="story-conversation-code">
                 <pre style="margin: 0px;">## Story from conversation with me</pre>
                 <span *ngFor="let code of storyCode;">
@@ -98,14 +98,14 @@
         <mat-expansion-panel [expanded]="true">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              <b>Predictions for message: <span *ngIf="predictions">{{predictions.text}}</span></b>
+              <b>Analises sobre as mensagens: <span *ngIf="predictions">{{predictions.text}}</span></b>
             </mat-panel-title>
           </mat-expansion-panel-header>
           <table *ngIf="predictions && showUserPredictionsDetails" class="table table-striped">
             <thead>
               <tr>
-                <th scope="col">Intent</th>
-                <th scope="col">Confidence</th>
+                <th scope="col">Intenção</th>
+                <th scope="col">Confiança</th>
               </tr>
             </thead>
             <tbody>
