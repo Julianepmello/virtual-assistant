@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-md-9">
-    <h1 mat-dialog-title>Copy Project</h1>
+    <h1 mat-dialog-title>Copiar Projeto</h1>
   </div>
   <div class="col-md-3 text-right">
     <mat-icon *ngIf="appSource==='enterprise'" class="dialog-icon" svgIcon="project"></mat-icon>
@@ -10,12 +10,12 @@
 <form [formGroup]="copyProjectForm" (ngSubmit)="closeDialog()">
 <mat-dialog-content>
   <mat-form-field class="dialog-full-width" appearance="outline">
-    <mat-label>Project Name</mat-label>
+    <mat-label>Nome do Projeto</mat-label>
     <input matInput (keydown.space)="$event.preventDefault()" onPaste="return false" autocomplete="off" formControlName="projectName" #projectName="matInput">
   </mat-form-field>
   <br />
   <mat-form-field class="dialog-full-width" appearance="outline">
-    <mat-label>Project Description</mat-label>
+    <mat-label>Descrição do Projeto</mat-label>
     <textarea matInput maxlength="140" formControlName="projectDescription"></textarea>
   </mat-form-field>
 </mat-dialog-content>
@@ -27,7 +27,7 @@
       <button *ngIf="appSource==='open'" mat-raised-button type="submit" class="submit-button-black" [disabled]="!copyProjectForm.valid">OK</button>
     </div>
     <div class="col-md-6 text-center">
-      <button mat-raised-button mat-dialog-close class="cancel-button">Cancel</button>
+      <button mat-raised-button mat-dialog-close class="cancel-button">Cancelar</button>
     </div>
   </div>
 </mat-dialog-actions>

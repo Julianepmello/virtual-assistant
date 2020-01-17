@@ -136,7 +136,7 @@ class ExportProject:
         async with aiofiles.open(self.project_home + '/config.yml', "w") as out:
 
             await out.write("# Configuration for Rasa NLU." + "\n\n")
-            await out.write("language: en" + "\n")
+            await out.write("language: pt" + "\n")
             await out.write("pipeline: supervised_embeddings" + "\n")
 
             await out.write("# Configuration for Rasa Core." + "\n\n")
