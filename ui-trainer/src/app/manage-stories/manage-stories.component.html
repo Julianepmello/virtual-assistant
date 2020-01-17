@@ -5,18 +5,18 @@
         <form [formGroup]="storyForm">
           <div class="row story-description-box">
             <div class="col-md-12">
-              <span class="mat-subheading-2"><b>Story Description: </b></span>
+              <span class="mat-subheading-2"><b>Descrição da Historia: </b></span>
               <span *ngIf="currentStory">{{currentStory.story_description}}</span>
             </div>
           </div>
           <br />
           <div *ngIf="show_intent_error===true" class="alert alert-danger alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Error !</strong> Story cannot start with a response.
+            <strong>Error !</strong> Historia Não Pode Iniciar Resposta.
           </div>
           <div *ngIf="show_ir_error===true" class="alert alert-danger alert-dismissible">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Error !</strong> Kindly fill in all required fields.
+            <strong>Error !</strong> Por favor, preencha todos os campos requeridos.
           </div>
           <div class="story-main-box">
             <div class="row story-box">
@@ -39,7 +39,7 @@
                                       </mat-option>
                                     </mat-autocomplete>
                                     <mat-error *ngIf="intent_response.get('value').hasError('invalid')">
-                                      Invalid Intent
+                                      Intenção invalida
                                     </mat-error>
                                   </mat-form-field>
                                   <input type="hidden" id="intent_{{ind}}" formControlName="key">
@@ -48,13 +48,13 @@
                                   <div class="row intent-buttons-box">
                                     <div class="col-md-3">
                                       <button class="intent-buttons" [ngClass]="(appSource==='open')?'intent-black-button':'intent-color-button'" mat-mini-fab matTooltip="Add Intent" (click)="addIntentResponseDetailsToStory('intent', ind+1)">
-                                        <mat-icon *ngIf="appSource==='enterprise'">add</mat-icon>
+                                        <mat-icon *ngIf="appSource==='enterprise'">Adicionar</mat-icon>
                                         <mat-icon *ngIf="appSource==='open'">add_circle_outline</mat-icon>
                                       </button>
                                     </div>
                                     <div class="col-md-4">
                                       <button class="intent-buttons" [ngClass]="(appSource==='open')?'intent-black-button':'intent-color-button'" mat-mini-fab matTooltip="Remove Intent" (click)="removeIntentResponseFromStory(ind, intent_response, intent_response_entity_arr[ind])">
-                                        <mat-icon *ngIf="appSource==='enterprise'">remove</mat-icon>
+                                        <mat-icon *ngIf="appSource==='enterprise'">Remover</mat-icon>
                                         <mat-icon *ngIf="appSource==='open'">highlight_off</mat-icon>
                                       </button>
                                     </div>
@@ -79,14 +79,14 @@
                                     </mat-option>
                                   </mat-autocomplete>
                                   <mat-error *ngIf="entityControl.hasError('invalid')">
-                                    Invalid Entity
+                                    Entidade Invalida
                                   </mat-error>
                                 </mat-form-field>
                                 <div class="entities-box">
                                   <mat-chip-list>
                                     <mat-chip color="warn" selected *ngFor="let entity of intent_response_entity_arr[ind]; let ind_ent = index" [selectable]="selectable" [removable]="removable" (removed)="removeEntityFromIntentResponse(intent_response, ind, intent_response_entity_arr[ind], ind_ent)">
                                       {{entity.entity_name}}:{{entity.entity_value}}
-                                      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                                      <mat-icon matChipRemove *ngIf="removable">Cancelar</mat-icon>
                                     </mat-chip>
                                   </mat-chip-list>
                                 </div>
@@ -112,13 +112,13 @@
                                     </div>
                                     <div class="col-md-3">
                                       <button class="response-buttons" [ngClass]="(appSource==='open')?'response-black-button':'response-color-button'" mat-mini-fab matTooltip="Remove Response" (click)="removeIntentResponseFromStory(ind, intent_response)">
-                                        <mat-icon *ngIf="appSource==='enterprise'">remove</mat-icon>
+                                        <mat-icon *ngIf="appSource==='enterprise'">Remover</mat-icon>
                                         <mat-icon *ngIf="appSource==='open'">highlight_off</mat-icon>
                                       </button>
                                     </div>
                                     <div class="col-md-3">
                                       <button class="response-buttons" [ngClass]="(appSource==='open')?'response-black-button':'response-color-button'" mat-mini-fab matTooltip="Add Response" (click)="addIntentResponseDetailsToStory('response', ind+1)">
-                                        <mat-icon *ngIf="appSource==='enterprise'">add</mat-icon>
+                                        <mat-icon *ngIf="appSource==='enterprise'">Adicionar</mat-icon>
                                         <mat-icon *ngIf="appSource==='open'">add_circle_outline</mat-icon>
                                       </button>
                                     </div>
@@ -134,7 +134,7 @@
                                       </mat-option>
                                     </mat-autocomplete>
                                     <mat-error *ngIf="intent_response.get('value').hasError('invalid')">
-                                      Invalid Response
+                                      Respostas Invalidas
                                     </mat-error>
                                   </mat-form-field>
                                   <input type="hidden" id="response_{{ind}}" formControlName="key">
@@ -165,12 +165,12 @@
             <div class="row story-buttons-box">
               <div class="col-md-6 text-left add-intent-button">
                 <button  mat-mini-fab [ngClass]="(appSource==='open')?'add-intent-black':'add-intent-color'" matTooltip="Add Intent" (click)="addIntentToStory()">
-                  <mat-icon>add</mat-icon>
+                  <mat-icon>Adicionar</mat-icon>
                 </button>
               </div>
               <div class="col-md-6 text-right add-response-button">
                 <button  mat-mini-fab [ngClass]="(appSource==='open')?'add-response-black':'add-response-color'" [disabled]="disable_response" matTooltip="Add Response" (click)="addResponseToStory()">
-                  <mat-icon>add</mat-icon>
+                  <mat-icon>Adicionar</mat-icon>
                 </button>
               </div>
             </div>
