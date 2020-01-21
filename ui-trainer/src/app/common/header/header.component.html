@@ -3,7 +3,7 @@
     <div class="eva-logo-div">
       <div class="logo-div" [routerLink]="'/home/trainer'">
         <img class="side_header_logo_img" src="/assets/images/trainer-loader.svg">
-        <span class="header-text">Virtual&nbsp;Assistant</span>
+        <span class="header-text">Artificial&nbsp;Intelligence&nbsp;Assistant</span>
       </div>
     </div>
   </div>
@@ -24,28 +24,28 @@
 <mat-menu #menu="matMenu" xPosition="before">
   <button *ngIf="showTrainerOrDeploy==='trainer'" [routerLink]="'/home/trainer'" mat-menu-item>
     <mat-icon svgIcon="trainer"></mat-icon>
-    <span>Trainer</span>
+    <span>Treinar</span>
   </button>
   <button *ngIf="showTrainerOrDeploy==='deploy'" [routerLink]="'/home/deploy'" mat-menu-item>
     <mat-icon svgIcon="deploy"></mat-icon>
-    <span>Deploy</span>
+    <span>Ativar</span>
   </button>
   <div *ngIf="showTrainerOrDeploy==='both'">
     <button mat-menu-item [routerLink]="'/home/trainer'">
       <mat-icon svgIcon="trainer"></mat-icon>
-      <span>Trainer</span>
+      <span>Treinar</span>
     </button>
     <button mat-menu-item [routerLink]="'/home/deploy'">
       <mat-icon svgIcon="deploy"></mat-icon>
-      <span>Deploy</span>
+      <span>Ativar</span>
     </button>
   </div>
   <button mat-menu-item [routerLink]="'/home/actions'">
     <mat-icon>gavel</mat-icon>
-    <span>Actions</span>
+    <span>Ações</span>
   </button>
   <button mat-menu-item (click)="refreshDB()">
     <mat-icon>import_export</mat-icon>
-    <span>Refresh</span>
+    <span>Recarregar</span>
   </button>
 </mat-menu>
