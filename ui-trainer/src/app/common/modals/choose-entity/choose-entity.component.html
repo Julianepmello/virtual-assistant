@@ -1,10 +1,10 @@
 <div *ngIf="entities.length">
-  <h1 mat-dialog-title>Choose Entity Value</h1>
+  <h1 mat-dialog-title>Escolha um Valor para Entidade</h1>
   <mat-dialog-content>
     <div *ngIf="entity === ''">
       <form>
         <mat-form-field class="example-full-width" appearance="outline">
-          <mat-label>Select Entity</mat-label>
+          <mat-label>Selecione a Entidade</mat-label>
           <input type="text" class="entity-auto-complete" aria-label="Entity" matInput [formControl]="entitiesControl" [matAutocomplete]="auto">
           <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getEntityValue($event.option.value)'>
             <mat-option *ngFor="let option of entityfilteredOptions | async" [value]="option.entity_name">
@@ -15,8 +15,8 @@
       </form>
     </div>
     <div *ngIf="entity !== ''">
-      <p class="mat-body-strong">Entity: {{entity.entity_name}}</p>
-      <p class="mat-body-strong">Entity Description: {{entity.entity_description}}</p>
+      <p class="mat-body-strong">Entidade: {{entity.entity_name}}</p>
+      <p class="mat-body-strong">Descrição da Entidade: {{entity.entity_description}}</p>
       <div *ngIf="entity.entity_slot.type === 'categorical'">
         <mat-form-field class="example-full-width" appearance="outline">
           <mat-select placeholder="Entity Value" [(ngModel)]="chosen_entity_value">
@@ -30,13 +30,13 @@
   </mat-dialog-content>
 
   <mat-dialog-actions>
-    <button mat-raised-button mat-dialog-close>Cancel</button>
-    <button mat-raised-button (click)="chooseEntity()" color="primary">Confirm</button>
+    <button mat-raised-button mat-dialog-close>Cancelar</button>
+    <button mat-raised-button (click)="chooseEntity()" color="primary">Confirmar</button>
   </mat-dialog-actions>
 </div>
 <div *ngIf="entities.length === 0">
-  <h1 mat-dialog-title>No Entities Defined</h1>
+  <h1 mat-dialog-title>Nenhuma Entidade</h1>
   <mat-dialog-actions>
-    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button mat-dialog-close>Cancelar</button>
   </mat-dialog-actions>
 </div>

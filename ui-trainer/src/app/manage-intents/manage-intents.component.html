@@ -1,12 +1,12 @@
 <div class="intent-container">
   <div class="row manage-map-intent-row">
     <div class="col-md-6">
-      <span class="mat-subheading-2"><b>Intent Description: </b></span>
+      <span class="mat-subheading-2"><b>Descrição da Intenção: </b></span>
       <span *ngIf="currentIntent">{{currentIntent.intent_description}}</span>
     </div>
     <div class="col-md-6">
       <mat-form-field class="example-full-width" appearance="outline">
-        <mat-label>Select Entity</mat-label>
+        <mat-label>Selecionar Entidade</mat-label>
         <input type="text" class="entity-auto-complete" #trigger="matAutocompleteTrigger" (blur)="closeAutoCompPanel()" aria-label="Entity" [(ngModel)]="entity_value" matInput [formControl]="entitiesControl" [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)='getEntityValue($event.option.value)'>
           <mat-option *ngFor="let option of entityfilteredOptions | async" [value]="option.entity_name">
@@ -14,19 +14,19 @@
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <div *ngIf="show_invalid_entity_error" class="error">Invalid Entity</div>
+      <div *ngIf="show_invalid_entity_error" class="error">Entidade Invalida</div>
     </div>
   </div>
   <div class="row">
     <div class="col-md-6">
       <mat-form-field class="example-form-field" appearance="outline">
-        <mat-label>New Intent Text</mat-label>
+        <mat-label>Nova Intenção</mat-label>
         <textarea matInput type="text" [(ngModel)]="new_intent_text" (keyup)="disableQuotes($event)" (keydown.enter)="addIntentTextElement($event)"></textarea>
       </mat-form-field>
     </div>
     <div class="col-md-6">
       <mat-form-field class="intent-text-filter" appearance="outline">
-        <mat-label>Filter Intent Text</mat-label>
+        <mat-label>Filtrar Intenção</mat-label>
         <input matInput (keyup)="applyMapFilter($event.target.value)">
       </mat-form-field>
     </div>
@@ -34,14 +34,14 @@
   <div *ngIf="text_entities.length===0 && text_entities_backup.length===0" class="row empty-intent-text">
     <div class="col-md-12">
       <div class="alert alert-info">
-        <strong>Info!</strong> Atleast one intent should be defined.
+        <strong>Info!</strong> É necessário que ao menos uma Intenção esteja definida.
       </div>
     </div>
   </div>
   <div *ngIf="text_entities.length===0 && text_entities_backup.length!==0" class="row empty-intent-text">
     <div class="col-md-12">
       <div class="alert alert-warning">
-        <strong>Warning!</strong> No Matching Intent Texts.
+        <strong>Warning!</strong> Problemas na Intenções.
       </div>
     </div>
   </div>
@@ -74,10 +74,10 @@
               <table class="table table-striped" id="intent_text_table_{{i}}">
                 <thead>
                   <tr>
-                    <th class="mat-body-strong" scope="col">Parameter Name</th>
-                    <th class="mat-body-strong" scope="col">Entity</th>
-                    <th class="mat-body-strong" scope="col">Resolved Value</th>
-                    <th class="mat-body-strong" scope="col">Remove</th>
+                    <th class="mat-body-strong" scope="col">Nome do Parametro</th>
+                    <th class="mat-body-strong" scope="col">Entidade</th>
+                    <th class="mat-body-strong" scope="col">Valor</th>
+                    <th class="mat-body-strong" scope="col">Remover</th>
                   </tr>
                 </thead>
                 <tbody>
