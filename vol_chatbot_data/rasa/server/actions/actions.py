@@ -12,3 +12,14 @@ class ActionJoke(Action):
         joke = request['value']['joke']  # extract a joke from returned json response
         dispatcher.utter_message(joke)  # send the message back to the user
         return []
+    
+class ActionDefaultAskAffirmation(Action):
+    """Asks for an affirmation of the intent if NLU threshold is not met."""
+
+    def name(self) -> Text:
+        return "action_default_ask_affirmation"
+    
+    def run(self, dispatcher, tracker, domain):
+        ent = tracker.latest_message['entities'][0]['entity'] if len(tracker.latest_message['entities']) > 0 else None
+        dispatcher.utter_message("A sua intençao era de: " + ent)
+        return[]
