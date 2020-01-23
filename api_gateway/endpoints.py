@@ -586,7 +586,7 @@ class TryNow():
                                                 db=CONFIG.get('api_gateway', 'MONGODB_NAME'),
                                                 username=None,
                                                 password=None,
-                                                auth_source='admin',
+                                                auth_source="admin",
                                                 collection="conversations",
                                                 event_broker=None)
             print("***************  Actions Endpoint as per data ********** {}".format(endpoints.url))
