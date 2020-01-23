@@ -23,3 +23,12 @@ class ActionDefaultAskAffirmation(Action):
         ent = tracker.latest_message['entities'][0]['entity'] if len(tracker.latest_message['entities']) > 0 else None
         dispatcher.utter_message("A sua intençao era de: " + ent)
         return[]
+    
+class ActionTeste(Action):
+    
+    def name(self):
+        return "action_teste"
+    
+    def run (self, dispatcher, tracker, domain):
+        dispatcher.utter_message("Teste funcionou!!")
+        return

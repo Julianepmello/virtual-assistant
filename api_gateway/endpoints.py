@@ -584,10 +584,10 @@ class TryNow():
             _tracker_store = MongoTrackerStore(domain=domain,
                                                 host=CONFIG.get('api_gateway', 'MONGODB_URL'),
                                                 db=CONFIG.get('api_gateway', 'MONGODB_NAME'),
-                                                username=None,
-                                                password=None,
+                                                username='admin',
+                                                password=CONFIG.get('api_gateway', 'PASS'),
                                                 auth_source="admin",
-                                                collection="conversations",
+                                                collection="bot_conversations",
                                                 event_broker=None)
             print("***************  Actions Endpoint as per data ********** {}".format(endpoints.url))
             self.agent = Agent.load(unpacked, tracker_store=_tracker_store, action_endpoint=endpoints)
