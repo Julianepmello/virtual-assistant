@@ -137,7 +137,14 @@ class ExportProject:
 
             await out.write("# Configuration for Rasa NLU." + "\n\n")
             await out.write("language: pt" + "\n")
-            await out.write("pipeline: supervised_embeddings" + "\n")
+            await out.write("pipeline:" + "\n")
+            await out.write("  - name: supervised_embeddings" + "\n")
+            await out.write("  - name: WhitespaceTokenizer" + "\n")
+            await out.write("    case_sensitive: false"+ "\n")
+            await out.write("  - name: CountVectorsFeaturizer" + "\n")
+            await out.write("  - name: EmbeddingIntentClassifier" + "\n")
+            await out.write("  - name: CRFEntityExtractor" + "\n")
+
 
             await out.write("# Configuration for Rasa Core." + "\n\n")
             await out.write("policies:" + "\n")
@@ -145,13 +152,12 @@ class ExportProject:
             await out.write("    epochs: 60"+ "\n")
             await out.write("    max_history: 10" + "\n")
             await out.write("  - name: MemoizationPolicy" + "\n")
+            await out.write("  - name: FormPolicy" + "\n")
             await out.write("  - name: MappingPolicy" + "\n")
-            await out.write("  - name: TwoStageFallbackPolicy" + "\n")
+            await out.write("  - name: FallbackPolicy" + "\n")
             await out.write("    nlu_threshold: 0.3" + "\n")
             await out.write("    core_threshold: 0.3" + "\n")
-            await out.write("    fallback_core_action_name: ""action_default_fallback""" + "\n")
-            await out.write("    fallback_nlu_action_name: ""action_default_fallback""" + "\n")
-            await out.write("    deny_suggestion_intent_name: ""negative""" + "\n")
+            await out.write("    fallback_action_name: ""action_default_fallback""" + "\n")
             await out.flush()
 
         return result
@@ -252,7 +258,6 @@ class ExportProject:
                                'action_default_fallback',
                                'action_deactivate_form',
                                'action_revert_fallback_events',
-                               'action_default_ask_affirmation',
                                'action_default_ask_rephrase',
                                'action_back']
 
