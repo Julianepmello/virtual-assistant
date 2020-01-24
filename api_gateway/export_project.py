@@ -145,13 +145,12 @@ class ExportProject:
             await out.write("    epochs: 60"+ "\n")
             await out.write("    max_history: 10" + "\n")
             await out.write("  - name: MemoizationPolicy" + "\n")
+            await out.write("  - name: FormPolicy" + "\n")
             await out.write("  - name: MappingPolicy" + "\n")
-            await out.write("  - name: TwoStageFallbackPolicy" + "\n")
+            await out.write("  - name: FallbackPolicy" + "\n")
             await out.write("    nlu_threshold: 0.3" + "\n")
             await out.write("    core_threshold: 0.3" + "\n")
-            await out.write("    fallback_core_action_name: ""action_default_fallback""" + "\n")
-            await out.write("    fallback_nlu_action_name: ""action_default_fallback""" + "\n")
-            await out.write("    deny_suggestion_intent_name: ""negative""" + "\n")
+            await out.write("    fallback_action_name: ""action_default_fallback""" + "\n")
             await out.flush()
 
         return result
@@ -252,7 +251,6 @@ class ExportProject:
                                'action_default_fallback',
                                'action_deactivate_form',
                                'action_revert_fallback_events',
-                               'action_default_ask_affirmation',
                                'action_default_ask_rephrase',
                                'action_back']
 
