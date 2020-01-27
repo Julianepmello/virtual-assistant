@@ -602,6 +602,7 @@ class TryNow():
         res_data = await request.json()
         out_message = {}
         print("inside chat now")
+        print(res_data['sessionId'])
         responses = await self.agent.handle_text(res_data['message'], sender_id=res_data['sessionId'])
         print(responses)
         result = await RasaConversations.get_conversations(res_data['sessionId'])

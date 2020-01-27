@@ -142,7 +142,7 @@ class ExportProject:
             await out.write("# Configuration for Rasa Core." + "\n\n")
             await out.write("policies:" + "\n")
             await out.write("  - name: KerasPolicy" + "\n")
-            await out.write("    epochs: 60"+ "\n")
+            await out.write("    epochs: 150"+ "\n")
             await out.write("    max_history: 10" + "\n")
             await out.write("  - name: MemoizationPolicy" + "\n")
             await out.write("  - name: FormPolicy" + "\n")
@@ -189,12 +189,13 @@ class ExportProject:
 
         async with aiofiles.open(self.project_home+'/skills/'+domain_name+'/data/stories.md', "w") as out:
             print("Writing files ")
-            entity_list = None
+            # entity_list = None
             for stories in stories_list:
                 story_detail = await self.StoryModel.get_only_story_details({'object_id': stories['_id']['$oid']})
                 await out.write("##"+stories['story_name']+"\n")
                 self.master_stories = self.master_stories + "##"+stories['story_name']+"\n"
                 for story_rec in story_detail['story']:
+                    entity_list = None
                     if story_rec['type'] == 'intent':
                         await out.write("* "+story_rec['key']+"\n")
                         for entities in story_rec['entities']:
