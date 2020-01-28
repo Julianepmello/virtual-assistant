@@ -1,34 +1,11 @@
-# import re
-# from rasa_sdk import Action
-# from rasa_sdk.forms import FormAction
-# from rasa_sdk.interfaces import Tracker
-# from rasa_sdk.executor import CollectingDispatcher
-# from typing import Dict, Text, Any, List, Union
-# from rasa_sdk.events import FollowupAction, SlotSet
-
-
-# class ActionJoke(Action):
-#     def name(self):
-#         return "action_joke"
-
-#     def run(self, dispatcher, tracker, domain):
-#         # make an api call
-#         # extract a joke from returned json response
-#         print('OEÇOAHSFLIASFÇIASDÇLAJSDÇIASDDÇLASJDÇAISDJSCBBSICJPOICJAÇOIHCASOCIJ')
-#         print('OEÇOAHSFLIASFÇIASDÇLAJSDÇIASDDÇLASJDÇAISDJSCBBSICJPOICJAÇOIHCASOCIJ')
-#         print('OEÇOAHSFLIASFÇIASDÇLAJSDÇIASDDÇLASJDÇAISDJSCBBSICJPOICJAÇOIHCASOCIJ')
-#         print('OEÇOAHSFLIASFÇIASDÇLAJSDÇIASDDÇLASJDÇAISDJSCBBSICJPOICJAÇOIHCASOCIJ')
-#         dispatcher.utter_message("hjahdjk")
-#         return []
-
+from rasa_sdk import Action
+from rasa_sdk.forms import FormAction
+from rasa_sdk.interfaces import Tracker
+from rasa_sdk.executor import CollectingDispatcher
+from typing import Dict, Text, Any, List, Union
+from rasa_sdk.events import FollowupAction, SlotSet
 
 from typing import Dict, Text, Any, List, Union
-
-from rasa_sdk.forms import FormAction
-from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk.interfaces import Action, Tracker
-from rasa_sdk.events import SlotSet, Restarted
-from rasa_sdk.events import FollowupAction
 
 import smtplib
 from email.mime.multipart import MIMEMultipart
@@ -37,13 +14,24 @@ from string import Template
 import json
 import os
 import re
-from make_txt import make_txt_conversation
+from .make_txt import make_txt_conversation
 
 
 def read_template(filename):
     with open(filename, mode='r', encoding='utf-8') as template_file:
         template_file_content = template_file.read()
     return Template(template_file_content)
+
+
+class ActionJoke(Action):
+    def name(self):
+        return "action_joke"
+
+    def run(self, dispatcher, tracker, domain):
+        # make an api call
+        # extract a joke from returned json response
+        dispatcher.utter_message("hjahdjk")
+        return []
 
 
 class ActionChangeField(Action):
@@ -66,7 +54,7 @@ class ActionChangeField(Action):
         elif "email" in ent:
             return [SlotSet("user_email", None)]
         elif "number_contact" in ent:
-            return [SlotSet("user_number_contact", None)]
+            return [SlotSet("number_contact", None)]
         elif "message" in ent:
             return [SlotSet("user_message", None)]
         else:
@@ -81,9 +69,9 @@ class InformContact(FormAction):
         return "form_inform_contact"
 
     def required_slots(self, tracker: Tracker) -> List[Text]:
-        return["user_name", "user_email", "user_number_contact",
+        return["user_name", "email", "number_contact",
                "confirm_message", "user_message"]
-
+    
     def submit(self, dispatcher: CollectingDispatcher, tracker: Tracker,
                domain: Dict[Text, Any],) -> List[Dict]:
         # Define what the form has to do after all required slots are filled
@@ -92,39 +80,39 @@ class InformContact(FormAction):
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         return {
             "user_name": [self.from_text()],
-            "user_email": [self.from_text()],
-            "user_number_contact": [self.from_text()],
+            "email": [self.from_text()],
+            "number_contact": [self.from_text()],
             "confirm_message": [self.from_intent(intent='affirmative',
                                 value=True),
                                 self.from_intent(intent='negative',
                                 value=False),
                                 self.from_text()],
-            "user_message": [self.from_text()],
-            }
+            "user_message": [self.from_text()]
+            }    
 
     def validate_user_name(self, value, dispatcher, tracker: Tracker, domain):
         return {"user_name": value}
 
-    def validate_user_email(self, value, dispatcher, tracker: Tracker, domain):
+    def validate_email(self, value, dispatcher, tracker: Tracker, domain):
         regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$'
         # regex2 = "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
 
         if(re.search(regex, value)):
-            return {"user_email": value}
+            return {"email": value}
         else:
             dispatcher.utter_message("Desculpe, mas esse email não é válido")
-            return{"user_email": None}
+            return{"email": None}
 
-    def validate_user_number_contact(self, value, dispatcher, tracker: Tracker,
-                                     domain):
+    def validate_number_contact(self, value, dispatcher, tracker: Tracker,
+                                domain):
         regex = "^\(?\d{2}\)?[\s-]?[\s9]?\d{4}-?\d{4}$"
         regex2 = "(\(?\d{2}\)?\s)?(\d{4,5}\-?\d{4})"
 
         if(re.search(regex, value) or re.search(regex2, value)):
-            return {"user_number_contact": value}
+            return {"number_contact": value}
         else:
             dispatcher.utter_message("Desculpe, mas esse número não é válido")
-            return{"user_number_contact": None}
+            return{"number_contact": None}
 
     def validate_confirm_message(self, value, dispatcher, tracker: Tracker,
                                  domain):
@@ -142,15 +130,6 @@ class InformContact(FormAction):
     def validate_user_message(self, value, dispatcher, tracker: Tracker,
                               domain):
         return{"user_message": value}
-
-
-class ActionRestart(Action):
-    def name(self):
-        return "action_restart_conversation"
-
-    def run(self, dispatcher, tracker, domain):
-        return[Restarted()]
-        # Reiniciar a conversa
 
 
 class ActionFillSlotCanceled(Action):
@@ -175,8 +154,8 @@ class SentContact(Action):
     def run(self, dispatcher, tracker, domain):
         try:
             name = tracker.get_slot("user_name")
-            email = tracker.get_slot("user_email")
-            number_contact = tracker.get_slot("user_number_contact")
+            email = tracker.get_slot("email")
+            number_contact = tracker.get_slot("number_contact")
             message = tracker.get_slot("user_message")
 
             if message is False or message is None:
@@ -203,12 +182,12 @@ class SentContact(Action):
             for names_email, email_send in zip(names_email, email_send):
                 msg = MIMEMultipart()       # create a message
                 sub={'PERSON_NAME': name.title(), 'USER_NAME': name.title(),
-                        'USER_EMAIL': email, 'USER_NUMBER': number_contact}
+                     'USER_EMAIL': email, 'USER_NUMBER': number_contact}
                 
                 # add in the actual person name to the message template
                 message = message_template.substitute(PERSON_NAME= 'Olá', USER_NAME= name.title(), 
-                                                    USER_EMAIL=str(email), USER_NUMBER=str(number_contact),
-                                                    USER_MESSAGE=str(message))
+                                                      USER_EMAIL=str(email), USER_NUMBER=str(number_contact),
+                                                      USER_MESSAGE=str(message))
 
                 # setup the parameters of the message
                 msg['From']= 'juliamello373@gmail.com'
@@ -230,8 +209,8 @@ class SentContact(Action):
                 del msg
             
             # dispatcher.utter_message("Já enviei o seus dados para um de nossos colaboradores. Entraremos em contato em breve")
-            dispatcher.utter_template("utter_sent_contact", tracker)
-            dispatcher.utter_message("Posso ajudar em mais alguma coisa? 😄")
+            dispatcher.utter_message("Já enviei os seus dados para um de nossos colaboradores. Entraremos em contato em breve.")
+            dispatcher.utter_message("Posso ajudar em mais alguma coisa? ")
                 
             print("Email enviado com sucesso!!")
             return[FollowupAction('action_restart_conversation')]

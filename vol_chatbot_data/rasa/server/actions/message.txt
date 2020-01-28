@@ -1,0 +1,11 @@
+$PERSON_NAME, 
+
+Segue abaixo os dados do usuário que entrou em contato comigo:
+
+Nome: $USER_NAME
+E-mail: $USER_EMAIL
+Número: $USER_NUMBER
+Mensagem: $USER_MESSAGE
+
+Atenciosamente, 
+Jaque, Inteligência Artificial da Kyros
