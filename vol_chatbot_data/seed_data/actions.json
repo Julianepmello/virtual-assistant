@@ -5,4 +5,6 @@
 {"action_name":"action_revert_fallback_events","action_description":"Revert events that occurred during the TwoStageFallbackPolicy."},
 {"action_name":"action_default_ask_rephrase","action_description":"Ask the user to rephrase their intent."},
 {"action_name":"action_back","action_description":"Undo the last user message"},
-{"action_name":"action_joke","action_description":"The teste"}]
+{"action_name":"action_joke","action_description":"The teste"},
+{"action_name":"form_inform_contact","action_description":"açksdfoiashcvoawen"},
+{"action_name":"action_sent_contact","action_description":"sdjkldajlsklasc"}]
