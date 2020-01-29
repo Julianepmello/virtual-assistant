@@ -66,12 +66,13 @@ class ActionChangeField(Action):
 class InformContact(FormAction):
 
     def name(self):
-        return "form_inform_contact"
+        return "inform_contact_form"
 
-    def required_slots(self, tracker: Tracker) -> List[Text]:
+    @staticmethod
+    def required_slots(tracker: Tracker) -> List[Text]:
         return["user_name", "email", "number_contact",
                "confirm_message", "user_message"]
-    
+
     def submit(self, dispatcher: CollectingDispatcher, tracker: Tracker,
                domain: Dict[Text, Any],) -> List[Dict]:
         # Define what the form has to do after all required slots are filled

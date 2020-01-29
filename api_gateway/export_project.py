@@ -28,6 +28,7 @@ class ExportProject:
         self.master_stories = ""
         self.master_domain_intents = ""
         self.master_domain_actions = ""
+        self.master_domain_forms = ""
         self.master_domain_templates = ""
         self.master_domain_entities = ""
 
@@ -36,6 +37,7 @@ class ExportProject:
         self.master_stories = ""
         self.master_domain_intents = ""
         self.master_domain_actions = ""
+        self.master_domain_forms = ""
         self.master_domain_templates = ""
         self.master_domain_entities = ""
         self.session_id = sid
@@ -125,6 +127,9 @@ class ExportProject:
 
             await out.write("actions:"+"\n")
             await out.write(self.master_domain_actions + "\n" + "\n")
+
+            await out.write("forms:"+"\n")
+            await out.write(self.master_domain_forms + "\n" + "\n")
 
             await out.write("templates:" + "\n")
             await out.write(self.master_domain_templates + "\n" + "\n")
@@ -244,6 +249,10 @@ class ExportProject:
             for resp in response_list:
                 await out.write("- "+resp['response_name']+"\n")
                 self.master_domain_actions = self.master_domain_actions + "- "+resp['response_name']+"\n"
+
+            await out.write("forms:"+"\n")
+            await out.write("- inform_contact_form\n")
+            self.master_domain_forms = self.master_domain_forms + "- inform_contact_form\n"
 
             # Import custom actions from Actions collection
 
