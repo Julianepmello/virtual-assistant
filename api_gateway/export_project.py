@@ -30,6 +30,7 @@ class ExportProject:
         self.master_domain_actions = ""
         self.master_domain_forms = ""
         self.master_domain_templates = ""
+        self.master_domain_slots = ""
         self.master_domain_entities = ""
 
     async def reset_globals(self, sid):
@@ -39,6 +40,7 @@ class ExportProject:
         self.master_domain_actions = ""
         self.master_domain_forms = ""
         self.master_domain_templates = ""
+        self.master_domain_slots = ""
         self.master_domain_entities = ""
         self.session_id = sid
 
@@ -120,19 +122,22 @@ class ExportProject:
 
         async with aiofiles.open(self.project_home + '/domain.yml', "w") as out:
             await out.write("intents:"+"\n")
-            await out.write(self.master_domain_intents + "\n" + "\n")
+            await out.write(self.master_domain_intents + "\n")
+
+            await out.write("entities:"+"\n")
+            await out.write(self.master_domain_entities + "\n")
 
             await out.write("slots:"+"\n")
-            await out.write(self.master_domain_entities + "\n" + "\n")
+            await out.write(self.master_domain_slots + "\n")
 
             await out.write("actions:"+"\n")
-            await out.write(self.master_domain_actions + "\n" + "\n")
+            await out.write(self.master_domain_actions + "\n")
 
             await out.write("forms:"+"\n")
-            await out.write(self.master_domain_forms + "\n" + "\n")
+            await out.write(self.master_domain_forms + "\n")
 
             await out.write("templates:" + "\n")
-            await out.write(self.master_domain_templates + "\n" + "\n")
+            await out.write(self.master_domain_templates + "\n")
 
             await out.flush()
 
@@ -237,9 +242,10 @@ class ExportProject:
             slots_list = await self.EntityModel.get_entities({"project_id": project_id})
 
             for slots in slots_list:
-                if slots['entity_name'] not in self.master_domain_entities:
-                    self.master_domain_entities = self.master_domain_entities+"  "+slots['entity_name']+":"+"\n"
-                    self.master_domain_entities = self.master_domain_entities+"    "+"type: "+slots['entity_slot']['type']+"\n"
+                if slots['entity_name'] not in self.master_domain_slots:
+                    self.master_domain_entities = self.master_domain_entities + "- " + slots['entity_name'] + "\n"
+                    self.master_domain_slots = self.master_domain_slots+"  "+slots['entity_name']+":"+"\n"
+                    self.master_domain_slots = self.master_domain_slots+"    "+"type: "+slots['entity_slot']['type']+"\n"
                 else:
                     print("Entity Already exists ")
 
