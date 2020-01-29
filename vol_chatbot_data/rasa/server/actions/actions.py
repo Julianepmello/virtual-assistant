@@ -134,6 +134,7 @@ class InformContact(FormAction):
 
 
 class ActionFillSlotCanceled(Action):
+    
     def name(self):
         return "action_fill_slot_canceled"
 
@@ -161,9 +162,9 @@ class SentContact(Action):
 
             if message is False or message is None:
                 message = "Não informado"
+            
             # Mensagem a ser enviada
-            message_template = read_template('message.txt')
-
+            message_template = Template('$PERSON_NAME, \n\nSegue abaixo os dados do usuário que entrou em contato comigo:\n\nNome: $USER_NAME\nE-mail: $USER_EMAIL\nNúmero: $USER_NUMBER\nMensagem: $USER_MESSAGE\n\nAtenciosamente, \nJaque, Inteligência Artificial da Kyros')
             s = smtplib.SMTP(host='smtp.gmail.com', port=587)
             s.starttls()
             s.login('juliamello373@gmail.com', '1511#Chocolate')
@@ -214,7 +215,7 @@ class SentContact(Action):
             dispatcher.utter_message("Posso ajudar em mais alguma coisa? ")
                 
             print("Email enviado com sucesso!!")
-            return[FollowupAction('action_restart_conversation')]
+            return[]
         
         except:
             dispatcher.utter_message("Desculpe, mas ocorreu um erro e não consegui enviar o email")
