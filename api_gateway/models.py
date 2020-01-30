@@ -32,7 +32,7 @@ class RefreshDb:
 
         # Cleaning up collections
         await db.entities.delete_many({})
-
+        await db.slots.delete_many({})
         await db.projects.delete_many({})
         await db.domains.delete_many({})
         await db.intents.delete_many({})
@@ -71,6 +71,12 @@ class RefreshDb:
             await db.entities.insert_many(data)
 
         await db.entities.update_many({}, {'$set': {'project_id': str(project_id)}})
+
+        with open(seed_data_path+'entities.json') as json_file:
+            data = json.load(json_file)
+            await db.slots.insert_many(data)
+
+        await db.slots.update_many({}, {'$set': {'project_id': str(project_id)}})
 
         with open(seed_data_path+'responses.json') as json_file:
             data = json.load(json_file)
