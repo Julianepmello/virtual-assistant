@@ -1,6 +1,6 @@
 import aiofiles
 import json
-from models import db, DomainsModel, IntentsModel, StoryModel, ResponseModel, EntityModel, CustomActionsModel, ValidateData
+from models import db, DomainsModel, IntentsModel, StoryModel, ResponseModel, SlotModel, EntityModel, CustomActionsModel, ValidateData
 import asyncio
 import os
 import shutil
@@ -17,6 +17,7 @@ class ExportProject:
         self.IntentsModel = IntentsModel()
         self.StoryModel = StoryModel()
         self.ResponseModel = ResponseModel()
+        self.SlotModel = SlotModel()
         self.EntityModel = EntityModel()
         self.CustomActionsModel = CustomActionsModel()
         self.ValidateData = ValidateData()
@@ -239,15 +240,22 @@ class ExportProject:
             await out.write("\n")
             await out.write("\n")
 
-            slots_list = await self.EntityModel.get_entities({"project_id": project_id})
+            entities_list = await self.SlotModel.get_slots({"project_id": project_id})
 
-            for slots in slots_list:
-                if slots['entity_name'] not in self.master_domain_slots:
+            for entity in entities_list:
+                if entity['entity_name'] not in self.master_domain_entities:
                     self.master_domain_entities = self.master_domain_entities + "- " + slots['entity_name'] + "\n"
-                    self.master_domain_slots = self.master_domain_slots+"  "+slots['entity_name']+":"+"\n"
-                    self.master_domain_slots = self.master_domain_slots+"    "+"type: "+slots['entity_slot']['type']+"\n"
                 else:
                     print("Entity Already exists ")
+
+            slots_list = await self.SlotModel.get_slots({"project_id": project_id})
+
+            for slots in slots_list:
+                if slots['slot_name'] not in self.master_domain_slots:
+                    self.master_domain_slots = self.master_domain_slots+"  "+slots['slot_name']+":"+"\n"
+                    self.master_domain_slots = self.master_domain_slots+"    "+"type: "+slots['slot_name']['type']+"\n"
+                else:
+                    print("Slot Already exists ")
 
             response_list = await self.ResponseModel.get_responses({"project_id": project_id, "domain_id": domain_id})
 
