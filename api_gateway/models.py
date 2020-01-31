@@ -31,15 +31,17 @@ class RefreshDb:
         seed_data_path = CONFIG.get('api_gateway', 'SEED_DATA_PATH')
 
         # Cleaning up collections
-        await db.entities.delete_many({})
-        await db.slots.delete_many({})
-        await db.projects.delete_many({})
-        await db.domains.delete_many({})
-        await db.intents.delete_many({})
-        await db.responses.delete_many({})
-        await db.stories.delete_many({})
-        await db.conversations.delete_many({})
-        await db.actions.delete_many({})
+        proj_id = await db.projects.find_one({'project_name':'BaseDomain'}).get('_id')
+
+        await db.entities.delete_many({'project_id':str(proj_id)})
+        await db.slots.delete_many({'project_id':str(proj_id)})
+        await db.domains.delete_many({'project_id':str(proj_id)})
+        await db.intents.delete_many({'project_id':str(proj_id)})
+        await db.responses.delete_many({'project_id':str(proj_id)})
+        await db.stories.delete_many({'project_id':str(proj_id)})
+        await db.conversations.delete_many({'project_id':str(proj_id)})
+        await db.actions.delete_many({'project_id':str(proj_id)})
+        await db.projects.delete_many({'project_name':'BaseDomain'})
 
         # Inserting Data in collection
 
@@ -49,7 +51,7 @@ class RefreshDb:
 
         # Get project ID
 
-        project = await db.projects.find_one({})
+        project = await db.projects.find_one({'project_name':'BaseDomain'})
         project_id = project.get('_id')
         print("project ID {}".format(project_id))
 
