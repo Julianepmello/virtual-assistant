@@ -64,6 +64,7 @@ class RefreshDb:
 
         with open(seed_data_path+'intents.json') as json_file:
             data = json.load(json_file)
+            print(data)
             await db.intents.insert_many(data)
 
         await db.intents.update_many({}, {'$set': {'project_id': str(project_id), 'domain_id': str(domain_id.get('_id'))}})
