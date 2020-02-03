@@ -31,7 +31,8 @@ class RefreshDb:
         seed_data_path = CONFIG.get('api_gateway', 'SEED_DATA_PATH')
 
         # Cleaning up collections
-        proj_id = await db.projects.find_one({'project_name':'BaseDomain'}).get('_id')
+        proj = await db.projects.find_one({'project_name':'BaseDomain'})
+        proj_id = proj.get('_id')
 
         await db.entities.delete_many({'project_id':str(proj_id)})
         await db.slots.delete_many({'project_id':str(proj_id)})
