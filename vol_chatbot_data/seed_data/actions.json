@@ -6,4 +6,6 @@
 {"action_name":"action_default_ask_rephrase","action_description":"Ask the user to rephrase their intent."},
 {"action_name":"action_back","action_description":"Undo the last user message"},
 {"action_name":"action_joke","action_description":"The teste"},
-{"action_name":"action_sent_contact","action_description":"sdjkldajlsklasc"}]
+{"action_name":"action_sent_contact","action_description":"Enviar contato"},
+{"action_name":"action_fill_slot_canceled","action_description":"Preencher slot de cancelamento"},
+{"action_name":"action_change_field","action_description":"Alterar um campo já preenchido"}]

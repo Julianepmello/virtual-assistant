@@ -14,6 +14,7 @@ from string import Template
 import json
 import os
 import re
+from unidecode import unidecode
 from .make_txt import make_txt_conversation
 
 
@@ -39,7 +40,9 @@ class ActionChangeField(Action):
         return "action_change_field"
 
     def run(self, dispatcher, tracker, domain):
-        ent = tracker.latest_message['entities'][0]['entity'] if len(tracker.latest_message['entities']) > 0 else None
+        
+        ent = tracker.latest_message['entities'][0]['value'] if len(tracker.latest_message['entities']) > 0 else None
+        ent = unidecode(ent) if ent != None else None
 
         print(str(tracker.latest_message['entities']))
         # ent = unidecode(ent) if ent != None else None
@@ -49,13 +52,13 @@ class ActionChangeField(Action):
             dispatcher.utter_message("Esse campo não está disponível " +
                                      "para alteração")
             return[]
-        elif "name_user" in ent:
+        elif "nome" in ent.lower():
             return [SlotSet("user_name", None)]
-        elif "email" in ent:
-            return [SlotSet("user_email", None)]
-        elif "number_contact" in ent:
+        elif "email" in ent.lower() or "e-mail" in ent.lower():
+            return [SlotSet("email", None)]
+        elif "telefone" in ent.lower() or "número" in ent.lower():
             return [SlotSet("number_contact", None)]
-        elif "message" in ent:
+        elif "mensagem" in ent.lower():
             return [SlotSet("user_message", None)]
         else:
             dispatcher.utter_message("Esse campo não está disponível " +
