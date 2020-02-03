@@ -147,7 +147,13 @@ class ExportProject:
 
             await out.write("# Configuration for Rasa NLU." + "\n\n")
             await out.write("language: pt" + "\n")
-            await out.write("pipeline: supervised_embeddings" + "\n")
+            await out.write("pipeline:" + "\n")
+            await out.write("- name: \"WhitespaceTokenizer\"" + "\n" +
+                            "  case_sensitive: false" + "\n" + 
+                            "- name: \"CountVectorsFeaturizer\"" + "\n" + 
+                            "- name: \"EmbeddingIntentClassifier\"" + "\n" + 
+                            "- name: \"ResponseSelector\"" + "\n" + 
+                            "- name: \"CRFEntityExtractor\"" + "\n")
 
             await out.write("# Configuration for Rasa Core." + "\n\n")
             await out.write("policies:" + "\n")
