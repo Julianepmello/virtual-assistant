@@ -212,7 +212,7 @@ class SentContact(Action):
             
             # dispatcher.utter_message("Já enviei o seus dados para um de nossos colaboradores. Entraremos em contato em breve")
             dispatcher.utter_message("Já enviei os seus dados para um de nossos colaboradores. Entraremos em contato em breve.")
-            dispatcher.utter_message("Posso ajudar em mais alguma coisa? ")
+            dispatcher.utter_template("utter_ask_inform", tracker)
                 
             print("Email enviado com sucesso!!")
             return[]
