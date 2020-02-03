@@ -32,17 +32,18 @@ class RefreshDb:
 
         # Cleaning up collections
         proj = await db.projects.find_one({'project_name':'BaseDomain'})
-        proj_id = proj.get('_id')
 
-        await db.entities.delete_many({'project_id':str(proj_id)})
-        await db.slots.delete_many({'project_id':str(proj_id)})
-        await db.domains.delete_many({'project_id':str(proj_id)})
-        await db.intents.delete_many({'project_id':str(proj_id)})
-        await db.responses.delete_many({'project_id':str(proj_id)})
-        await db.stories.delete_many({'project_id':str(proj_id)})
-        await db.conversations.delete_many({'project_id':str(proj_id)})
-        await db.actions.delete_many({'project_id':str(proj_id)})
-        await db.projects.delete_many({'project_name':'BaseDomain'})
+        if not (proj is None):
+            proj_id = proj.get('_id')
+            await db.entities.delete_many({'project_id':str(proj_id)})
+            await db.slots.delete_many({'project_id':str(proj_id)})
+            await db.domains.delete_many({'project_id':str(proj_id)})
+            await db.intents.delete_many({'project_id':str(proj_id)})
+            await db.responses.delete_many({'project_id':str(proj_id)})
+            await db.stories.delete_many({'project_id':str(proj_id)})
+            await db.conversations.delete_many({'project_id':str(proj_id)})
+            await db.actions.delete_many({'project_id':str(proj_id)})
+            await db.projects.delete_many({'project_name':'BaseDomain'})
 
         # Inserting Data in collection
 
