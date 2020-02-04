@@ -158,8 +158,8 @@ class ExportProject:
             await out.write("  - name: FormPolicy" + "\n")
             await out.write("  - name: MappingPolicy" + "\n")
             await out.write("  - name: FallbackPolicy" + "\n")
-            await out.write("    nlu_threshold: 0.3" + "\n")
-            await out.write("    core_threshold: 0.3" + "\n")
+            await out.write("    nlu_threshold: 0.4" + "\n")
+            await out.write("    core_threshold: 0.4" + "\n")
             await out.write("    fallback_action_name: ""action_default_fallback""" + "\n")
             await out.flush()
 
