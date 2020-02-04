@@ -14,7 +14,7 @@ from string import Template
 import json
 import os
 import re
-from unidecode import unidecode
+#from unidecode import unidecode
 from .make_txt import make_txt_conversation
 
 
@@ -42,7 +42,7 @@ class ActionChangeField(Action):
     def run(self, dispatcher, tracker, domain):
         
         ent = tracker.latest_message['entities'][0]['value'] if len(tracker.latest_message['entities']) > 0 else None
-        ent = unidecode(ent) if ent != None else None
+        # ent = unidecode(ent) if ent != None else None
 
         print(str(tracker.latest_message['entities']))
         # ent = unidecode(ent) if ent != None else None
@@ -83,15 +83,16 @@ class InformContact(FormAction):
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         return {
-            "user_name": [self.from_text()],
-            "email": [self.from_text()],
-            "number_contact": [self.from_text()],
-            "confirm_message": [self.from_intent(intent='affirmative',
-                                value=True),
-                                self.from_intent(intent='negative',
-                                value=False),
-                                self.from_text()],
-            "user_message": [self.from_text()]
+            "user_name": [self.from_entity(entity="name_user"),
+                          self.from_text(not_intent=["cancel", "change_contact"])],
+            "email": [self.from_entity(entity="email"),
+                      self.from_text(not_intent = ["cancel", "change_contact"])],
+            "number_contact": [self.from_entity(entity="number_contact"),
+                               self.from_text(not_intent = ["cancel", "change_contact"])],
+            "confirm_message": [self.from_intent(intent = ['affirmative'], value = True),
+                                self.from_intent(intent= 'negative', value = False),
+                                self.from_text(not_intent = ["cancel", "change_contact"])],
+            "user_message": [self.from_text(not_intent = ["cancel", "change_contact"])],
             }    
 
     def validate_user_name(self, value, dispatcher, tracker: Tracker, domain):

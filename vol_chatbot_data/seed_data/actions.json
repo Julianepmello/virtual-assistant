@@ -8,4 +8,5 @@
 {"action_name":"action_joke","action_description":"The teste"},
 {"action_name":"action_sent_contact","action_description":"Enviar contato"},
 {"action_name":"action_fill_slot_canceled","action_description":"Preencher slot de cancelamento"},
-{"action_name":"action_change_field","action_description":"Alterar um campo já preenchido"}]
+{"action_name":"action_change_field","action_description":"Alterar um campo já preenchido"},
+{"action_name":"action_deactivate_form","action_description":"Desativar formulário"}]
