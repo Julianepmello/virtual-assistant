@@ -240,11 +240,11 @@ class ExportProject:
             await out.write("\n")
             await out.write("\n")
 
-            entities_list = await self.SlotModel.get_slots({"project_id": project_id})
+            entities_list = await self.EntityModel.get_entities({"project_id": project_id})
 
             for entity in entities_list:
                 if entity['entity_name'] not in self.master_domain_entities:
-                    self.master_domain_entities = self.master_domain_entities + "- " + slots['entity_name'] + "\n"
+                    self.master_domain_entities = self.master_domain_entities + "- " + entity['entity_name'] + "\n"
                 else:
                     print("Entity Already exists ")
 
@@ -253,7 +253,7 @@ class ExportProject:
             for slots in slots_list:
                 if slots['slot_name'] not in self.master_domain_slots:
                     self.master_domain_slots = self.master_domain_slots+"  "+slots['slot_name']+":"+"\n"
-                    self.master_domain_slots = self.master_domain_slots+"    "+"type: "+slots['slot_name']['type']+"\n"
+                    self.master_domain_slots = self.master_domain_slots+"    "+"type: "+slots['slot_features']['type']+"\n"
                 else:
                     print("Slot Already exists ")
 
