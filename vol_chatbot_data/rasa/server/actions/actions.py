@@ -79,7 +79,7 @@ class InformContact(FormAction):
     def submit(self, dispatcher: CollectingDispatcher, tracker: Tracker,
                domain: Dict[Text, Any],) -> List[Dict]:
         # Define what the form has to do after all required slots are filled
-        return [FollowupAction("action_sent_contact")]
+        return [FollowupAction("action_sent_contact"), SlotSet("canceled", False)]
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         return {
