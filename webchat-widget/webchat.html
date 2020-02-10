@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		Teste
+	</title>
+</head>
+<body>
+	Teste WebChat
+	<div id="webchat"/>
+  <script src="https://storage.googleapis.com/mrbot-cdn/webchat-latest.js"></script>
+  // Or you can replace latest with a specific version
+  <script>
+    WebChat.default.init({
+      selector: "#webchat",
+      initPayload: "/greet",
+      customData: {"userID": "teste"}, // arbitrary custom data. Stay minimal as this will be added to the socket
+      socketUrl: "http://localhost:5005",
+      socketPath: "/socket.io/",
+      title: "Hermes",
+      subtitle: "O mensageiro oficial do Monte Kyros!",
+      profileAvatar: "avatar.png",
+    })
+  </script>
+</body>
+</html>

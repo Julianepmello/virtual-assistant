@@ -146,14 +146,14 @@ class ExportProject:
 
         async with aiofiles.open(self.project_home + '/config.yml', "w") as out:
 
-            await out.write("# Configuration for Rasa NLU." + "\n\n")
+            await out.write("# Configuration for Rasa NLU." + "\n")
             await out.write("language: pt" + "\n")
-            await out.write("pipeline: supervised_embeddings" + "\n")
+            await out.write("pipeline: supervised_embeddings" + "\n\n")
 
-            await out.write("# Configuration for Rasa Core." + "\n\n")
+            await out.write("# Configuration for Rasa Core." + "\n")
             await out.write("policies:" + "\n")
             await out.write("  - name: KerasPolicy" + "\n")
-            await out.write("    epochs: 150"+ "\n")
+            await out.write("    epochs: 80"+ "\n")
             await out.write("    max_history: 10" + "\n")
             await out.write("  - name: MemoizationPolicy" + "\n")
             await out.write("  - name: FormPolicy" + "\n")
@@ -162,6 +162,25 @@ class ExportProject:
             await out.write("    nlu_threshold: 0.4" + "\n")
             await out.write("    core_threshold: 0.4" + "\n")
             await out.write("    fallback_action_name: ""action_default_fallback""" + "\n")
+            await out.flush()
+
+        async with aiofiles.open(self.project_home + '/credentials.yml', "w") as out:
+
+            await out.write("# This file contains the credentials for the voice & chat platforms" + "\n")
+            await out.write("# which your bot is using." + "\n")
+            await out.write("# https://rasa.com/docs/rasa/user-guide/messaging-and-voice-channels/" + "\n\n")
+
+            await out.write("rest:" + "\n\n")
+            await out.write("#  # you don't need to provide anything here - this channel doesn't" + "\n")
+            await out.write("#  # require any credentials" + "\n\n")
+
+            await out.write("socketio:" + "\n")
+            await out.write("  user_message_evt: user_uttered" + "\n")
+            await out.write("  bot_message_evt: bot_uttered" + "\n")
+            await out.write("  session_persistence: true" + "\n\n")
+
+            await out.write("rasa:" + "\n")
+            await out.write("  url: \"http://localhost:5002/api\"" + "\n")
             await out.flush()
 
         return result
