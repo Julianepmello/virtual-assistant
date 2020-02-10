@@ -152,7 +152,7 @@ class ExportProject:
             await out.write("# Configuration for Rasa Core." + "\n\n")
             await out.write("policies:" + "\n")
             await out.write("  - name: KerasPolicy" + "\n")
-            await out.write("    epochs: 60"+ "\n")
+            await out.write("    epochs: 120"+ "\n")
             await out.write("    max_history: 5" + "\n")
             await out.write("  - name: MemoizationPolicy" + "\n")
             await out.write("  - name: FormPolicy" + "\n")
