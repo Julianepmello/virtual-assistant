@@ -14,6 +14,7 @@ from string import Template
 import json
 import os
 import re
+#from unidecode import unidecode
 from .make_txt import make_txt_conversation
 
 
@@ -39,7 +40,9 @@ class ActionChangeField(Action):
         return "action_change_field"
 
     def run(self, dispatcher, tracker, domain):
-        ent = tracker.latest_message['entities'][0]['entity'] if len(tracker.latest_message['entities']) > 0 else None
+        
+        ent = tracker.latest_message['entities'][0]['value'] if len(tracker.latest_message['entities']) > 0 else None
+        # ent = unidecode(ent) if ent != None else None
 
         print(str(tracker.latest_message['entities']))
         # ent = unidecode(ent) if ent != None else None
@@ -49,13 +52,13 @@ class ActionChangeField(Action):
             dispatcher.utter_message("Esse campo não está disponível " +
                                      "para alteração")
             return[]
-        elif "name_user" in ent:
+        elif "nome" in ent.lower():
             return [SlotSet("user_name", None)]
-        elif "email" in ent:
-            return [SlotSet("user_email", None)]
-        elif "number_contact" in ent:
+        elif "email" in ent.lower() or "e-mail" in ent.lower():
+            return [SlotSet("email", None)]
+        elif "telefone" in ent.lower() or "número" in ent.lower():
             return [SlotSet("number_contact", None)]
-        elif "message" in ent:
+        elif "mensagem" in ent.lower():
             return [SlotSet("user_message", None)]
         else:
             dispatcher.utter_message("Esse campo não está disponível " +
@@ -80,15 +83,16 @@ class InformContact(FormAction):
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         return {
-            "user_name": [self.from_text()],
-            "email": [self.from_text()],
-            "number_contact": [self.from_text()],
-            "confirm_message": [self.from_intent(intent='affirmative',
-                                value=True),
-                                self.from_intent(intent='negative',
-                                value=False),
-                                self.from_text()],
-            "user_message": [self.from_text()]
+            "user_name": [self.from_entity(entity="name_user"),
+                          self.from_text(not_intent=["cancel", "change_contact"])],
+            "email": [self.from_entity(entity="email"),
+                      self.from_text(not_intent = ["cancel", "change_contact"])],
+            "number_contact": [self.from_entity(entity="number_contact"),
+                               self.from_text(not_intent = ["cancel", "change_contact"])],
+            "confirm_message": [self.from_intent(intent = ['affirmative'], value = True),
+                                self.from_intent(intent= 'negative', value = False),
+                                self.from_text(not_intent = ["cancel", "change_contact"])],
+            "user_message": [self.from_text(not_intent = ["cancel", "change_contact"])],
             }    
 
     def validate_user_name(self, value, dispatcher, tracker: Tracker, domain):
@@ -154,70 +158,74 @@ class SentContact(Action):
         return "action_sent_contact"
 
     def run(self, dispatcher, tracker, domain):
-        try:
-            name = tracker.get_slot("user_name")
-            email = tracker.get_slot("email")
-            number_contact = tracker.get_slot("number_contact")
-            message = tracker.get_slot("user_message")
-
-            if message is False or message is None:
-                message = "Não informado"
-            
-            # Mensagem a ser enviada
-            message_template = Template('$PERSON_NAME, \n\nSegue abaixo os dados do usuário que entrou em contato comigo:\n\nNome: $USER_NAME\nE-mail: $USER_EMAIL\nNúmero: $USER_NUMBER\nMensagem: $USER_MESSAGE\n\nAtenciosamente, \nJaque, Inteligência Artificial da Kyros')
-            s = smtplib.SMTP(host='smtp.gmail.com', port=587)
-            s.starttls()
-            s.login('juliamello373@gmail.com', '1511#Chocolate')
-
-            names_email = ['Júlia']
-            email_send = ['juliam@kyros.com.br']
-
-            if os.path.exists("data.json"):
-                os.remove("data.json")
-
-            with open("data.json", "w") as write_file:
-                json.dump(tracker.current_state(), write_file)
-
-            make_txt_conversation('data.json')
-
-            # For each contact, send the email
-            for names_email, email_send in zip(names_email, email_send):
-                msg = MIMEMultipart()       # create a message
-                sub={'PERSON_NAME': name.title(), 'USER_NAME': name.title(),
-                     'USER_EMAIL': email, 'USER_NUMBER': number_contact}
-                
-                # add in the actual person name to the message template
-                message = message_template.substitute(PERSON_NAME= 'Olá', USER_NAME= name.title(), 
-                                                      USER_EMAIL=str(email), USER_NUMBER=str(number_contact),
-                                                      USER_MESSAGE=str(message))
-
-                # setup the parameters of the message
-                msg['From']= 'juliamello373@gmail.com'
-                msg['To']=email_send
-                msg['Subject']="Usuário entrou em contato"
-
-                # add in the message body
-                msg.attach(MIMEText(message, 'plain'))
-                
-                # add txt file
-                f = open("conversa_bot.txt", "r")
-                attachment = MIMEText(f.read())
-                attachment.add_header('Content-Disposition', 'attachment', filename='conversa_bot.txt')           
-                msg.attach(attachment)
-
-                # send the message via the server set up earlier.
-                s.send_message(msg)
-                
-                del msg
-            
-            # dispatcher.utter_message("Já enviei o seus dados para um de nossos colaboradores. Entraremos em contato em breve")
-            dispatcher.utter_message("Já enviei os seus dados para um de nossos colaboradores. Entraremos em contato em breve.")
-            dispatcher.utter_template("utter_ask_inform", tracker)
-                
-            print("Email enviado com sucesso!!")
-            return[]
         
-        except:
-            dispatcher.utter_message("Desculpe, mas ocorreu um erro e não consegui enviar o email")
+        if tracker.get_slot("canceled") == False:
+            try:
+                name = tracker.get_slot("user_name")
+                email = tracker.get_slot("email")
+                number_contact = tracker.get_slot("number_contact")
+                message = tracker.get_slot("user_message")
+
+                if message is False or message is None:
+                    message = "Não informado"
+                
+                # Mensagem a ser enviada
+                message_template = Template('$PERSON_NAME, \n\nSegue abaixo os dados do usuário que entrou em contato comigo:\n\nNome: $USER_NAME\nE-mail: $USER_EMAIL\nNúmero: $USER_NUMBER\nMensagem: $USER_MESSAGE\n\nAtenciosamente, \nJaque, Inteligência Artificial da Kyros')
+                s = smtplib.SMTP(host='smtp.gmail.com', port=587)
+                s.starttls()
+                s.login('juliamello373@gmail.com', '1511#Chocolate')
+
+                names_email = ['Júlia']
+                email_send = ['juliam@kyros.com.br']
+
+                if os.path.exists("data.json"):
+                    os.remove("data.json")
+
+                with open("data.json", "w") as write_file:
+                    json.dump(tracker.current_state(), write_file)
+
+                make_txt_conversation('data.json')
+
+                # For each contact, send the email
+                for names_email, email_send in zip(names_email, email_send):
+                    msg = MIMEMultipart()       # create a message
+                    sub={'PERSON_NAME': name.title(), 'USER_NAME': name.title(),
+                        'USER_EMAIL': email, 'USER_NUMBER': number_contact}
+                    
+                    # add in the actual person name to the message template
+                    message = message_template.substitute(PERSON_NAME= 'Olá', USER_NAME= name.title(), 
+                                                        USER_EMAIL=str(email), USER_NUMBER=str(number_contact),
+                                                        USER_MESSAGE=str(message))
+
+                    # setup the parameters of the message
+                    msg['From']= 'juliamello373@gmail.com'
+                    msg['To']=email_send
+                    msg['Subject']="Usuário entrou em contato"
+
+                    # add in the message body
+                    msg.attach(MIMEText(message, 'plain'))
+                    
+                    # add txt file
+                    f = open("conversa_bot.txt", "r")
+                    attachment = MIMEText(f.read())
+                    attachment.add_header('Content-Disposition', 'attachment', filename='conversa_bot.txt')           
+                    msg.attach(attachment)
+
+                    # send the message via the server set up earlier.
+                    s.send_message(msg)
+                    
+                    del msg
+                
+                # dispatcher.utter_message("Já enviei o seus dados para um de nossos colaboradores. Entraremos em contato em breve")
+                dispatcher.utter_message("Já enviei os seus dados para um de nossos colaboradores. Entraremos em contato em breve.")
+                dispatcher.utter_template("utter_ask_inform", tracker)
+                    
+                print("Email enviado com sucesso!!")
+                return[]
+            
+            except:
+                dispatcher.utter_message("Desculpe, mas ocorreu um erro e não consegui enviar o email")
+                return[]
+        else:
             return[]
 

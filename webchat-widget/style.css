@@ -1,0 +1,21 @@
+.conversation-container .header {
+background-color: #41403c !important;
+}
+.conversation-container .header .avatar {
+    height: 55px !important;
+    width: 55px !important;
+    top: 11px !important;
+    position: initial !important;
+}
+.launcher{
+background-color: #41403c !important;
+}
+.conversation-container .client {
+background-color: #819bd8 !important;
+}
+.conversation-container .response {
+    background-color: #b5c4ba  !important;
+}
+.conversation-container .close-button {
+    background-color:#41403c !important;
+}
