@@ -153,7 +153,7 @@ class ExportProject:
             await out.write("policies:" + "\n")
             await out.write("  - name: KerasPolicy" + "\n")
             await out.write("    epochs: 60"+ "\n")
-            await out.write("    max_history: 10" + "\n")
+            await out.write("    max_history: 5" + "\n")
             await out.write("  - name: MemoizationPolicy" + "\n")
             await out.write("  - name: FormPolicy" + "\n")
             await out.write("  - name: MappingPolicy" + "\n")
