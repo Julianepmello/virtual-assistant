@@ -255,5 +255,6 @@ class SentContact(Action):
                 dispatcher.utter_message("Desculpe, mas ocorreu um erro e não consegui enviar o email")
                 return[]
         else:
+            dispatcher.utter_message("Desculpe, mas tive um problema e não consegui enviar o e-mail. Por favor, informe seu e-mail novamente")
             return[]
 
