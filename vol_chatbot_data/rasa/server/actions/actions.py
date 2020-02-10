@@ -56,7 +56,7 @@ class ActionChangeField(Action):
             return [SlotSet("user_name", None)]
         elif "email" in ent.lower() or "e-mail" in ent.lower():
             return [SlotSet("email", None)]
-        elif "telefone" in ent.lower() or "número" in ent.lower():
+        elif "telefone" in ent.lower() or "número" in ent.lower() or "numero" in ent.lower():
             return [SlotSet("number_contact", None)]
         elif "mensagem" in ent.lower():
             return [SlotSet("user_message", None)]
