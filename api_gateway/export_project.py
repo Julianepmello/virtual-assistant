@@ -1,6 +1,6 @@
 import aiofiles
 import json
-from models import db, DomainsModel, IntentsModel, StoryModel, ResponseModel, EntityModel, CustomActionsModel, ValidateData
+from models import db, DomainsModel, IntentsModel, StoryModel, ResponseModel, SlotModel, EntityModel, CustomActionsModel, ValidateData
 import asyncio
 import os
 import shutil
@@ -17,6 +17,7 @@ class ExportProject:
         self.IntentsModel = IntentsModel()
         self.StoryModel = StoryModel()
         self.ResponseModel = ResponseModel()
+        self.SlotModel = SlotModel()
         self.EntityModel = EntityModel()
         self.CustomActionsModel = CustomActionsModel()
         self.ValidateData = ValidateData()
@@ -30,6 +31,7 @@ class ExportProject:
         self.master_domain_actions = ""
         self.master_domain_forms = ""
         self.master_domain_templates = ""
+        self.master_domain_slots = ""
         self.master_domain_entities = ""
 
     async def reset_globals(self, sid):
@@ -39,6 +41,7 @@ class ExportProject:
         self.master_domain_actions = ""
         self.master_domain_forms = ""
         self.master_domain_templates = ""
+        self.master_domain_slots = ""
         self.master_domain_entities = ""
         self.session_id = sid
 
@@ -120,19 +123,22 @@ class ExportProject:
 
         async with aiofiles.open(self.project_home + '/domain.yml', "w") as out:
             await out.write("intents:"+"\n")
-            await out.write(self.master_domain_intents + "\n" + "\n")
+            await out.write(self.master_domain_intents + "\n")
+
+            await out.write("entities:"+"\n")
+            await out.write(self.master_domain_entities + "\n")
 
             await out.write("slots:"+"\n")
-            await out.write(self.master_domain_entities + "\n" + "\n")
+            await out.write(self.master_domain_slots + "\n")
 
             await out.write("actions:"+"\n")
-            await out.write(self.master_domain_actions + "\n" + "\n")
+            await out.write(self.master_domain_actions + "\n")
 
             await out.write("forms:"+"\n")
-            await out.write(self.master_domain_forms + "\n" + "\n")
+            await out.write(self.master_domain_forms + "\n")
 
             await out.write("templates:" + "\n")
-            await out.write(self.master_domain_templates + "\n" + "\n")
+            await out.write(self.master_domain_templates + "\n")
 
             await out.flush()
 
@@ -140,22 +146,41 @@ class ExportProject:
 
         async with aiofiles.open(self.project_home + '/config.yml', "w") as out:
 
-            await out.write("# Configuration for Rasa NLU." + "\n\n")
+            await out.write("# Configuration for Rasa NLU." + "\n")
             await out.write("language: pt" + "\n")
-            await out.write("pipeline: supervised_embeddings" + "\n")
+            await out.write("pipeline: supervised_embeddings" + "\n\n")
 
-            await out.write("# Configuration for Rasa Core." + "\n\n")
+            await out.write("# Configuration for Rasa Core." + "\n")
             await out.write("policies:" + "\n")
             await out.write("  - name: KerasPolicy" + "\n")
-            await out.write("    epochs: 150"+ "\n")
-            await out.write("    max_history: 10" + "\n")
+            await out.write("    epochs: 120"+ "\n")
+            await out.write("    max_history: 5" + "\n")
             await out.write("  - name: MemoizationPolicy" + "\n")
             await out.write("  - name: FormPolicy" + "\n")
             await out.write("  - name: MappingPolicy" + "\n")
             await out.write("  - name: FallbackPolicy" + "\n")
-            await out.write("    nlu_threshold: 0.3" + "\n")
-            await out.write("    core_threshold: 0.3" + "\n")
+            await out.write("    nlu_threshold: 0.4" + "\n")
+            await out.write("    core_threshold: 0.4" + "\n")
             await out.write("    fallback_action_name: ""action_default_fallback""" + "\n")
+            await out.flush()
+
+        async with aiofiles.open(self.project_home + '/credentials.yml', "w") as out:
+
+            await out.write("# This file contains the credentials for the voice & chat platforms" + "\n")
+            await out.write("# which your bot is using." + "\n")
+            await out.write("# https://rasa.com/docs/rasa/user-guide/messaging-and-voice-channels/" + "\n\n")
+
+            await out.write("rest:" + "\n\n")
+            await out.write("#  # you don't need to provide anything here - this channel doesn't" + "\n")
+            await out.write("#  # require any credentials" + "\n\n")
+
+            await out.write("socketio:" + "\n")
+            await out.write("  user_message_evt: user_uttered" + "\n")
+            await out.write("  bot_message_evt: bot_uttered" + "\n")
+            await out.write("  session_persistence: true" + "\n\n")
+
+            await out.write("rasa:" + "\n")
+            await out.write("  url: \"http://localhost:5002/api\"" + "\n")
             await out.flush()
 
         return result
@@ -234,14 +259,22 @@ class ExportProject:
             await out.write("\n")
             await out.write("\n")
 
-            slots_list = await self.EntityModel.get_entities({"project_id": project_id})
+            entities_list = await self.EntityModel.get_entities({"project_id": project_id})
 
-            for slots in slots_list:
-                if slots['entity_name'] not in self.master_domain_entities:
-                    self.master_domain_entities = self.master_domain_entities+"  "+slots['entity_name']+":"+"\n"
-                    self.master_domain_entities = self.master_domain_entities+"    "+"type: "+slots['entity_slot']['type']+"\n"
+            for entity in entities_list:
+                if entity['entity_name'] not in self.master_domain_entities:
+                    self.master_domain_entities = self.master_domain_entities + "- " + entity['entity_name'] + "\n"
                 else:
                     print("Entity Already exists ")
+
+            slots_list = await self.SlotModel.get_slots({"project_id": project_id})
+
+            for slots in slots_list:
+                if slots['slot_name'] not in self.master_domain_slots:
+                    self.master_domain_slots = self.master_domain_slots+"  "+slots['slot_name']+":"+"\n"
+                    self.master_domain_slots = self.master_domain_slots+"    "+"type: "+slots['slot_features']['type']+"\n"
+                else:
+                    print("Slot Already exists ")
 
             response_list = await self.ResponseModel.get_responses({"project_id": project_id, "domain_id": domain_id})
 

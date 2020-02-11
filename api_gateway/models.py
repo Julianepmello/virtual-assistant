@@ -31,15 +31,19 @@ class RefreshDb:
         seed_data_path = CONFIG.get('api_gateway', 'SEED_DATA_PATH')
 
         # Cleaning up collections
-        await db.entities.delete_many({})
+        proj = await db.projects.find_one({'project_name':'BaseDomain'})
 
-        await db.projects.delete_many({})
-        await db.domains.delete_many({})
-        await db.intents.delete_many({})
-        await db.responses.delete_many({})
-        await db.stories.delete_many({})
-        await db.conversations.delete_many({})
-        await db.actions.delete_many({})
+        if not (proj is None):
+            proj_id = proj.get('_id')
+            await db.entities.delete_many({'project_id':str(proj_id)})
+            await db.slots.delete_many({'project_id':str(proj_id)})
+            await db.domains.delete_many({'project_id':str(proj_id)})
+            await db.intents.delete_many({'project_id':str(proj_id)})
+            await db.responses.delete_many({'project_id':str(proj_id)})
+            await db.stories.delete_many({'project_id':str(proj_id)})
+            await db.conversations.delete_many({'project_id':str(proj_id)})
+            await db.actions.delete_many({'project_id':str(proj_id)})
+            await db.projects.delete_many({'project_name':'BaseDomain'})
 
         # Inserting Data in collection
 
@@ -49,7 +53,7 @@ class RefreshDb:
 
         # Get project ID
 
-        project = await db.projects.find_one({})
+        project = await db.projects.find_one({'project_name':'BaseDomain'})
         project_id = project.get('_id')
         print("project ID {}".format(project_id))
 
@@ -62,6 +66,7 @@ class RefreshDb:
 
         with open(seed_data_path+'intents.json') as json_file:
             data = json.load(json_file)
+            print(data)
             await db.intents.insert_many(data)
 
         await db.intents.update_many({}, {'$set': {'project_id': str(project_id), 'domain_id': str(domain_id.get('_id'))}})
@@ -71,6 +76,12 @@ class RefreshDb:
             await db.entities.insert_many(data)
 
         await db.entities.update_many({}, {'$set': {'project_id': str(project_id)}})
+
+        with open(seed_data_path+'slots.json') as json_file:
+            data = json.load(json_file)
+            await db.slots.insert_many(data)
+
+        await db.slots.update_many({}, {'$set': {'project_id': str(project_id)}})
 
         with open(seed_data_path+'responses.json') as json_file:
             data = json.load(json_file)
@@ -214,6 +225,16 @@ class ProjectsModel:
                 entity['project_id'] = "{}".format(new_project.inserted_id)
                 new_entity = await db.entities.insert_one(entity)
                 print("new entity inserted with id {}".format(new_entity.inserted_id))
+
+            # Copy Slots
+
+            slots_cursor = db.slots.find({"project_id": str(source_project_id)})
+            for slot in await slots_cursor.to_list(length=100):
+                print(slot['_id'])
+                del slot['_id']
+                slot['project_id'] = "{}".format(new_project.inserted_id)
+                new_slot = await db.slots.insert_one(slot)
+                print("new slot inserted with id {}".format(new_slot.inserted_id))
 
             # Copy domains
 
@@ -834,6 +855,93 @@ class StoryModel:
 
 
 # noinspection PyMethodMayBeStatic
+class SlotModel:
+
+    def __init__(self):
+        pass
+
+    async def get_slots(self, record):
+
+        json_record = json.loads(json.dumps(record))
+        cursor = db.slots.find(json_record)
+        result = await cursor.to_list(length=1000)
+        print("Slots sent {}".format(json.loads(dumps(result))))
+        return json.loads(dumps(result))
+
+    async def create_slot(self, record):
+
+        json_record = json.loads(json.dumps(record))
+
+        # Check if Entity already exists
+        val_res = await db.slots.find_one({"project_id": json_record['project_id'],
+                                              "slot_name": json_record['slot_name']})
+
+        if val_res is not None:
+            print("Slot Already exists ")
+            return {"status": "Error", "message": "Slot Already exists "}, None
+        else:
+            result = await db.slots.insert_one(json_record)
+            print("Slot created with ID {}".format(result.inserted_id))
+
+            get_slots = {"project_id": json_record['project_id']}
+            slots_list = await self.get_slots(get_slots)
+
+            return {"status": "Success", "message": "Slot created successfully"}, slots_list
+
+    async def delete_slot(self, record):
+
+        json_record = json.loads(json.dumps(record))
+
+        query = {"_id": ObjectId("{}".format(json_record['object_id']))}
+
+        # check if entity is used in any Intent
+        # {"text_entities": {"$elemMatch":  {"entities.entity": "location_value"} }}
+
+        slot_detail = await db.slots.find_one(query)
+
+        # res = await db.intents.find_one({"text_entities": {"$elemMatch":  {"entities.entity": entity_detail['entity_name']}}})
+
+        # res2 = await db.responses.find_one({"text_entities": "/"+entity_detail['entity_name']+"/"})
+
+        # if res is None and res2 is None:
+
+        result = await db.slots.delete_one(query)
+        print("Slot Deleted count {}".format(result))
+
+        get_slots = {"project_id": json_record['project_id']}
+        slots_list = await self.get_slots(get_slots)
+
+        return {"status": "Success", "message": "Slot deleted successfully"}, slots_list
+        # elif res is None:
+        #     return {"status": "Error", "message": "Unable to delete entity , its used in an Response"}, None
+        # else:
+        #     return {"status": "Error", "message": "Unable to delete entity , its used in an Intent"}, None
+
+    async def update_slot(self, record):
+
+        json_record = json.loads(json.dumps(record))
+
+        # Check if slot already exists
+        val_res = await db.slots.find_one({"project_id": json_record['project_id'],
+                                              "slot_name": json_record['slot_name']})
+
+        object_id = val_res.get('_id')
+        query = {"_id": ObjectId("{}".format(object_id))}
+
+        if val_res is None or val_res['slot_name'] == json_record['slot_name']:
+            del json_record['_id']
+            print("Got value ", json_record)
+            update_record = await db.slots.update_one(query, {"$set": json_record})
+            print("slot Updated , rows modified {}".format(update_record.modified_count))
+
+            get_slots = {"project_id": json_record['project_id']}
+            slots_list = await self.get_slots(get_slots)
+            return {"status": "Success", "message": "Slot updated successfully"}, slots_list
+
+        else:
+            return {"status": "Error", "message": "slot Name already exists"}, None
+
+
 class EntityModel:
 
     def __init__(self):
@@ -920,7 +1028,7 @@ class EntityModel:
         else:
             return {"status": "Error", "message": "Entity Name already exists"}, None
 
-
+            
 class ValidateData:
     def __int__(self):
         pass

@@ -4,4 +4,6 @@
 {"project_id":"5d109b0e082d46048bd26b5b","entity_description":"Email do usuário","entity_slot":{"type":"unfeaturized","values":[]},"entity_name":"email"},
 {"project_id":"5d109b0e082d46048bd26b5b","entity_description":"Telefone de contato do usuário","entity_slot":{"type":"unfeaturized","values":[]},"entity_name":"number_contact"},
 {"project_id":"5d109b0e082d46048bd26b5b","entity_description":"Confirmar mensagem do usuário","entity_slot":{"type":"unfeaturized","values":[]},"entity_name":"confirm_message"},
-{"project_id":"5d109b0e082d46048bd26b5b","entity_description":"Mensagem do usuário","entity_slot":{"type":"unfeaturized","values":[]},"entity_name":"user_message"}]
+{"project_id":"5d109b0e082d46048bd26b5b","entity_description":"Mensagem do usuário","entity_slot":{"type":"unfeaturized","values":[]},"entity_name":"user_message"},
+{"project_id":"5d109b0e082d46048bd26b5b","entity_description":"Slot para confirmar cancelamento","entity_slot":{"type":"bool","values":[]},"entity_name":"canceled"},
+{"project_id":"5d109b0e082d46048bd26b5b","entity_description":"Campo a ser alterado","entity_slot":{"type":"unfeaturized","values":[]},"entity_name":"field"}]
