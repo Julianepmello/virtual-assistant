@@ -4,4 +4,6 @@
 {"project_id":"5d109b0e082d46048bd26b5b","slot_description":"Email do usuário","slot_features":{"type":"unfeaturized","values":[]},"slot_name":"email"},
 {"project_id":"5d109b0e082d46048bd26b5b","slot_description":"Telefone de contato do usuário","slot_features":{"type":"unfeaturized","values":[]},"slot_name":"number_contact"},
 {"project_id":"5d109b0e082d46048bd26b5b","slot_description":"Confirmar mensagem do usuário","slot_features":{"type":"unfeaturized","values":[]},"slot_name":"confirm_message"},
-{"project_id":"5d109b0e082d46048bd26b5b","slot_description":"Mensagem do usuário","slot_features":{"type":"unfeaturized","values":[]},"slot_name":"user_message"}]
+{"project_id":"5d109b0e082d46048bd26b5b","slot_description":"Mensagem do usuário","slot_features":{"type":"unfeaturized","values":[]},"slot_name":"user_message"},
+{"project_id":"5d109b0e082d46048bd26b5b","slot_description":"Slot para confirmar cancelamento","slot_features":{"type":"bool","values":[]},"slot_name":"canceled"},
+{"project_id":"5d109b0e082d46048bd26b5b","slot_description":"Campo a ser alterado","slot_features":{"type":"unfeaturized","values":[]},"slot_name":"field"}]

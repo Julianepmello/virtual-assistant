@@ -56,7 +56,7 @@ class ActionChangeField(Action):
             return [SlotSet("user_name", None)]
         elif "email" in ent.lower() or "e-mail" in ent.lower():
             return [SlotSet("email", None)]
-        elif "telefone" in ent.lower() or "número" in ent.lower():
+        elif "telefone" in ent.lower() or "número" in ent.lower() or "numero" in ent.lower():
             return [SlotSet("number_contact", None)]
         elif "mensagem" in ent.lower():
             return [SlotSet("user_message", None)]
@@ -79,21 +79,49 @@ class InformContact(FormAction):
     def submit(self, dispatcher: CollectingDispatcher, tracker: Tracker,
                domain: Dict[Text, Any],) -> List[Dict]:
         # Define what the form has to do after all required slots are filled
-        return [FollowupAction("action_sent_contact")]
+        return [SlotSet("canceled", False),FollowupAction("action_sent_contact")]
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
         return {
             "user_name": [self.from_entity(entity="name_user"),
-                          self.from_text(not_intent=["cancel", "change_contact"])],
+                self.from_text(not_intent=['change_contact','cancel','ask_faq_kyros','ask_faq_owners','ask_faq_foundation','ask_faq_services_consulting','ask_faq_products_kyts',
+                                    'ask_faq_services_allocation','ask_faq_services','ask_faq_projects','ask_faq_products','ask_faq_partners','ask_faq_clients',
+                                    'ask_faq_mission','ask_faq_vision','ask_faq_values','ask_faq_address','ask_faq_contact','ask_faq_schedule','ask_faq_jobs',  
+                                    'ask_faq_emailRH','ask_faq_products_geojuris','ask_faq_products_klonner','ask_faq_products_agroeyes','ask_faq_products_pergamo',
+                                    'ask_faq_products_sua_comanda','ask_faq_services_support','ask_faq_services_mobility','ask_faq_services_testing_factory',
+                                    'ask_faq_services_software_factory'])],
             "email": [self.from_entity(entity="email"),
-                      self.from_text(not_intent = ["cancel", "change_contact"])],
+                        self.from_text(not_intent=['change_contact','cancel','ask_faq_kyros','ask_faq_owners','ask_faq_foundation','ask_faq_services_consulting','ask_faq_products_kyts',
+                                    'ask_faq_services_allocation','ask_faq_services','ask_faq_projects','ask_faq_products','ask_faq_partners','ask_faq_clients',
+                                    'ask_faq_mission','ask_faq_vision','ask_faq_values','ask_faq_address','ask_faq_contact','ask_faq_schedule','ask_faq_jobs',  
+                                    'ask_faq_emailRH','ask_faq_products_geojuris','ask_faq_products_klonner','ask_faq_products_agroeyes','ask_faq_products_pergamo',
+                                    'ask_faq_products_sua_comanda','ask_faq_services_support','ask_faq_services_mobility','ask_faq_services_testing_factory',
+                                    'ask_faq_services_software_factory'])],
             "number_contact": [self.from_entity(entity="number_contact"),
-                               self.from_text(not_intent = ["cancel", "change_contact"])],
-            "confirm_message": [self.from_intent(intent = ['affirmative'], value = True),
-                                self.from_intent(intent= 'negative', value = False),
-                                self.from_text(not_intent = ["cancel", "change_contact"])],
-            "user_message": [self.from_text(not_intent = ["cancel", "change_contact"])],
-            }    
+                self.from_text(not_intent=['change_contact','cancel','ask_faq_kyros','ask_faq_owners','ask_faq_foundation','ask_faq_services_consulting','ask_faq_products_kyts',
+                                    'ask_faq_services_allocation','ask_faq_services','ask_faq_projects','ask_faq_products','ask_faq_partners','ask_faq_clients',
+                                    'ask_faq_mission','ask_faq_vision','ask_faq_values','ask_faq_address','ask_faq_contact','ask_faq_schedule','ask_faq_jobs',  
+                                    'ask_faq_emailRH','ask_faq_products_geojuris','ask_faq_products_klonner','ask_faq_products_agroeyes','ask_faq_products_pergamo',
+                                    'ask_faq_products_sua_comanda','ask_faq_services_support','ask_faq_services_mobility','ask_faq_services_testing_factory',
+                                    'ask_faq_services_software_factory'])],
+            "confirm_message": [self.from_intent(intent='affirmative',
+                                value=True),
+                                self.from_intent(intent=['negative',
+                                    'ask_faq_kyros','ask_faq_owners','ask_faq_foundation','ask_faq_services_consulting','ask_faq_products_kyts',
+                                    'ask_faq_services_allocation','ask_faq_services','ask_faq_projects','ask_faq_products','ask_faq_partners','ask_faq_clients',
+                                    'ask_faq_mission','ask_faq_vision','ask_faq_values','ask_faq_address','ask_faq_contact','ask_faq_schedule','ask_faq_jobs',  
+                                    'ask_faq_emailRH','ask_faq_products_geojuris','ask_faq_products_klonner','ask_faq_products_agroeyes','ask_faq_products_pergamo',
+                                    'ask_faq_products_sua_comanda','ask_faq_services_support','ask_faq_services_mobility','ask_faq_services_testing_factory',
+                                    'ask_faq_services_software_factory'],
+                                value=False),
+                              self.from_text(not_intent=['change_contact','cancel','ask_faq_kyros','ask_faq_owners','ask_faq_foundation','ask_faq_services_consulting','ask_faq_products_kyts',
+                                    'ask_faq_services_allocation','ask_faq_services','ask_faq_projects','ask_faq_products','ask_faq_partners','ask_faq_clients',
+                                    'ask_faq_mission','ask_faq_vision','ask_faq_values','ask_faq_address','ask_faq_contact','ask_faq_schedule','ask_faq_jobs',  
+                                    'ask_faq_emailRH','ask_faq_products_geojuris','ask_faq_products_klonner','ask_faq_products_agroeyes','ask_faq_products_pergamo',
+                                    'ask_faq_products_sua_comanda','ask_faq_services_support','ask_faq_services_mobility','ask_faq_services_testing_factory',
+                                    'ask_faq_services_software_factory'])],
+            "user_message": [self.from_text(not_intent=['change_contact', 'cancel'])]
+            }   
 
     def validate_user_name(self, value, dispatcher, tracker: Tracker, domain):
         return {"user_name": value}
@@ -145,11 +173,12 @@ class ActionFillSlotCanceled(Action):
     def run(self, dispatcher, tracker, domain):
         ent = tracker.latest_message['intent'].get('name')
         print(str(tracker.latest_message['intent']))
-        dispatcher.utter_message("Pronto, cancelei o envio. Você quer saber " +
-                                 "mais alguma coisa sobre a Kyros?")
         if "affirm" in ent or "acknowledge" in ent:
+            dispatcher.utter_message("Pronto, cancelei o envio. Você quer saber " +
+                                 "mais alguma coisa sobre a Kyros?")
             return [SlotSet("canceled", True)]
         elif "deny" in ent:
+            dispatcher.utter_message("Tudo bem. Vamos voltar para o envio do email.")
             return [SlotSet("canceled", False)]
 
 
@@ -227,5 +256,6 @@ class SentContact(Action):
                 dispatcher.utter_message("Desculpe, mas ocorreu um erro e não consegui enviar o email")
                 return[]
         else:
+            dispatcher.utter_message("Desculpe, mas tive um problema e não consegui enviar o e-mail. Por favor, informe seu e-mail novamente")
             return[]
 

@@ -35,7 +35,6 @@ services:
       - action_server
 
   ## Trainer stack
-
   mongodb:
     image: mongo:latest
     container_name: "mongodb"

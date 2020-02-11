@@ -226,6 +226,16 @@ class ProjectsModel:
                 new_entity = await db.entities.insert_one(entity)
                 print("new entity inserted with id {}".format(new_entity.inserted_id))
 
+            # Copy Slots
+
+            slots_cursor = db.slots.find({"project_id": str(source_project_id)})
+            for slot in await slots_cursor.to_list(length=100):
+                print(slot['_id'])
+                del slot['_id']
+                slot['project_id'] = "{}".format(new_project.inserted_id)
+                new_slot = await db.slots.insert_one(slot)
+                print("new slot inserted with id {}".format(new_slot.inserted_id))
+
             # Copy domains
 
             domains_cursor = db.domains.find({"project_id": str(source_project_id)})
