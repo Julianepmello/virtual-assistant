@@ -8,4 +8,4 @@ Número: $USER_NUMBER
 Mensagem: $USER_MESSAGE
 
 Atenciosamente, 
-Jaque, Inteligência Artificial da Kyros
+Hermes, o mensageiro virtual da Kyros
