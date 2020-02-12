@@ -544,7 +544,7 @@ class ResponseModel:
 
         json_record = json.loads(json.dumps(record))
 
-        cursor = db.responses.find(json_record, {"project_id": 1, "domain_id": 1, "response_name": 1, "response_description": 1})
+        cursor = db.responses.find(json_record, {"project_id": 1, "domain_id": 1,"response_display": 1, "response_name": 1, "response_description": 1})
         result = await cursor.to_list(length=1000)
 
         print("Responses sent {}".format(json.loads(dumps(result))))
@@ -687,7 +687,7 @@ class StoryModel:
 
         json_record = json.loads(json.dumps(record))
 
-        cursor = db.stories.find(json_record, {"project_id": 1, "domain_id": 1, "story_name": 1, "story_description": 1})
+        cursor = db.stories.find(json_record, {"project_id": 1, "domain_id": 1,"story_display": 1, "story_name": 1, "story_description": 1})
         result = await cursor.to_list(length=1000)
 
         print("Stories sent {}".format(json.loads(dumps(result))))
