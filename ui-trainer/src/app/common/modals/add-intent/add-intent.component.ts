@@ -21,6 +21,7 @@ export class AddIntentComponent implements OnInit {
   ngOnInit() {
     this.appSource = environment.app_source;
     this.newIntentForm = new FormGroup({
+      intentDisplay: new FormControl('', Validators.required),
       intentName: new FormControl('', Validators.required),
       intentDescription: new FormControl('', Validators.required)
     });
@@ -33,6 +34,7 @@ export class AddIntentComponent implements OnInit {
         project_id: this.data.projectObjectId,
         domain_id: this.data.domainObjectId,
         intent_name: this.newIntentForm.value.intentName,
+        intent_display: this.newIntentForm.value.intentDisplay,
         intent_description: this.newIntentForm.value.intentDescription
       });
     }

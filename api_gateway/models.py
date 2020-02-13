@@ -389,9 +389,14 @@ class IntentsModel:
 
         json_record = json.loads(json.dumps(record))
 
-        insert_record = {"project_id": json_record['project_id'], "domain_id": json_record['domain_id'],
-                         "intent_name": json_record['intent_name'], "intent_display": json_record['intent_display'],
-                         "intent_description": json_record['intent_description'], "text_entities": []}
+        insert_record = {
+            "project_id": json_record['project_id'],
+            "domain_id": json_record['domain_id'],
+            "intent_name": json_record['intent_name'],
+            "intent_display": json_record['intent_display'],
+            "intent_description": json_record['intent_description'],
+            "text_entities": []
+        }
 
         val_res = await db.intents.find_one({"project_id": json_record['project_id'],
                                              #"domain_id": json_record['domain_id'],
@@ -444,6 +449,7 @@ class IntentsModel:
 
         query = {"_id": ObjectId("{}".format(json_record['object_id']))}
         update_field = {"$set": {"intent_name": json_record['intent_name'],
+                                 "intent_display": json_record['intent_display'],
                                  "intent_description": json_record['intent_description']}}
 
         # Check if intent already exists

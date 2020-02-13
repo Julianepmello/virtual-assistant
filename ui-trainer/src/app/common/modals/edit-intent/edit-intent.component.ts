@@ -19,6 +19,7 @@ export class EditIntentComponent implements OnInit {
   ngOnInit() {
     this.appSource = environment.app_source;
     this.editIntentForm = new FormGroup({
+      intentDisplay: new FormControl(this.data.intentDisplay, Validators.required),
       intentName: new FormControl({value: this.data.intentName, disabled: true}, Validators.required),
       intentDescription: new FormControl(this.data.intentDescription, Validators.required)
     });
@@ -30,6 +31,7 @@ export class EditIntentComponent implements OnInit {
         project_id: this.data.projectObjectId,
         domain_id: this.data.domainObjectId,
         object_id: this.data.intentObjectId,
+        intent_display: this.data.intentDisplay,
         intent_name: this.data.intentName,
         intent_description: this.editIntentForm.value.intentDescription
       });

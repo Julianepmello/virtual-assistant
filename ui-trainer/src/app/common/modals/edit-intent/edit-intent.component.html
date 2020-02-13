@@ -10,12 +10,17 @@
 <form [formGroup]="editIntentForm" (ngSubmit)="closeDialog()">
 <mat-dialog-content>
   <mat-form-field class="dialog-full-width" appearance="outline">
-    <mat-label>Nome da Entidade</mat-label>
+    <mat-label>Nome da Intenção</mat-label>
+    <input matInput (keydown.space)="$event.preventDefault()" maxlength="30" onPaste="return false" autocomplete="off" formControlName="intentDisplay">
+  </mat-form-field>
+  <br />
+  <mat-form-field class="dialog-full-width" appearance="outline">
+    <mat-label>Nome Técnico da Intenção</mat-label>
     <input matInput (keydown.space)="$event.preventDefault()" maxlength="30" onPaste="return false" autocomplete="off" formControlName="intentName">
   </mat-form-field>
   <br />
   <mat-form-field class="dialog-full-width" appearance="outline">
-    <mat-label>Descrição da Entidade</mat-label>
+    <mat-label>Descrição da Intenção</mat-label>
     <textarea matInput maxlength="140" formControlName="intentDescription"></textarea>
   </mat-form-field>
 </mat-dialog-content>
