@@ -219,7 +219,7 @@ class SentContact(Action):
                     message = "Não informado"
                 
                 # Mensagem a ser enviada
-                message_template = Template('$PERSON_NAME, \n\nSegue abaixo os dados do usuário que entrou em contato comigo:\n\nNome: $USER_NAME\nE-mail: $USER_EMAIL\nNúmero: $USER_NUMBER\nMensagem: $USER_MESSAGE\n\nAtenciosamente, \nJaque, Inteligência Artificial da Kyros')
+                message_template = Template('$PERSON_NAME, \n\nSegue abaixo os dados do usuário que entrou em contato comigo:\n\nNome: $USER_NAME\nE-mail: $USER_EMAIL\nNúmero: $USER_NUMBER\nMensagem: $USER_MESSAGE\n\nAtenciosamente, \nHermes, o mensageiro virtual da Kyros')
                 
                 #Configurações para envio do email
                 s = smtplib.SMTP(host='smtp.gmail.com', port=587)
