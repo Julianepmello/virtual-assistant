@@ -144,12 +144,11 @@ class InformContact(FormAction):
     def validate_number_contact(self, value, dispatcher, tracker: Tracker,
                                 domain):
         #Validação do número de telefone do usuário
-        #TO DO: verificar a eficácia dos regex e corrigir problema (validação de números muito grandes)
+        #Site para testar regex: https://regexr.com/
         
-        regex = "^\(?\d{2}\)?[\s-]?[\s9]?\d{4}-?\d{4}$"
-        regex2 = "(\(?\d{2}\)?\s)?(\d{4,5}\-?\d{4})"
+        regex = "^(\+?55)?((\(?\s?\d{2}\s?\)?\s?)?([\s9]?\d{4}[\s-]?\d{4}))$"
 
-        if(re.search(regex, value) or re.search(regex2, value)):
+        if re.search(regex, value):
             return {"number_contact": value}
         else:
             dispatcher.utter_message("Desculpe, mas esse número não é válido")
