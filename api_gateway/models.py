@@ -550,7 +550,11 @@ class ResponseModel:
 
         json_record = json.loads(json.dumps(record))
 
-        cursor = db.responses.find(json_record, {"project_id": 1, "domain_id": 1,"response_display": 1, "response_name": 1, "response_description": 1})
+        cursor = db.responses.find(json_record, {"project_id": 1,
+                                                 "domain_id": 1,
+                                                 "response_display": 1,
+                                                 "response_name": 1,
+                                                 "response_description": 1})
         result = await cursor.to_list(length=1000)
 
         print("Responses sent {}".format(json.loads(dumps(result))))
@@ -612,8 +616,9 @@ class ResponseModel:
         json_record = json.loads(json.dumps(record))
 
         query = {"_id": ObjectId("{}".format(json_record['object_id']))}
-        update_field = {"$set": {"response_name": json_record['response_name'],
+        update_field = {"$set": {
                                  "response_display": json_record['response_display'],
+                                 "response_name": json_record['response_name'],
                                  "response_description": json_record['response_description']}}
  
         # Check if Response already exists

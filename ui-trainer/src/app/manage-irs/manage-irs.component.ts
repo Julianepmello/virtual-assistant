@@ -124,7 +124,7 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
 
   addNewIntent() {
     const dialogRef = this.dialog.open(AddIntentComponent, {
-      height: '320px',
+      height: '450px',
       width: '345px',
       data: {projectObjectId: this.projectObjectId, domainObjectId: this.domainObjectId}
     });
@@ -135,16 +135,16 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
     });
   }
 
-  editIntent(intentObjectId: string, intentName: string, intentDescription: string, intentDisplay: string) {
+  editIntent(intentObjectId: string, intentDisplay: string, intentName: string, intentDescription: string,) {
     const dialogRef = this.dialog.open(EditIntentComponent, {
-      height: '320px',
+      height: '450px',
       width: '345px',
       data: {
         projectObjectId: this.projectObjectId,
         domainObjectId: this.domainObjectId,
         intentObjectId: intentObjectId,
-        intentName: intentName,
         intentDisplay: intentDisplay,
+        intentName: intentName,
         intentDescription: intentDescription
       }
     });
@@ -185,7 +185,7 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
 
   addNewResponse() {
     const dialogRef = this.dialog.open(AddResponseComponent, {
-      height: '320px',
+      height: '450px',
       width: '345px',
       data: {projectObjectId: this.projectObjectId, domainObjectId: this.domainObjectId}
     });
@@ -196,15 +196,16 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
     });
   }
 
-  editResponse(responseObjectId: string, responseName: string, responseDescription: string) {
+  editResponse(responseObjectId: string, responseDisplay:string, responseName: string, responseDescription: string) {
     const dialogRef = this.dialog.open(EditResponseComponent, {
-      height: '320px',
+      height: '450px',
       width: '345px',
       data: {
         projectObjectId: this.projectObjectId,
         domainObjectId: this.domainObjectId,
         responseObjectId: responseObjectId,
         responseName: responseName,
+        responseDisplay: responseDisplay,
         responseDescription: responseDescription
       }
     });
@@ -245,7 +246,7 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
 
   addNewStory() {
     const dialogRef = this.dialog.open(AddStoryComponent, {
-      height: '320px',
+      height: '450px',
       width: '345px',
       data: {projectObjectId: this.projectObjectId, domainObjectId: this.domainObjectId}
     });
@@ -256,14 +257,15 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
     });
   }
 
-  editStory(storyObjectId: string, storyName: string, storyDescription: string) {
+  editStory(storyObjectId: string, storyName: string, storyDisplay: string, storyDescription: string) {
     const dialogRef = this.dialog.open(EditStoryComponent, {
-      height: '320px',
+      height: '450px',
       width: '345px',
       data: {
         projectObjectId: this.projectObjectId,
         domainObjectId: this.domainObjectId,
         storyObjectId: storyObjectId,
+        storyDisplay: storyDisplay,
         storyName: storyName,
         storyDescription: storyDescription
       }

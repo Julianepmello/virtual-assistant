@@ -11,7 +11,7 @@
 <mat-dialog-content>
   <mat-form-field class="dialog-full-width" appearance="outline">
     <mat-label>Nome da Resposta</mat-label>
-    <input matInput (keydown.space)="$event.preventDefault()" maxlength="30" onPaste="return false" autocomplete="off" formControlName="responseDisplay" #responseDisplay="matInput">
+    <input matInput  maxlength="30" onPaste="return false" autocomplete="off" formControlName="responseDisplay" #responseDisplay="matInput">
   </mat-form-field>
   <br />
   <mat-form-field class="dialog-full-width" appearance="outline">
