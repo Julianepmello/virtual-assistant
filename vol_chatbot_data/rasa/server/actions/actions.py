@@ -148,12 +148,12 @@ class InformContact(FormAction):
         
         #Regex para números fixos ou móveis (com ou sem 9), com ou sem DDI e DDD, 
         #considernado presença de espaços, traços e parênteses
-        regex = "^(\(?\s?\+?55\s?\)?)?\s?((\(?\s?\d{2}\s?\)?\s?)?([\s9]?\d{4}[\s-]?\d{4}))$"
+        regex = "^(\(?\s?\+?55\s?\)?)?\s?((\(?\s?\d{2}\s?\)?\s?)?([\s9]\s?)?(\d{4}[\s-]?\d{4}))$"
 
         if re.search(regex, value):
             return {"number_contact": value}
         else:
-            dispatcher.utter_message("Desculpe, mas esse número não é válido")
+            dispatcher.utter_message("Desculpe, mas esse número não é válido. Tente no formato (xx)xxxx-xxxx")
             return{"number_contact": None}
 
     def validate_confirm_message(self, value, dispatcher, tracker: Tracker,
