@@ -560,7 +560,9 @@ class ResponseModel:
 
         json_record = json.loads(json.dumps(record))
 
-        insert_record = {"project_id": json_record['project_id'], "domain_id": json_record['domain_id'],
+        insert_record = {"project_id": json_record['project_id'],
+                         "domain_id": json_record['domain_id'],
+                         "response_display": json_record['response_display'],
                          "response_name": json_record['response_name'],
                          "response_description": json_record['response_description'], "text_entities": []}
 
@@ -611,8 +613,9 @@ class ResponseModel:
 
         query = {"_id": ObjectId("{}".format(json_record['object_id']))}
         update_field = {"$set": {"response_name": json_record['response_name'],
+                                 "response_display": json_record['response_display'],
                                  "response_description": json_record['response_description']}}
-
+ 
         # Check if Response already exists
         val_res = await db.responses.find_one({"project_id": json_record['project_id'],
                                                #"domain_id": json_record['domain_id'],
