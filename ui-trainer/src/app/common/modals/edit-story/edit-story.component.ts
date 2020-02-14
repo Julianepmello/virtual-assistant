@@ -19,6 +19,7 @@ export class EditStoryComponent implements OnInit {
   ngOnInit() {
     this.appSource = environment.app_source;
     this.editStoryForm = new FormGroup({
+      storyDisplay: new FormControl({value: this.data.storyDisplay, disabled: true}, Validators.required),
       storyName: new FormControl({value: this.data.storyName, disabled: true}, Validators.required),
       storyDescription: new FormControl(this.data.storyDescription, Validators.required)
     });
@@ -30,6 +31,7 @@ export class EditStoryComponent implements OnInit {
         project_id: this.data.projectObjectId,
         domain_id: this.data.domainObjectId,
         object_id: this.data.storyObjectId,
+        story_display: this.data.storyDisplay,
         story_name: this.data.storyName,
         story_description: this.editStoryForm.value.storyDescription
       });
