@@ -33,10 +33,9 @@
                   <mat-icon *ngIf="appSource==='open'" svgIcon="intent-black"></mat-icon>
                 </td>
               </ng-container>
-            
               <ng-container matColumnDef="intent_name">
                 <th mat-header-cell *matHeaderCellDef> Nome da Intenção </th>
-                <td mat-cell *matCellDef="let intent" class="intent_name_text"><span (click)="selectIntent(intent)">{{intent.intent_name}}</span></td>
+                <td mat-cell *matCellDef="let intent" class="intent_name_text"><span (click)="selectIntent(intent)">{{intent.intent_display}}</span></td>
               </ng-container>
             
               <ng-container matColumnDef="intent_description">

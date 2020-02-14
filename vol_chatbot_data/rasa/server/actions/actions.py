@@ -14,7 +14,6 @@ from string import Template
 import json
 import os
 import re
-#from unidecode import unidecode
 from .make_txt import make_txt_conversation
 
 
@@ -40,14 +39,18 @@ class ActionChangeField(Action):
         return "action_change_field"
 
     def run(self, dispatcher, tracker, domain):
+        #Action para possibilitar a alteração de um campo já preenchido no form de informação de contato.
+        #A partir da entidade detectada na última mensagem do usuário, atualiza o slot correspondente 
+        #com None, forçando assim que formulário refaça a pergunta e preencha novamente o slot
         
+        #Detecção das informações da entidade
         ent = tracker.latest_message['entities'][0]['value'] if len(tracker.latest_message['entities']) > 0 else None
         # ent = unidecode(ent) if ent != None else None
 
         print(str(tracker.latest_message['entities']))
         # ent = unidecode(ent) if ent != None else None
-        # Mod_direto é um vetor de validação para entrar no modo de
-        # criação de documento direto
+        
+        #Verificaçaõ de qual slot deve ser apagado (atualizado para None)
         if ent is None:
             dispatcher.utter_message("Esse campo não está disponível " +
                                      "para alteração")
@@ -127,6 +130,8 @@ class InformContact(FormAction):
         return {"user_name": value}
 
     def validate_email(self, value, dispatcher, tracker: Tracker, domain):
+        #Validação do email com um regex
+        
         regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,6})+$'
         # regex2 = "(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"
 
@@ -138,17 +143,23 @@ class InformContact(FormAction):
 
     def validate_number_contact(self, value, dispatcher, tracker: Tracker,
                                 domain):
-        regex = "^\(?\d{2}\)?[\s-]?[\s9]?\d{4}-?\d{4}$"
-        regex2 = "(\(?\d{2}\)?\s)?(\d{4,5}\-?\d{4})"
+        #Validação do número de telefone do usuário
+        #Site para testar regex: https://regexr.com/
+        
+        #Regex para números fixos ou móveis (com ou sem 9), com ou sem DDI e DDD, 
+        #considernado presença de espaços, traços e parênteses
+        regex = "^(\(?\s?\+?55\s?\)?)?\s?((\(?\s?\d{2}\s?\)?\s?)?([\s9]\s?)?(\d{4}[\s-]?\d{4}))$"
 
-        if(re.search(regex, value) or re.search(regex2, value)):
+        if re.search(regex, value):
             return {"number_contact": value}
         else:
-            dispatcher.utter_message("Desculpe, mas esse número não é válido")
+            dispatcher.utter_message("Desculpe, mas esse número não é válido. Tente no formato (xx)xxxx-xxxx")
             return{"number_contact": None}
 
     def validate_confirm_message(self, value, dispatcher, tracker: Tracker,
                                  domain):
+        #Validação do slot referente ao desejo de enviar uma mensagem ao comercial
+        
         if value is True:
             return{"confirm_message": True,
                    "user_message": None}
@@ -162,6 +173,8 @@ class InformContact(FormAction):
 
     def validate_user_message(self, value, dispatcher, tracker: Tracker,
                               domain):
+        #Validação da mensagem: não tem nenhuma
+        
         return{"user_message": value}
 
 
@@ -171,6 +184,8 @@ class ActionFillSlotCanceled(Action):
         return "action_fill_slot_canceled"
 
     def run(self, dispatcher, tracker, domain):
+        #Preenchimento do slot referente ao cancelamento
+        
         ent = tracker.latest_message['intent'].get('name')
         print(str(tracker.latest_message['intent']))
         if "affirm" in ent or "acknowledge" in ent:
@@ -187,9 +202,15 @@ class SentContact(Action):
         return "action_sent_contact"
 
     def run(self, dispatcher, tracker, domain):
+        #Action para realizar o envio do email com os dados do usuário.
+        #Se não ocorreu o cancelamento do envio do email, buscam-se os slots preenchidos no formulário,
+        #sendo esses utilizados para preencher uma mensagem (message_template). Além disso, através da
+        #função make_txt_conversation (make_txt.py), utilizando o tracker como base, é reconstruída 
+        #a interação entre o usuário e o bot, sendo esse arquivo enviado em anexo no email
         
         if tracker.get_slot("canceled") == False:
             try:
+                #Busca dos slots
                 name = tracker.get_slot("user_name")
                 email = tracker.get_slot("email")
                 number_contact = tracker.get_slot("number_contact")
@@ -200,10 +221,13 @@ class SentContact(Action):
                 
                 # Mensagem a ser enviada
                 message_template = Template('$PERSON_NAME, \n\nSegue abaixo os dados do usuário que entrou em contato comigo:\n\nNome: $USER_NAME\nE-mail: $USER_EMAIL\nNúmero: $USER_NUMBER\nMensagem: $USER_MESSAGE\n\nAtenciosamente, \nJaque, Inteligência Artificial da Kyros')
+                
+                #Configurações para envio do email
                 s = smtplib.SMTP(host='smtp.gmail.com', port=587)
                 s.starttls()
                 s.login('juliamello373@gmail.com', '1511#Chocolate')
 
+                #Dados de quem irá receber o email (podem ser colocadas mais de uma pessoa)
                 names_email = ['Júlia']
                 email_send = ['juliam@kyros.com.br']
 
@@ -213,28 +237,29 @@ class SentContact(Action):
                 with open("data.json", "w") as write_file:
                     json.dump(tracker.current_state(), write_file)
 
+                #Reconstrução da conversa (salva em txt)
                 make_txt_conversation('data.json')
 
-                # For each contact, send the email
+                #Para cada contato definido, envia-se o email
                 for names_email, email_send in zip(names_email, email_send):
                     msg = MIMEMultipart()       # create a message
                     sub={'PERSON_NAME': name.title(), 'USER_NAME': name.title(),
                         'USER_EMAIL': email, 'USER_NUMBER': number_contact}
                     
-                    # add in the actual person name to the message template
+                    #Adicionar o nome da pessoa no template
                     message = message_template.substitute(PERSON_NAME= 'Olá', USER_NAME= name.title(), 
                                                         USER_EMAIL=str(email), USER_NUMBER=str(number_contact),
                                                         USER_MESSAGE=str(message))
 
-                    # setup the parameters of the message
+                    #Configurar os parâmetros do email
                     msg['From']= 'juliamello373@gmail.com'
                     msg['To']=email_send
                     msg['Subject']="Usuário entrou em contato"
 
-                    # add in the message body
+                    #Adicionar a mensagem 
                     msg.attach(MIMEText(message, 'plain'))
                     
-                    # add txt file
+                    #Adicionar arquivo txt em anexo
                     f = open("conversa_bot.txt", "r")
                     attachment = MIMEText(f.read())
                     attachment.add_header('Content-Disposition', 'attachment', filename='conversa_bot.txt')           

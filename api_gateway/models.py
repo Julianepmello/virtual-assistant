@@ -379,7 +379,7 @@ class IntentsModel:
 
         json_record = json.loads(json.dumps(record))
 
-        cursor = db.intents.find(json_record, {"project_id": 1, "domain_id": 1, "intent_name": 1, "intent_description": 1})
+        cursor = db.intents.find(json_record, {"project_id": 1, "domain_id": 1, "intent_display": 1, "intent_name": 1, "intent_description": 1})
         result = await cursor.to_list(length=1000)
         json_result = json.loads(dumps(result))
         print("Intents sent {}".format(json_result))
