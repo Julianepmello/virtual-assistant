@@ -148,7 +148,7 @@ class InformContact(FormAction):
         
         #Regex para números fixos ou móveis (com ou sem 9), com ou sem DDI e DDD, 
         #considernado presença de espaços, traços e parênteses
-        regex = "^(\+?55)?((\(?\s?\d{2}\s?\)?\s?)?([\s9]?\d{4}[\s-]?\d{4}))$"
+        regex = "^(\(\s?\+?55\s?\))?\s?((\(?\s?\d{2}\s?\)?\s?)?([\s9]?\d{4}[\s-]?\d{4}))$"
 
         if re.search(regex, value):
             return {"number_contact": value}
