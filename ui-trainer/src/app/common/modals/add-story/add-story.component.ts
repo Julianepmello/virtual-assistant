@@ -21,7 +21,7 @@ export class AddStoryComponent implements OnInit {
   ngOnInit() {
     this.appSource = environment.app_source;
     this.newStoryForm = new FormGroup({
-      storyDisplat: new FormControl('', Validators.required),
+      storyDisplay: new FormControl('', Validators.required),
       storyName: new FormControl('', Validators.required),
       storyDescription: new FormControl('', Validators.required)
     });

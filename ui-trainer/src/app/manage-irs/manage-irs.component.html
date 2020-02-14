@@ -34,7 +34,7 @@
                 </td>
               </ng-container>
               <ng-container matColumnDef="intent_name">
-                <th mat-header-cell *matHeaderCellDef> Nome da Intenção </th>
+                <th mat-header-cell *matHeaderCellDef> Intenções do Usuário </th>
                 <td mat-cell *matCellDef="let intent" class="intent_name_text"><span (click)="selectIntent(intent)">{{intent.intent_display}}</span></td>
               </ng-container>
             
@@ -106,8 +106,8 @@
               </ng-container>
             
               <ng-container matColumnDef="response_name">
-                <th mat-header-cell *matHeaderCellDef> Nome da Resposta </th>
-                <td mat-cell *matCellDef="let response" class="response_name_text"><span (click)="selectResponse(response)">{{response.response_name}}</span></td>
+                <th mat-header-cell *matHeaderCellDef> Resposta do Bot </th>
+                <td mat-cell *matCellDef="let response" class="response_name_text"><span (click)="selectResponse(response)">{{response.response_display}}</span></td>
               </ng-container>
             
               <ng-container matColumnDef="response_description">
@@ -177,7 +177,7 @@
             
               <ng-container matColumnDef="story_name">
                 <th mat-header-cell *matHeaderCellDef> Nome da Historia </th>
-                <td mat-cell *matCellDef="let story" class="story_name_text"><span (click)="selectStory(story)">{{story.story_name}}</span></td>
+                <td mat-cell *matCellDef="let story" class="story_name_text"><span (click)="selectStory(story)">{{story.story_display}}</span></td>
               </ng-container>
             
               <ng-container matColumnDef="story_description">

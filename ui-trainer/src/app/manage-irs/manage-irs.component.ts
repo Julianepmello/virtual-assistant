@@ -135,7 +135,7 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
     });
   }
 
-  editIntent(intentObjectId: string, intentName: string, intentDescription: string) {
+  editIntent(intentObjectId: string, intentName: string, intentDescription: string, intentDisplay: string) {
     const dialogRef = this.dialog.open(EditIntentComponent, {
       height: '320px',
       width: '345px',
@@ -144,6 +144,7 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
         domainObjectId: this.domainObjectId,
         intentObjectId: intentObjectId,
         intentName: intentName,
+        intentDisplay: intentDisplay,
         intentDescription: intentDescription
       }
     });
