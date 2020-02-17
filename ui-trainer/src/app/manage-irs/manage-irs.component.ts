@@ -204,8 +204,8 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
         projectObjectId: this.projectObjectId,
         domainObjectId: this.domainObjectId,
         responseObjectId: responseObjectId,
-        responseName: responseName,
         responseDisplay: responseDisplay,
+        responseName: responseName,
         responseDescription: responseDescription
       }
     });
