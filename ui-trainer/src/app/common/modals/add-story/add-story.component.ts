@@ -21,6 +21,7 @@ export class AddStoryComponent implements OnInit {
   ngOnInit() {
     this.appSource = environment.app_source;
     this.newStoryForm = new FormGroup({
+      storyDisplay: new FormControl('', Validators.required),
       storyName: new FormControl('', Validators.required),
       storyDescription: new FormControl('', Validators.required)
     });
@@ -32,6 +33,7 @@ export class AddStoryComponent implements OnInit {
       this.dialogRef.close({
         project_id: this.data.projectObjectId,
         domain_id: this.data.domainObjectId,
+        story_display: this.newStoryForm.value.storyDisplay,
         story_name: this.newStoryForm.value.storyName,
         story_description: this.newStoryForm.value.storyDescription
       });

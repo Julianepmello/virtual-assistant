@@ -21,6 +21,7 @@ export class AddResponseComponent implements OnInit {
   ngOnInit() {
     this.appSource = environment.app_source;
     this.newResponseForm = new FormGroup({
+      responseDisplay: new FormControl('', Validators.required),
       responseName: new FormControl('', Validators.required),
       responseDescription: new FormControl('', Validators.required)
     });
@@ -32,6 +33,7 @@ export class AddResponseComponent implements OnInit {
       this.dialogRef.close({
         project_id: this.data.projectObjectId,
         domain_id: this.data.domainObjectId,
+        response_display: this.newResponseForm.value.responseDisplay,
         response_name: 'utter_' + this.newResponseForm.value.responseName,
         response_description: this.newResponseForm.value.responseDescription
       });
