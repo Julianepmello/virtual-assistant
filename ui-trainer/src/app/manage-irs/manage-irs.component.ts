@@ -257,7 +257,7 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
     });
   }
 
-  editStory(storyObjectId: string, storyName: string, storyDisplay: string, storyDescription: string) {
+  editStory(storyObjectId: string, storyDisplay: string, storyName: string, storyDescription: string) {
     const dialogRef = this.dialog.open(EditStoryComponent, {
       height: '450px',
       width: '345px',
