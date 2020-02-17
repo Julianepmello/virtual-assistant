@@ -33,7 +33,7 @@ export class EditResponseComponent implements OnInit {
         project_id: this.data.projectObjectId,
         domain_id: this.data.domainObjectId,
         object_id: this.data.responseObjectId,
-        response_display: this.data.editResponseForm.value.responseDisplay,
+        response_display: this.editResponseForm.value.responseDisplay,
         response_name: this.data.responseName,
         response_description: this.editResponseForm.value.responseDescription
       });
