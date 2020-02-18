@@ -26,9 +26,9 @@ O angular pode ser instalado via npm, mas o docker ja instala um virtual machine
 
 ## Docker installation 
 
- Siga os passos do link para instalar o docker e docker-compose:
- [docker 18.09](https://docs.docker.com/install/)
- [docker-compose 1.24.0](https://docs.docker.com/compose/install/)
+ Siga os passos do link para instalar o docker e docker-compose (linux):
+  - [docker 18.09](https://docs.docker.com/install/)
+  - [docker-compose 1.24.0](https://docs.docker.com/compose/install/)
 
 ## Clone github repo 
 
