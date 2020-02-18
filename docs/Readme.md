@@ -1,20 +1,23 @@
-# Virtual Assistant
+# Kyros Intelligence (AIA)
 
-Virtual Assistant is build using following open source components.
+Kyros Platform é uma plataforma criada a partir do [Virtual Assistant](https://github.com/navigateconsulting/virtual-assistant).
 
-- Angular Ui - To build, train and deploy a chat bot project
-- Python API gateway - connecting to rasa for deploying and persisting training data
-- Mongodb - for storing training data and editing training data
+- Angular Ui - Para interface web para gerenciar um bot.
+- Python API gateway - Conecta ao rasa para treinar e fazer deploy do bot em um server.
+- Mongodb - Para armazenamento das informações dos bots.
 
 ### Using Rasa
 
-We use rasa 1.0 (combined repo for nlu + core) as a ML framework to train and deploy chat bots. 
-We would keep updating the code base to support latest versions of rasa.  
+Nos usamos a versão rasa = 1.3.1 e rasa-sdk = 1.3.2 pois tem suporte e mais estabilidade para algumas operações, atualmente já existem versões superiores que podem ser implementadas em um bot, mas é necessario testar em uma branch separada.
 
-We intent to support all features provided by rasa framework, in case you find any feature missing please report to us.
+Em especial o rasa 1.3.1 tem suporte a response, mas que não esta sendo utilizado nessa plataforma.
+
+O rasa-sdk 1.3.2 foi escolhido pois o 1.3.1 tem problemas no formulário. (rasa-sdk não pode ter versão muito maior do que a do rasa)
 
 ## 1. Installation 
-   Installation instructions [click here](installation/Readme.md)
+
+   Instruções para instalação [click here](installation/Readme.md)
 
 ## 2. Usage
-   Usage instructions : [click here](usage/Readme.md)
+
+   Instruções de uso: [click here](usage/Readme.md)

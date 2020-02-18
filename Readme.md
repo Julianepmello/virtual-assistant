@@ -8,6 +8,8 @@
   </div>
 </div>
 
+## Documentação
+
 ### Using Rasa  
 
 Nós usamos o Rasa 1.3.1, que é um framework para treinar e fazer deploy de bots escritos em markdown e python.
@@ -16,7 +18,7 @@ PS: Versões futuras do bot precisam ser testadas.
 Voce pode encontrar informações do rasa em:
   https://rasa.com/ 
   https://rasa.com/docs/
-  https://rasa.com/docs/rasa/
+  https://rasa.com/docs/rasa/  
 
 ## Installation
 
@@ -54,12 +56,13 @@ PS:
 A aplicação vai instalar o python, npm, rasa e criar ambientes virtuais.
 Tenha paciência e acompanhe os logs para verificar possiveis problemas.
 
-#### Detailed Installation
+#### Installation
 
    Instalação detalhada: [this link](docs/installation/Readme.md)
 
 ## Usage
    Uso : [click here](docs/usage/Readme.md)
+   Informações: [About project](docs/Readme.md)
 
 ## License
 
