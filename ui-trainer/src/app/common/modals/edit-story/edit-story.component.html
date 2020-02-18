@@ -11,6 +11,11 @@
 <mat-dialog-content>
   <mat-form-field class="dialog-full-width" appearance="outline">
     <mat-label>Nome da Historia</mat-label>
+    <input matInput maxlength="30" onPaste="return false" autocomplete="off" formControlName="storyDisplay" autofocus #storyDisplay='matInput'>
+  </mat-form-field>
+  <br />
+  <mat-form-field class="dialog-full-width" appearance="outline">
+    <mat-label>Nome técnico da Historia</mat-label>
     <input matInput (keydown.space)="$event.preventDefault()" maxlength="30" onPaste="return false" autocomplete="off" formControlName="storyName" autofocus>
   </mat-form-field>
   <br />

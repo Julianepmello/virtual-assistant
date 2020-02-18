@@ -10,25 +10,32 @@
 <form [formGroup]="editIntentForm" (ngSubmit)="closeDialog()">
 <mat-dialog-content>
   <mat-form-field class="dialog-full-width" appearance="outline">
-    <mat-label>Nome da Entidade</mat-label>
+    <mat-label>Nome da Intenção</mat-label>
+    <input matInput maxlength="30" onPaste="return false" autocomplete="off" formControlName="intentDisplay" #intentDisplay="matInput">
+  </mat-form-field>
+  <br />
+  <mat-form-field class="dialog-full-width" appearance="outline">
+    <mat-label>Nome Técnico da Intenção</mat-label>
     <input matInput (keydown.space)="$event.preventDefault()" maxlength="30" onPaste="return false" autocomplete="off" formControlName="intentName">
   </mat-form-field>
   <br />
   <mat-form-field class="dialog-full-width" appearance="outline">
-    <mat-label>Descrição da Entidade</mat-label>
+    <mat-label>Descrição da Intenção</mat-label>
     <textarea matInput maxlength="140" formControlName="intentDescription"></textarea>
   </mat-form-field>
+  <mat-dialog-actions>
+    <div class="row" style="width: 100%;">
+      <div class="col-md-6 text-right">
+        <button *ngIf="appSource==='enterprise'" mat-raised-button type="submit" class="submit-button" [disabled]="!editIntentForm.valid">Confirmar</button>
+        <button *ngIf="appSource==='open'" mat-raised-button type="submit" class="submit-button-black" [disabled]="!editIntentForm.valid">Confirmar</button>
+      </div>
+      <div class="col-md-6 text-center">
+        <button mat-raised-button mat-dialog-close class="cancel-button">Cancelar</button>
+      </div>
+    </div>
+  </mat-dialog-actions>
+
 </mat-dialog-content>
 
-<mat-dialog-actions>
-  <div class="row" style="width: 100%;">
-    <div class="col-md-6 text-right">
-      <button *ngIf="appSource==='enterprise'" mat-raised-button type="submit" class="submit-button" [disabled]="!editIntentForm.valid">Confirmar</button>
-      <button *ngIf="appSource==='open'" mat-raised-button type="submit" class="submit-button-black" [disabled]="!editIntentForm.valid">Confirmar</button>
-    </div>
-    <div class="col-md-6 text-center">
-      <button mat-raised-button mat-dialog-close class="cancel-button">Cancelar</button>
-    </div>
-  </div>
-</mat-dialog-actions>
+
 </form>

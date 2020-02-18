@@ -379,7 +379,7 @@ class IntentsModel:
 
         json_record = json.loads(json.dumps(record))
 
-        cursor = db.intents.find(json_record, {"project_id": 1, "domain_id": 1, "intent_name": 1, "intent_description": 1})
+        cursor = db.intents.find(json_record, {"project_id": 1, "domain_id": 1, "intent_display": 1, "intent_name": 1, "intent_description": 1})
         result = await cursor.to_list(length=1000)
         json_result = json.loads(dumps(result))
         print("Intents sent {}".format(json_result))
@@ -389,9 +389,14 @@ class IntentsModel:
 
         json_record = json.loads(json.dumps(record))
 
-        insert_record = {"project_id": json_record['project_id'], "domain_id": json_record['domain_id'],
-                         "intent_name": json_record['intent_name'],
-                         "intent_description": json_record['intent_description'], "text_entities": []}
+        insert_record = {
+            "project_id": json_record['project_id'],
+            "domain_id": json_record['domain_id'],
+            "intent_name": json_record['intent_name'],
+            "intent_display": json_record['intent_display'],
+            "intent_description": json_record['intent_description'],
+            "text_entities": []
+        }
 
         val_res = await db.intents.find_one({"project_id": json_record['project_id'],
                                              #"domain_id": json_record['domain_id'],
@@ -444,6 +449,7 @@ class IntentsModel:
 
         query = {"_id": ObjectId("{}".format(json_record['object_id']))}
         update_field = {"$set": {"intent_name": json_record['intent_name'],
+                                 "intent_display": json_record['intent_display'],
                                  "intent_description": json_record['intent_description']}}
 
         # Check if intent already exists
@@ -544,7 +550,11 @@ class ResponseModel:
 
         json_record = json.loads(json.dumps(record))
 
-        cursor = db.responses.find(json_record, {"project_id": 1, "domain_id": 1, "response_name": 1, "response_description": 1})
+        cursor = db.responses.find(json_record, {"project_id": 1,
+                                                 "domain_id": 1,
+                                                 "response_display": 1,
+                                                 "response_name": 1,
+                                                 "response_description": 1})
         result = await cursor.to_list(length=1000)
 
         print("Responses sent {}".format(json.loads(dumps(result))))
@@ -554,7 +564,9 @@ class ResponseModel:
 
         json_record = json.loads(json.dumps(record))
 
-        insert_record = {"project_id": json_record['project_id'], "domain_id": json_record['domain_id'],
+        insert_record = {"project_id": json_record['project_id'],
+                         "domain_id": json_record['domain_id'],
+                         "response_display": json_record['response_display'],
                          "response_name": json_record['response_name'],
                          "response_description": json_record['response_description'], "text_entities": []}
 
@@ -604,9 +616,11 @@ class ResponseModel:
         json_record = json.loads(json.dumps(record))
 
         query = {"_id": ObjectId("{}".format(json_record['object_id']))}
-        update_field = {"$set": {"response_name": json_record['response_name'],
+        update_field = {"$set": {
+                                 "response_display": json_record['response_display'],
+                                 "response_name": json_record['response_name'],
                                  "response_description": json_record['response_description']}}
-
+ 
         # Check if Response already exists
         val_res = await db.responses.find_one({"project_id": json_record['project_id'],
                                                #"domain_id": json_record['domain_id'],
@@ -687,7 +701,7 @@ class StoryModel:
 
         json_record = json.loads(json.dumps(record))
 
-        cursor = db.stories.find(json_record, {"project_id": 1, "domain_id": 1, "story_name": 1, "story_description": 1})
+        cursor = db.stories.find(json_record, {"project_id": 1, "domain_id": 1,"story_display": 1, "story_name": 1, "story_description": 1})
         result = await cursor.to_list(length=1000)
 
         print("Stories sent {}".format(json.loads(dumps(result))))
@@ -699,6 +713,7 @@ class StoryModel:
 
         insert_record = {"project_id": json_record['project_id'], "domain_id": json_record['domain_id'],
                          "story_name": json_record['story_name'],
+                         "story_display": json_record['story_display'],
                          "story_description": json_record['story_description'], "story": []}
 
         val_res = await db.stories.find_one({"project_id": json_record['project_id'],
@@ -738,7 +753,8 @@ class StoryModel:
         json_record = json.loads(json.dumps(record))
 
         query = {"_id": ObjectId("{}".format(json_record['object_id']))}
-        update_field = {"$set": {"story_name": json_record['story_name'],
+        update_field = {"$set": {"story_display": json_record['story_display'],
+                                 "story_name": json_record['story_name'],
                                  "story_description": json_record['story_description']}}
 
         # Check if Response already exists

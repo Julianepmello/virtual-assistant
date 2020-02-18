@@ -1,100 +1,87 @@
-# Detailed Install Instructions 
+# Details
 
 ## Applications details 
 
-![Virtual Assistant](../assets/Virtual%20Assistant%20Arch.jpg)
+![Virtual Assistant](https://raw.githubusercontent.com/Julianepmello/virtual-assistant/master/docs/assets/Virtual%20Assistant%20Arch.jpg)
 
 
-### UI Component
-UI Component is developed using Angular 7, and would be supported on all browsers compatible with Angular 7.
-List of supported browsers at this [link](https://angular.io/guide/browser-support)
+#### UI Component
+A plataforma UI é o frameword web que faz o front end para aplicaçao do rasa. Foi desenvolvida em angular 7.
+O angular pode ser instalado via npm, mas o docker ja instala um virtual machine com o UI instalado nela e rodando.
  
- Note : As of now IE is not supported although its listed as supported for Angular 7.
- 
-### api gateway
- API gateway is a python 3.7 backend, which communicates with UI and database to serve the application. 
- it uses socketio for realtime data exchange between backend and UI.
- 
- Application does not provide any authentication methods or role based access control.
- 
-### MongoDB 
- Application would create a new database called 'eva_platform' and create collections in that database to store training data.
- This database can be accessed at port 27017 to view the database and its collections. 
- 
- Note : We do not recommend updating collections directly as this might case data inconsistency
- 
-### rasa 
- This is a rasa container, as published by rasa in docker hub. We pull rasa with latest tag 
- from docker hub this would ensure the platform gets latest version of rasa. Volumes are also bind-mounted to this container
- so that training data and model can be persisted on the volume.
- 
-### rasa-sdk 
-this is the rasa actions server. Any connector written for rasa actions server can be 
-deployed in actions server and can be used as documented in rasa. 
-Custom actions needs to be placed in "vol_chatbot_data/rasa/server/actions" folder. If any new 
-code is deployed for that to take effect rasa actions server container would need to be restarted.         
-    
+#### api gateway
+ API gateway é uma API em python 3.7 que comunica com o Front e o banco de dados coletando informações dos sockets e construindo um Bot. Faz parte do conjunto de backand juntamente com os typescript do UI.
 
-## Requirements
-
-Virtual Assistant has been built using docker containerization hence docker and docker-compose would be required to launch the application
-
-### Software requirements 
-
-   - Docker version 18.09 onwards. (not tested on previous versions)
-   - Docker Compose version 1.24 onwards (not tested on previous versions)
-   - Linux like distributions (Tested on ubuntu)
+ Através da API gateway é possivel treinar, rodar actions e fazer deploy do bot.
+ 
+#### MongoDB 
+ O mongo é a instancia onde o banco de dados armazena parametros como as intenções, entidades, respostas, stories e são coletadas via API gateway para poder construir um bot ou atualizalo.
+ 
+#### rasa 
+ O rasa é um container publicado no docker hub. É a partir do rasa que a inteligencia classifica e responde intenções do usuario seguindo um fluxo de historias
+ 
+#### rasa-sdk 
+ O rasa-sdk é o responsavel por rodar as ações do bot. O Rasa se conecta a porta do server de ações e executa scripts em python que podem variar de acordo com a imaginaçõ do usuário.          
    
 
 ## Docker installation 
 
-Follow steps to install docker CE or enterprise as per your needs following below [link](https://docs.docker.com/install/)
-and after that complete docker-compose installation by following [link](https://docs.docker.com/compose/install/)
+ Siga os passos do link para instalar o docker e docker-compose:
+ [docker 18.09](https://docs.docker.com/install/)
+ [docker-compose 1.24.0](https://docs.docker.com/compose/install/)
 
 ## Clone github repo 
 
-use below commands to clone the github repo to local machine or server.
+Use os comandos para clonar o repositorio git e conseguir editar os scripts da plataforma e do bot.
     
-    git clone https://github.com/navigateconsulting/virtual-assistant.git
-    cd virtual-assistant
-    docker-compose build
-    docker-compose up
+            git clone https://github.com/Julianepmello/virtual-assistant.git
+            cd virtual-assistant
+            docker-compose build
+            docker-compose up
     
-Docker containers would be using ports 5055, 5005, 27017, 8080 for VA components. Ensure these ports are free.
+Os containers do docker se abrem nas seguintes portas:
+ - Serviço: Porta
+ - Rasa Actions: 5055,
+ - Rasa Server: 5005,
+ - Mongodb: 27017,
+ - UI AIA: 8080,
+ - API gateway: 8089,
 
 ## Docker-compose files 
 
-The repo contains two docker-compose files. docker-compose.yml and docker-compose.devel.yml. 
+O repositório possui dois arquivos de docker-compose.
+ - docker-compose.yml
+ - docker-compose.devel.yml. 
 
-docker-compose.yml would start all platform components, including rasa server , rasa actions server and connectors
-this should be used to build the docker containers for server.
+docker-compose.yml é um arquivo que inicializa todas as plataformas.
 
-    docker-compose build
-    docker-compose up -d
+            docker-compose build
+            docker-compose up -d
 
-docker-compose.devel.yml would start only the ui application, api gateway and database. 
-Serving infrastructure and connectors would not be started by this compose file. This file can be used to 
-create a development environment for any contributions.      
+docker-compose.devel.yml inicializa as aplicações de ui application, api gateway e database. 
+Esse arquivo inicializa as plataformas de front para que possa desenvolver o front.    
 
-    docker-compose -f docker-compose.devel.yml build
-    docker-compose -f docker-compose.devel.yml up -d
+            docker-compose -f docker-compose.devel.yml build
+            docker-compose -f docker-compose.devel.yml up -d
     
-To check logs of any container use below command 
+Use esse compando para conferir os logs do container:
 
-    docker-compose logs -f <container name>
-    
+            docker-compose logs -f <container-name>
+
+Use o comando para criar uma pasta fisica do container: 
+
+            docker cp <container-name:/> <destino/pasta>
+
+Webchat-widget é o arquivo onde fica o webchat de exemplo que pode ser usado com canal de conexão do bot.
+
 ## External Volumes
 
-All the training data generated by the application is stored on the local machine / server itself. For this we use 
-bind-mount volumes which contains default config files, demo samples and database files. 
+Todos os dados de treinamento gerados pelo aplicativo são armazenados na própria máquina / servidor local. Para isso, usamos volumes de montagem de ligação que contêm arquivos de configuração padrão, amostras de demonstração e arquivos de banco de dados.
 
-vol_chatbot_data folder in the install base is a bind-mount volume and is mounted to the docker containers 
-the location for this can be changed but ensure to modify docker-compose files to reflect the modified location.
+A pasta vol_chatbot_data na base de instalação é um volume de montagem de ligação e é montada nos contêineres da janela de encaixeo local para isso pode ser alterado, mas assegure-se de modificar os arquivos de composição do docker para refletir o local modificado.
 
-vol_chatbot_data/database/db folder contains the mongodb database files. This folder can be backed up to restore 
-application data in case of any issues.
+A pasta vol_chatbot_data / database / db contém os arquivos de banco de dados mongodb.
 
-Note : We do not recommend to change bind-mount volumes attached to docker containers as this might break the functionality.
-In future releases we would bring in flexibility to define data store locations etc. 
+Nota: Não recomendamos alterar os volumes de montagem de ligação anexados aos contêineres do docker, pois isso pode interromper a funcionalidade. Para cada cliente, ofereceríamos flexibilidade para definir bots com funcionalidades diferentes. 
 
 

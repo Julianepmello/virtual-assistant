@@ -19,9 +19,12 @@ export class EditResponseComponent implements OnInit {
   ngOnInit() {
     this.appSource = environment.app_source;
     this.editResponseForm = new FormGroup({
+      responseDisplay: new FormControl(this.data.responseDisplay, Validators.required),
       responseName: new FormControl({value: this.data.responseName, disabled: true}, Validators.required),
       responseDescription: new FormControl(this.data.responseDescription, Validators.required)
     });
+    console.log(this.editResponseForm.valid);
+    console.log(this.editResponseForm);
   }
 
   closeDialog() {
@@ -30,6 +33,7 @@ export class EditResponseComponent implements OnInit {
         project_id: this.data.projectObjectId,
         domain_id: this.data.domainObjectId,
         object_id: this.data.responseObjectId,
+        response_display: this.editResponseForm.value.responseDisplay,
         response_name: this.data.responseName,
         response_description: this.editResponseForm.value.responseDescription
       });
