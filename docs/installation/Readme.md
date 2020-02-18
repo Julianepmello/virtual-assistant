@@ -72,6 +72,8 @@ Use o comando para criar uma pasta fisica do container:
 
             docker cp <container-name:/> <destino/pasta>
 
+Webchat-widget é o arquivo onde fica o webchat de exemplo que pode ser usado com canal de conexão do bot.
+
 ## External Volumes
 
 Todos os dados de treinamento gerados pelo aplicativo são armazenados na própria máquina / servidor local. Para isso, usamos volumes de montagem de ligação que contêm arquivos de configuração padrão, amostras de demonstração e arquivos de banco de dados.

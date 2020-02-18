@@ -1,28 +1,28 @@
-# EvaChatbotApp
+# Kyros Intelligence (AIA)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
+Este projeto foi gerado com  [Angular CLI](https://github.com/angular/angular-cli) version 7.1.4.
 
-## Development server
+## Sever front para desenvolvimento
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Use `ng serve` para rodar o server front. Hospedado em `http://localhost:4200/`. O aplicativo recarrega automaticamente após alterações.
 
-## Code scaffolding
+## Code comoponent
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Use `ng generate component component-name` Para gerar um novo componente . Você também pode usar `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Use `ng build` pode rodar. O comando vai fazer um armazenamento `dist/`. Use o sub-comando `--prod` para um uma criação durante a produção.
 
 ## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Use `ng test` para executar os testes unitários da plataforma, entre no link para observar a plataforma de testes [Karma](https://karma-runner.github.io).
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Use `ng e2e` para executar de inicio a fim os testes com o [Protractor](http://www.protractortest.org/).
 
-## Further help
+## Help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
-"# eva-chatbot-app" 
+Para mais ajuda com angular utilize `ng help` ou vá a página oficial do angular [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+"#Kyros Intelligence Platform" 

@@ -10,3 +10,4 @@ vol_chatbot_data/rasa/server/models/*
 !vol_chatbot_data/rasa/server/models/placeholder
 vol_chatbot_data/temp/trainer-sessions/*
 !vol_chatbot_data/temp/trainer-sessions/example_folder
+vol_chatbot_data/database/db/placeholder

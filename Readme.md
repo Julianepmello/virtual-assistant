@@ -1,6 +1,14 @@
-<p align="center">
-  <img src="https://www.kyros.com.br/wp-content/themes/Kyros%202.0/img/logo.png" width="200" height="200"/>
-</p>
+<div class='row'   >
+  <div class='col-6'  style='display: inline-block;'; >
+    <img src="https://www.kyros.com.br/wp-content/themes/Kyros%202.0/img/logo.png" width="200" height="100"/>
+  </div>
+
+  <div class='col-6'  style='display: inline-block; border-radius: 30px'; >
+    <img src="ui-trainer/src/assets/images/trainer-loader.svg" width='100px'/>
+  </div>
+</div>
+
+## Documentação
 
 ### Using Rasa  
 
@@ -10,7 +18,7 @@ PS: Versões futuras do bot precisam ser testadas.
 Voce pode encontrar informações do rasa em:
   https://rasa.com/ 
   https://rasa.com/docs/
-  https://rasa.com/docs/rasa/
+  https://rasa.com/docs/rasa/  
 
 ## Installation
 
@@ -48,12 +56,13 @@ PS:
 A aplicação vai instalar o python, npm, rasa e criar ambientes virtuais.
 Tenha paciência e acompanhe os logs para verificar possiveis problemas.
 
-#### Detailed Installation
+#### Installation
 
    Instalação detalhada: [this link](docs/installation/Readme.md)
 
 ## Usage
-   Uso : [click here](docs/usage/Readme.md)
+  -  Uso : [click here](docs/usage/Readme.md)
+  -  Informações: [About project](docs/Readme.md)
 
 ## License
 
