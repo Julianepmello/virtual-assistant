@@ -1,7 +1,11 @@
-[{"action_name":"action_listen","action_description":"Stop predicting more actions and wait for user input."},
-{"action_name":"action_restart","action_description":"Reset the whole conversation."},
-{"action_name":"action_default_fallback","action_description":"Undo the last user message (as if the user did not send it and the bot did not react) and utter a message that the bot did not understand"},
-{"action_name":"action_deactivate_form","action_description":"Deactivate the active form and reset the requested slot. "},
-{"action_name":"action_revert_fallback_events","action_description":"Revert events that occurred during the TwoStageFallbackPolicy."},
-{"action_name":"action_default_ask_rephrase","action_description":"Ask the user to rephrase their intent."},
-{"action_name":"action_back","action_description":"Undo the last user message"}]
+[{"action_display":"Ação escutar usuário","action_name":"action_listen","action_description":"Para de predizer mais ações e aguarda entrada do usuário."},
+    {"action_display":"Ação reiniciar","action_name":"action_restart","action_description":"Reinicia toda a conversa."},
+    {"action_display":"Ação default recuo","action_name":"action_default_fallback","action_description":"Desfaz a última mensagem do usuário (como se o usuário não a enviasse e o bot não reagisse) e diz uma mensagem mostrando que o bot não entendeu"},
+    {"action_display":"Ação reverte eventos de recuo","action_name":"action_revert_fallback_events","action_description":"Reverte eventos que ocorrem durante a TwoStageFallbackPolicy."},
+    {"action_display":"Ação pedir para reformular","action_name":"action_default_ask_rephrase","action_description":"Pede ao usuário pare reformular sua intenção."},
+    {"action_display":"Ação voltar","action_name":"action_back","action_description":"Desfaz a última mensagem."},
+    {"action_display":"Ação piada (teste)","action_name":"action_joke","action_description":"Ação teste"},
+    {"action_display":"Ação enviar email","action_name":"action_sent_contact","action_description":"Enviar contato"},
+    {"action_display":"Ação preencher slot cancelamento","action_name":"action_fill_slot_canceled","action_description":"Preencher slot de cancelamento"},
+    {"action_display":"Ação alterar campo","action_name":"action_change_field","action_description":"Alterar um campo já preenchido"},
+    {"action_display":"action_listen","action_name":"action_deactivate_form","action_description":"Desativar formulário"}]
