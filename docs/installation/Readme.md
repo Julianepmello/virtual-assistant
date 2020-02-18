@@ -83,5 +83,3 @@ A pasta vol_chatbot_data na base de instalação é um volume de montagem de lig
 A pasta vol_chatbot_data / database / db contém os arquivos de banco de dados mongodb.
 
 Nota: Não recomendamos alterar os volumes de montagem de ligação anexados aos contêineres do docker, pois isso pode interromper a funcionalidade. Para cada cliente, ofereceríamos flexibilidade para definir bots com funcionalidades diferentes. 
-
-
