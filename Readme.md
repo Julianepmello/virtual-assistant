@@ -1,5 +1,5 @@
 <div class='row' style='display: ruby'  >
-  <div class='col-6'  style='display: inline-block;'; >
+  <div class='col-6'>
     <img src="https://www.kyros.com.br/wp-content/themes/Kyros%202.0/img/logo.png" width="200" height="100"/>
   </div>
 
