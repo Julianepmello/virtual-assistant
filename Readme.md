@@ -61,8 +61,8 @@ Tenha paciência e acompanhe os logs para verificar possiveis problemas.
    Instalação detalhada: [this link](docs/installation/Readme.md)
 
 ## Usage
-   Uso : [click here](docs/usage/Readme.md)
-   Informações: [About project](docs/Readme.md)
+  -  Uso : [click here](docs/usage/Readme.md)
+  -  Informações: [About project](docs/Readme.md)
 
 ## License
 
