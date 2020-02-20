@@ -62,7 +62,7 @@ class RefreshDb:
             await db.domains.insert_many(data)
 
         await db.domains.update_many({'project_id':'5d109b0e082d46048bd26b5b'}, {'$set': {'project_id': str(project_id)}})
-        domain_id = await db.domains.find_one({})
+        domain_id = await db.domains.find_one({'project_id': str(project_id)})
 
         with open(seed_data_path+'intents.json') as json_file:
             data = json.load(json_file)
