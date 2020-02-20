@@ -42,8 +42,8 @@ class RefreshDb:
             await db.responses.delete_many({'project_id':str(proj_id)})
             await db.stories.delete_many({'project_id':str(proj_id)})
             await db.conversations.delete_many({'project_id':str(proj_id)})
-            await db.actions.delete_many({'project_id':str(proj_id)})
             await db.projects.delete_many({'project_name':'BaseDomain'})
+        await db.actions.delete_many({})
 
         # Inserting Data in collection
 
@@ -61,7 +61,7 @@ class RefreshDb:
             data = json.load(json_file)
             await db.domains.insert_many(data)
 
-        await db.domains.update_many({}, {'$set': {'project_id': str(project_id)}})
+        await db.domains.update_many({'project_id':'5d109b0e082d46048bd26b5b'}, {'$set': {'project_id': str(project_id)}})
         domain_id = await db.domains.find_one({})
 
         with open(seed_data_path+'intents.json') as json_file:
@@ -69,31 +69,31 @@ class RefreshDb:
             print(data)
             await db.intents.insert_many(data)
 
-        await db.intents.update_many({}, {'$set': {'project_id': str(project_id), 'domain_id': str(domain_id.get('_id'))}})
+        await db.intents.update_many({'project_id':'5d109b0e082d46048bd26b5b'}, {'$set': {'project_id': str(project_id), 'domain_id': str(domain_id.get('_id'))}})
 
         with open(seed_data_path+'entities.json') as json_file:
             data = json.load(json_file)
             await db.entities.insert_many(data)
 
-        await db.entities.update_many({}, {'$set': {'project_id': str(project_id)}})
+        await db.entities.update_many({'project_id':'5d109b0e082d46048bd26b5b'}, {'$set': {'project_id': str(project_id)}})
 
         with open(seed_data_path+'slots.json') as json_file:
             data = json.load(json_file)
             await db.slots.insert_many(data)
 
-        await db.slots.update_many({}, {'$set': {'project_id': str(project_id)}})
+        await db.slots.update_many({'project_id':'5d109b0e082d46048bd26b5b'}, {'$set': {'project_id': str(project_id)}})
 
         with open(seed_data_path+'responses.json') as json_file:
             data = json.load(json_file)
             await db.responses.insert_many(data)
 
-        await db.responses.update_many({}, {'$set': {'project_id': str(project_id), 'domain_id': str(domain_id.get('_id'))}})
+        await db.responses.update_many({'project_id':'5d109b0e082d46048bd26b5b'}, {'$set': {'project_id': str(project_id), 'domain_id': str(domain_id.get('_id'))}})
 
         with open(seed_data_path+'stories.json') as json_file:
             data = json.load(json_file)
             await db.stories.insert_many(data)
 
-        await db.stories.update_many({}, {'$set': {'project_id': str(project_id), 'domain_id': str(domain_id.get('_id'))}})
+        await db.stories.update_many({'project_id':'5d109b0e082d46048bd26b5b'}, {'$set': {'project_id': str(project_id), 'domain_id': str(domain_id.get('_id'))}})
 
         with open(seed_data_path+'actions.json') as json_file:
             data = json.load(json_file)
@@ -245,6 +245,7 @@ class ProjectsModel:
                 domain['project_id'] = "{}".format(new_project.inserted_id)
                 new_domain = await db.domains.insert_one(domain)
                 print("new domain inserted with id {}".format(new_domain.inserted_id))
+
 
                 # Copy Intents
 

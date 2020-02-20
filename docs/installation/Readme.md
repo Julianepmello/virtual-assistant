@@ -58,6 +58,28 @@ docker-compose.yml é um arquivo que inicializa todas as plataformas.
             docker-compose build
             docker-compose up -d
 
+Para conseguir para os serviços que não foram parados durante o ctrl-c: 
+
+            docker-compose down
+
+Visualizar as imagens do docker ou docker-compose:
+
+            docker images
+            docker-compose images
+  
+Visualizar as imagens ativas do docker ou docker-compose:
+
+            docker ps
+            docker-compose ps
+
+Se caso precisar apagar uma imagem:
+
+            sudo docker rmi -f <container-number>
+
+E para o caso de para um container que esta rodando:
+            
+            sudo docker rm -f <container-number>
+          
 docker-compose.devel.yml inicializa as aplicações de ui application, api gateway e database. 
 Esse arquivo inicializa as plataformas de front para que possa desenvolver o front.    
 
