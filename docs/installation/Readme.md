@@ -26,9 +26,9 @@ O angular pode ser instalado via npm, mas o docker ja instala um virtual machine
 
 ## Docker installation 
 
- Siga os passos do link para instalar o docker e docker-compose:
- [docker 18.09](https://docs.docker.com/install/)
- [docker-compose 1.24.0](https://docs.docker.com/compose/install/)
+ Siga os passos do link para instalar o docker e docker-compose (linux):
+  - [docker 18.09](https://docs.docker.com/install/)
+  - [docker-compose 1.24.0](https://docs.docker.com/compose/install/)
 
 ## Clone github repo 
 
@@ -58,6 +58,28 @@ docker-compose.yml é um arquivo que inicializa todas as plataformas.
             docker-compose build
             docker-compose up -d
 
+Para conseguir para os serviços que não foram parados durante o ctrl-c: 
+
+            docker-compose down
+
+Visualizar as imagens do docker ou docker-compose:
+
+            docker images
+            docker-compose images
+  
+Visualizar as imagens ativas do docker ou docker-compose:
+
+            docker ps
+            docker-compose ps
+
+Se caso precisar apagar uma imagem:
+
+            sudo docker rmi -f <container-number>
+
+E para o caso de para um container que esta rodando:
+            
+            sudo docker rm -f <container-number>
+          
 docker-compose.devel.yml inicializa as aplicações de ui application, api gateway e database. 
 Esse arquivo inicializa as plataformas de front para que possa desenvolver o front.    
 
@@ -83,5 +105,3 @@ A pasta vol_chatbot_data na base de instalação é um volume de montagem de lig
 A pasta vol_chatbot_data / database / db contém os arquivos de banco de dados mongodb.
 
 Nota: Não recomendamos alterar os volumes de montagem de ligação anexados aos contêineres do docker, pois isso pode interromper a funcionalidade. Para cada cliente, ofereceríamos flexibilidade para definir bots com funcionalidades diferentes. 
-
-

@@ -1,9 +1,9 @@
-<div class='row'   >
-  <div class='col-6'  style='display: inline-block;'; >
+<div class='row' style='display: ruby'  >
+  <div class='col-6'>
     <img src="https://www.kyros.com.br/wp-content/themes/Kyros%202.0/img/logo.png" width="200" height="100"/>
   </div>
 
-  <div class='col-6'  style='display: inline-block; border-radius: 30px'; >
+  <div class='col-6'  style='border-radius: 30px'; >
     <img src="ui-trainer/src/assets/images/trainer-loader.svg" width='100px'/>
   </div>
 </div>
