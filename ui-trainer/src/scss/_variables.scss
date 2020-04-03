@@ -1,8 +1,11 @@
 $font-family: 'Lato', sans-serif;
 
-$global_gradient: linear-gradient(to right, #F9D150, #383838);
+$global_gradient: linear-gradient(to right, #008892, #00cec4); //linear-gradient(to right, #F9D150, #383838);
 $global_gradient_black: linear-gradient(to right, #878787, #2B2B2B);
 $global_gradient_header: linear-gradient(to right, #2B2B2B, #878787);
+
+// linear-gradient(to right, #ff5c36, #fac426);
+// linear-gradient(to right, #008892, #00cec4)
 
 /** Breadcrumb CSS **/
 $breadcrumb-font-color: #383838;

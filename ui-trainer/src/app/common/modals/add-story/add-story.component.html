@@ -10,13 +10,13 @@
 <form [formGroup]="newStoryForm" (ngSubmit)="closeDialog()">
 <mat-dialog-content>
   <mat-form-field class="dialog-full-width" appearance="outline">
-    <mat-label>Nome da Historia</mat-label>
-    <input matInput onPaste="return false" autocomplete="off" maxlength="30" formControlName="storyDisplay" #storyDisplay="matInput">
+    <mat-label>Nome da História</mat-label>
+    <input matInput (input)="story($event.target.value)" onPaste="return false" autocomplete="off" maxlength="30" formControlName="storyDisplay" #storyDisplay="matInput">
   </mat-form-field>
   <br />
   <mat-form-field class="dialog-full-width" appearance="outline">
-    <mat-label>Nome técnico da Historia</mat-label>
-    <input matInput (keydown.space)="$event.preventDefault()" onPaste="return false" autocomplete="off" maxlength="30" formControlName="storyName" #storyName="matInput">
+    <mat-label>Nome técnico da História</mat-label>
+    <input matInput [value]="valueName" readonly maxlength="30" formControlName="storyName" #storyName="matInput">
   </mat-form-field>
   <br />
   <mat-form-field class="dialog-full-width" appearance="outline">

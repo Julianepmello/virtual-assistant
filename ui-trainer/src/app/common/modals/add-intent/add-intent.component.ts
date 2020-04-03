@@ -11,8 +11,9 @@ import { environment } from '../../../../environments/environment';
 })
 export class AddIntentComponent implements OnInit {
 
+  valueName: string = "";
   newIntentForm: FormGroup;
-  @ViewChild('intentName') intentNameInput: MatInput;
+  @ViewChild('intentDisplay') intentDisplayInput: MatInput;
   appSource: string;
 
   constructor(public dialogRef: MatDialogRef<AddIntentComponent>,
@@ -20,15 +21,38 @@ export class AddIntentComponent implements OnInit {
 
   ngOnInit() {
     this.appSource = environment.app_source;
+
+    // define os valores iniciais dos inputs e como obrigatórios
     this.newIntentForm = new FormGroup({
       intentDisplay: new FormControl('', Validators.required),
       intentName: new FormControl('', Validators.required),
       intentDescription: new FormControl('', Validators.required)
     });
-    this.intentNameInput.focus();
+
+    // coloca o foco no input "nome técnico"
+    this.intentDisplayInput.focus();
+  }
+
+  intent(value){
+    if(value == ""){
+      this.valueName = value;
+      this.newIntentForm.patchValue({
+        intentName: this.valueName,
+      });
+    }
+    else {
+      value = value.trim();
+      this.valueName = "intent_";
+      this.valueName = this.valueName + value.replace(/ /g, '_');
+      this.newIntentForm.patchValue({
+        intentName: this.valueName,
+      });
+    }
+    // console.log(this.newIntentForm.value.intentName);
   }
 
   closeDialog() {
+    // console.log(this.newIntentForm.value.intentName);
     if (this.newIntentForm.valid) {
       this.dialogRef.close({
         project_id: this.data.projectObjectId,

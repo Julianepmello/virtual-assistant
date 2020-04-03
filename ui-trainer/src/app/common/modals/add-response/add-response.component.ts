@@ -11,8 +11,9 @@ import { environment } from '../../../../environments/environment';
 })
 export class AddResponseComponent implements OnInit {
 
+  valueName: string = "";
   newResponseForm: FormGroup;
-  @ViewChild('responseName') responseNameInput: MatInput;
+  @ViewChild('responseDisplay') responseDisplayInput: MatInput;
   appSource: string;
 
   constructor(public dialogRef: MatDialogRef<AddResponseComponent>,
@@ -25,7 +26,25 @@ export class AddResponseComponent implements OnInit {
       responseName: new FormControl('', Validators.required),
       responseDescription: new FormControl('', Validators.required)
     });
-    this.responseNameInput.focus();
+    this.responseDisplayInput.focus();
+  }
+
+  response(value){
+    if(value == ""){
+      this.valueName = value;
+      this.newResponseForm.patchValue({
+        responseName: this.valueName,
+      });
+    }
+    else {
+      value = value.trim();
+      this.valueName = "utter_";
+      this.valueName = this.valueName + value.replace(/ /g, '_');
+      this.newResponseForm.patchValue({
+        responseName: this.valueName,
+      });
+    }
+    // console.log(this.newResponseForm.value.responseName);
   }
 
   closeDialog() {

@@ -11,8 +11,9 @@ import { environment } from '../../../../environments/environment';
 })
 export class AddStoryComponent implements OnInit {
 
+  valueName: string = "";
   newStoryForm: FormGroup;
-  @ViewChild('storyName') storyNameInput: MatInput;
+  @ViewChild('storyDisplay') storyDisplayInput: MatInput;
   appSource: string;
 
   constructor(public dialogRef: MatDialogRef<AddStoryComponent>,
@@ -25,8 +26,26 @@ export class AddStoryComponent implements OnInit {
       storyName: new FormControl('', Validators.required),
       storyDescription: new FormControl('', Validators.required)
     });
-    this.storyNameInput.focus();
+    this.storyDisplayInput.focus();
   }
+
+  story(value){
+    if(value == ""){
+      this.valueName = value;
+      this.newStoryForm.patchValue({
+        storyName: this.valueName,
+      });
+    }
+    else {
+      value = value.trim();
+      this.valueName = "story_";
+      this.valueName += value.replace(/ /g, '_');
+      this.newStoryForm.patchValue({
+        storyName: this.valueName,
+      })
+      console.log(this.newStoryForm.value.storyName);
+  }
+}
 
   closeDialog() {
     if (this.newStoryForm.valid) {
