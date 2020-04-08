@@ -3,6 +3,7 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatDialog } from '@angular/material/dialog';
 import { WebSocketService } from '../common/services/web-socket.service';
 import { AddIntentComponent } from '../common/modals/add-intent/add-intent.component';
+import { AddIntentUploadComponent } from '../common/modals/add-intent-upload/add-intent-upload.component'
 import { EditIntentComponent } from '../common/modals/edit-intent/edit-intent.component';
 import { DeleteIntentComponent } from '../common/modals/delete-intent/delete-intent.component';
 import { AddResponseComponent } from '../common/modals/add-response/add-response.component';
@@ -133,6 +134,15 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
         this.webSocketService.createIntent(response, 'domain_' + this.domainObjectId);
       }
     });
+  }
+
+  intentUpload(){
+    const dialogRef = this.dialog.open(AddIntentUploadComponent, {
+      height: '345px',
+      width: '345px',
+      data: { projectObjectId: this.projectObjectId, domainObjectId: this.domainObjectId },
+    });
+    // parte restante
   }
 
   editIntent(intentObjectId: string, intentDisplay: string, intentName: string, intentDescription: string,) {

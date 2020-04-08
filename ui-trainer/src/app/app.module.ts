@@ -58,6 +58,9 @@ import { ManageActionsComponent } from './manage-actions/manage-actions.componen
 import { AddActionComponent } from './common/modals/add-action/add-action.component';
 import { EditActionComponent } from './common/modals/edit-action/edit-action.component';
 import { DeleteActionComponent } from './common/modals/delete-action/delete-action.component';
+import { AddIntentUploadComponent } from './common/modals/add-intent-upload/add-intent-upload.component';
+import { NgxMatFileInputModule } from '@angular-material-components/file-input';
+import { XlsxTypeComponent } from './common/modals/add-intent-upload/xlsx-type/xlsx-type.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +107,8 @@ import { DeleteActionComponent } from './common/modals/delete-action/delete-acti
     AddActionComponent,
     EditActionComponent,
     DeleteActionComponent,
+    AddIntentUploadComponent,
+    XlsxTypeComponent,
   ],
   entryComponents: [
     AddEntityComponent,
@@ -133,7 +138,8 @@ import { DeleteActionComponent } from './common/modals/delete-action/delete-acti
     ConfirmRefreshComponent,
     AddActionComponent,
     EditActionComponent,
-    DeleteActionComponent
+    DeleteActionComponent,
+    AddIntentUploadComponent
   ],
   imports: [
     BrowserModule,
@@ -146,6 +152,7 @@ import { DeleteActionComponent } from './common/modals/delete-action/delete-acti
     DragDropModule,
     FlexLayoutModule,
     OverlayModule,
+    NgxMatFileInputModule,
     ToastrModule.forRoot()
   ],
   providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}, EntitiesDataService],
