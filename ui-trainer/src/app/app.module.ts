@@ -139,7 +139,8 @@ import { XlsxTypeComponent } from './common/modals/add-intent-upload/xlsx-type/x
     AddActionComponent,
     EditActionComponent,
     DeleteActionComponent,
-    AddIntentUploadComponent
+    AddIntentUploadComponent,
+    XlsxTypeComponent
   ],
   imports: [
     BrowserModule,

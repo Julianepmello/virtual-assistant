@@ -7,19 +7,19 @@
     <mat-icon *ngIf="appSource==='open'" svgIcon="intent-black"></mat-icon>
   </div>
 </div>
-<form [formGroup]="newUploadForm">
+<form [formGroup]="newUploadForm" (ngSubmit)="nextStep()">
   <mat-dialog-content>
     <mat-form-field class="dialog-full-width" appearance="outline">
       <mat-label> Tipo de arquivo </mat-label>
       <mat-select formControlName="archiveType" focused="true">
-        <mat-option value="rasa"> Rasa </mat-option>
-        <mat-option value="xlsx"> Excel (.xlsx) </mat-option>
-        <mat-option value="csv"> CSV </mat-option>
+        <mat-option value=".md,.json"> Rasa </mat-option>
+        <mat-option value=".xlsx"> Excel </mat-option>
+        <mat-option value=".csv"> CSV </mat-option>
       </mat-select>
     </mat-form-field>
     <br>
     <mat-form-field class="dialog-full-width" appearance="outline">
-      <ngx-mat-file-input multiple="false" accept="image/*" color="#000000" formControlName="selArchive">
+      <ngx-mat-file-input [accept]="tipoArq" color="#000000" formControlName="selArchive" id="excel">
         <mat-icon ngxMatFileInputIcon> folder </mat-icon>
       </ngx-mat-file-input>
     </mat-form-field>
@@ -28,8 +28,8 @@
   <mat-dialog-actions>
     <div class="row" style="width: 100%;">
         <div class="col-md-6 text-right">
-          <button *ngIf="appSource==='enterprise'" mat-raised-button type="submit" class="submit-button" (click)="nextStep()"> Próximo </button>
-          <button *ngIf="appSource==='open'" mat-raised-button type="submit" class="submit-button-black" (click)="nextStep()"> Próximo </button>
+          <button *ngIf="appSource==='enterprise'" mat-raised-button type="submit" class="submit-button" [disabled]="!newUploadForm.valid"> Próximo </button>
+          <button *ngIf="appSource==='open'" mat-raised-button type="submit" class="submit-button-black" [disabled]="!newUploadForm.valid"> Próximo </button>
         </div>
         <div class="col-md-6 text-center">
           <button mat-raised-button mat-dialog-close class="cancel-button"> Cancelar </button>

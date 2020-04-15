@@ -1,3 +1,44 @@
-<p>
-  xlsx-type works!
-</p>
+<h1 mat-dialog-title> Título </h1>
+<div mat-dialog-content>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && allSelected()"
+                      [indeterminate]="selection.hasValue() && !allSelected()"
+                      [aria-label]="label()"
+                      color="primary">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)"
+                      [aria-label]="label(row)"
+                      color="primary">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="intentDisplay">
+      <th mat-header-cell *matHeaderCellDef> Nome da intenção </th>
+      <td mat-cell *matCellDef="let data"> {{ data.intentDisplay }} </td>
+    </ng-container>
+    <mat-divider vertical="true"></mat-divider>
+    <ng-container matColumnDef="intentName">
+      <th mat-header-cell *matHeaderCellDef> Nome técnico </th>
+      <td mat-cell *matCellDef="let data"> {{ data.intentName }} </td>
+    </ng-container>
+    <mat-divider vertical="true"></mat-divider>
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef> Descrição </th>
+      <td mat-cell *matCellDef="let data"> {{ data.description }} </td>
+    </ng-container>
+    <mat-divider vertical="true"></mat-divider>
+    <ng-container matColumnDef="example">
+      <th mat-header-cell *matHeaderCellDef> Exemplo </th>
+      <td mat-cell *matCellDef="let data"> {{ data.example }} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsOrder; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsOrder" (click)="selection.toggle(row)"></tr>
+  </table>
+</div>

@@ -23,6 +23,7 @@
     "@angular/platform-browser": "~7.1.0",
     "@angular/platform-browser-dynamic": "~7.1.0",
     "@angular/router": "~7.1.0",
+    "@types/node": "^8.9.5",
     "@types/socket.io": "^2.1.2",
     "@types/socket.io-client": "^1.4.32",
     "core-js": "^2.6.9",
@@ -36,6 +37,7 @@
     "socket.io-client": "^2.2.0",
     "tslib": "^1.10.0",
     "uuid": "^3.3.2",
+    "xlsx": "^0.15.6",
     "zone.js": "^0.8.29"
   },
   "devDependencies": {
@@ -45,7 +47,6 @@
     "@angular/language-service": "~7.1.0",
     "@types/jasmine": "^2.8.16",
     "@types/jasminewd2": "~2.0.3",
-    "@types/node": "~8.9.4",
     "bootstrap": "^4.3.1",
     "codelyzer": "~4.5.0",
     "jasmine-core": "~2.99.1",
