@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="stylesheet" type="text/css" href="style.css">
 	<title>
 		Teste
 	</title>
@@ -9,6 +10,7 @@
 	Teste WebChat
 	<div id="webchat"/>
   <script src="https://storage.googleapis.com/mrbot-cdn/webchat-latest.js"></script>
+
   // Or you can replace latest with a specific version
   <script>
     WebChat.default.init({
@@ -20,6 +22,15 @@
       title: "Hermes",
       subtitle: "O mensageiro oficial do Monte Kyros!",
       profileAvatar: "avatar.png",
+      params: {
+      images: {
+        dims: {
+          width: 300,
+          height: 200
+        }
+      },
+      storage: "session"
+    }
     })
   </script>
 </body>
