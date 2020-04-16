@@ -187,6 +187,18 @@ async def create_intent(sid, data, room_name):
         await sio.emit('allIntents', intents_list, namespace='/dashboard', room=room_name)
 
 
+@sio.on('createIntentsFromUpload', namespace='/dashboard')
+async def create_intent_from_upload(sid, data, room_name):
+
+    print("---------- Request from Session {} -- with record {} -- and room {} ----------  ".format(sid, data, room_name))
+
+    message, intents_list = await IntentsModel.create_intent_from_upload(data)
+    await sio.emit('intentResponse', message, namespace='/dashboard', room=sid)
+
+    if intents_list is not None:
+        await sio.emit('allIntents', intents_list, namespace='/dashboard', room=room_name)
+
+
 @sio.on('deleteIntent', namespace='/dashboard')
 async def delete_intent(sid, data, room_name):
 
