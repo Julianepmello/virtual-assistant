@@ -11,7 +11,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 export class XlsxTypeComponent implements OnInit {
   @ViewChild(MatTable) datatable: MatTable<any>;
   columnsOrder: string[] = ["select", "intentDisplay", "intentName", "description", "example"];
-  intentsData: IntentUpload[];
+  intentsData: IntentUpload[] = [];
   /*
   intentsData: IntentUpload[] = [
     { intentDisplay: "Intenção um", intentName: "intent_intenção_um", description: "Descrição um", example: "Exemplo um" },
@@ -25,12 +25,12 @@ export class XlsxTypeComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<XlsxTypeComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.intentsData = this.data.intentFile;
-    this.dataSource = new MatTableDataSource<IntentUpload>(this.intentsData);
-    this.selection = new SelectionModel<IntentUpload>(true, []);
   }
 
   ngOnInit() {
+    this.intentsData = this.data.uploadedIntent;
+    this.dataSource = new MatTableDataSource<IntentUpload>(this.intentsData);
+    this.selection = new SelectionModel<IntentUpload>(true, []);
   }
 
   masterToggle(){
@@ -47,7 +47,7 @@ export class XlsxTypeComponent implements OnInit {
   allSelected(){
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
-    console.log(numRows + ", " + numSelected);
+    // console.log(numRows + ", " + numSelected);
     return numSelected === numRows;
   }
 
