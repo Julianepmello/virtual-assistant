@@ -564,7 +564,7 @@ class IntentsModel:
                 query = {"_id": ObjectId("{}".format(object_id))}
                 txt_entities = val_res.get('text_entities')
                 txt_entities = txt_entities + json_record['text_entities']
-                result = await db.intents.update_one(query, {"$set": {"text_entities": txt_entities})
+                result = await db.intents.update_one(query, {"$set": {"text_entities": txt_entities}})
                 print('Intent already exists')
                 message = {"status": "Error", "message": "Algumas intenções já existem. Foram inseridas as que não existem e atualizadas as que existem."}
             else:
