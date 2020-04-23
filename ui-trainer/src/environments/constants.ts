@@ -34,6 +34,7 @@ export const constant = {
     IRS_INTENTS_CREATE: 'createIntent',
     IRS_INTENTS_UPDATE: 'updateIntent',
     IRS_INTENTS_DELETE: 'deleteIntent',
+    IRS_INTENTS_CREATE_FROM_UPLOAD: 'createIntentsFromUpload',
     IRS_RESPONSES_URL: 'getResponses',
     IRS_RESPONSES_LISTEN: 'allResponses',
     IRS_RESPONSES_RESPONSE: 'respResponse',

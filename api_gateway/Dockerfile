@@ -10,6 +10,8 @@ RUN pip install -r /requirements.txt
 RUN python -m spacy download pt_core_news_sm \
     && python -m spacy link pt_core_news_sm pt
 
+COPY test.py /usr/local/lib/python3.7/site-packages/rasa/core/
+
 ADD . /api_gateway
 WORKDIR /api_gateway
 
