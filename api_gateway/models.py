@@ -539,6 +539,42 @@ class IntentsModel:
 
         intent_detail = await self.get_intent_details({"object_id": object_id})
         return {"status": "Success", "message": "Intent text Removed "}, intent_detail
+    
+    async def create_intents_from_upload(self, records):
+
+        json_records = json.loads(json.dumps(records))
+
+        for json_record in json_records:
+
+            insert_record = {
+                "project_id": json_record['project_id'],
+                "domain_id": json_record['domain_id'],
+                "intent_name": json_record['intent_name'],
+                "intent_display": json_record['intent_display'],
+                "intent_description": json_record['intent_description'],
+                "text_entities": json_record['text_entities']
+            }
+
+            val_res = await db.intents.find_one({"project_id": json_record['project_id'],
+                                                #"domain_id": json_record['domain_id'],
+                                                "intent_name": json_record['intent_name']})
+
+            if val_res is not None:
+                object_id = val_res.get('_id')
+                query = {"_id": ObjectId("{}".format(object_id))}
+                txt_entities = val_res.get('text_entities')
+                txt_entities = txt_entities + json_record['text_entities']
+                result = await db.intents.update_one(query, {"$set": {"text_entities": txt_entities}})
+                print('Intent already exists')
+                message = {"status": "Error", "message": "Algumas intenções já existem. Foram inseridas as que não existem e atualizadas as que existem."}
+            else:
+                result = await db.intents.insert_one(json.loads(json.dumps(insert_record)))
+                message = {"status": "Success", "message": "Intenções carregadas com sucesso."}
+
+                get_intents = {"project_id": json_record['project_id'], "domain_id": json_record['domain_id']}
+                intents_list = await self.get_intents(get_intents)
+
+        return message, intents_list
 
 
 # noinspection PyMethodMayBeStatic

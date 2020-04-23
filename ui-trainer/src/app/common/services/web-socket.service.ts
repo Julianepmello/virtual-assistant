@@ -170,6 +170,10 @@ export class WebSocketService {
     this.socket.emit(constant.IRS_INTENTS_DELETE, delete_intent_stub, irs_room);
   }
 
+  createIntentsFromUpload(new_intent_stub: any, irs_room: string) {
+    this.socket.emit(constant.IRS_INTENTS_CREATE_FROM_UPLOAD, new_intent_stub, irs_room);
+  }
+
   getResponses(project_domain_ids: any, irs_room: string) {
     this.socket.emit(constant.IRS_RESPONSES_URL, project_domain_ids, irs_room);
     return Observable.create((observer) => {
