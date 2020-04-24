@@ -697,5 +697,8 @@ class ModelPublish(socketio.AsyncNamespace):
         else:
             await sio.emit('publishMessage', {"status": "Error", "message": "Error while training model"}, namespace='/modelpublish')
 
+    async def on_enableEdit(self, sid, project_id, option):
+        await ProjectsModel.enable_edit_project(project_id, option)
+        
 
 sio.register_namespace(ModelPublish('/modelpublish'))

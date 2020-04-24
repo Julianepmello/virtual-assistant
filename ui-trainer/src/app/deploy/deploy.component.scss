@@ -21,21 +21,31 @@ table {
 }
 .mat-column-icon{
     width: 5%;
+    margin: auto;
 }
 .mat-column-project_name{
-    width: 25%;
+    width: 20%;
+    margin: auto;
 }
 .mat-column-source {
-    width: 25%;
+    width: 20%;
+    margin: auto;
 }
 .mat-column-model_name {
-    width: 25%;
+    width: 20%;
+    margin: auto;
 }
 .mat-column-state {
     width: 15%;
+    margin: auto;
 }
 .mat-column-deploy {
-    width: 5%;
+    width: 10%;
+    margin: auto;
+}
+.mat-column-enable_edit {
+    width: 10%;
+    margin: auto;
 }
 .mat-row:hover {
     background-color: #eee;

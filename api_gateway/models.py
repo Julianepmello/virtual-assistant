@@ -184,7 +184,8 @@ class ProjectsModel:
 
         query = {"_id": ObjectId("{}".format(json_record['object_id']))}
         update_field = {"$set": {"model_name": json_record['model_name'],
-                                 "state": json_record['state']
+                                 "state": json_record['state'],
+                                 "edit": "disabled"
                                  }}
 
         res_archived = await db.projects.update_many({"state": "Published"}, {"$set": {"state": "Archived"}})
@@ -278,6 +279,14 @@ class ProjectsModel:
                     print("new story inserted with id {}".format(new_story.inserted_id))
 
             return {"status": "Success", "message": "Project Copied ID {}".format(new_project.inserted_id)}
+
+    async def enable_edit_project(self, project_id, option):
+        query = {"_id": ObjectId("{}".format(str(project_id)))}
+        update_field = {"$set": {"edit": option}}
+        if option is not None:
+            result = await db.projects.update_one(query, update_field)
+            print("Edit status changed to '{}' for project {}".format(option,str(project_id)))
+
 
 
 # noinspection PyMethodMayBeStatic

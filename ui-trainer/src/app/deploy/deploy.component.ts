@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSlideToggleChange } from '@angular/material';
 
 import { WebSocketService } from '../common/services/web-socket.service';
 import { NotificationsService } from '../common/services/notifications.service';
@@ -32,7 +33,7 @@ export class DeployComponent implements OnInit, OnDestroy {
               public sharedDataService: SharedDataService,
               public notificationsService: NotificationsService) {}
 
-  projectsModelDisplayedColumns: string[] = ['icon', 'project_name', 'source', 'model_name', 'state', 'deploy'];
+  projectsModelDisplayedColumns: string[] = ['icon', 'project_name', 'source', 'model_name', 'state', 'deploy', 'enable_edit'];
   projectsModelDataSource: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -80,6 +81,15 @@ export class DeployComponent implements OnInit, OnDestroy {
         this.webSocketService.deployModel(projectObjectId);
       }
     });
+  }
+
+  enableEditProject(event: MatSlideToggleChange, projectObjectId: string) {
+    if (event.checked) {
+      this.webSocketService.enableEditProject(projectObjectId, 'enabled');
+    } else {
+      this.webSocketService.enableEditProject(projectObjectId, 'disabled');
+    }
+    
   }
 
   getDeployPaginatorData(event: any) {

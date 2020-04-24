@@ -58,6 +58,7 @@ import { ManageActionsComponent } from './manage-actions/manage-actions.componen
 import { AddActionComponent } from './common/modals/add-action/add-action.component';
 import { EditActionComponent } from './common/modals/edit-action/edit-action.component';
 import { DeleteActionComponent } from './common/modals/delete-action/delete-action.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -146,7 +147,8 @@ import { DeleteActionComponent } from './common/modals/delete-action/delete-acti
     DragDropModule,
     FlexLayoutModule,
     OverlayModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    MatSlideToggleModule
   ],
   providers: [{provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: true}}, EntitiesDataService],
   bootstrap: [AppComponent]

@@ -506,6 +506,10 @@ export class WebSocketService {
     this.socket.emit(constant.MODEL_DEPLOY_URL, projectObjectId);
   }
 
+  enableEditProject(projectObjectId: string, editOption: string) {
+    this.socket.emit(constant.PROJECT_ENABLE_EDIT, projectObjectId, editOption);
+  }
+
   refreshAppDB() {
     this.socket.nsp = constant.REFRESH_DB_NSP;
     this.socket.emit(constant.REFRESH_DB_URL);

@@ -90,6 +90,7 @@ export const constant = {
     MODEL_DEPLOY_URL: 'trainModel',
     PROJECT_DEPLOY_LISTEN: 'respModelPublish',
     MODEL_DEPLOY_LISTEN: 'publishMessage',
+    PROJECT_ENABLE_EDIT: 'enableEdit',
 
     REFRESH_DB_NSP: '/refresh',
     REFRESH_DB_URL: 'refresh_data',

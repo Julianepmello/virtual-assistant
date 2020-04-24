@@ -1,12 +1,13 @@
 <h1 mat-dialog-title>Confirmar Ativação</h1>
 
 <mat-dialog-content>
-  <h4 class="mat-subheading-1">Voce tem certeza de que gostaria de ativar o bot?
-                                Após a ativação não é possivel alterar o bot</h4>
+  <h4 class="mat-subheading-1">Voce tem certeza de que gostaria de ativar o bot?</h4><br>
+  <h6 class="mat-subheading-1">* Para falar com o bot em seu website, clique no botão "Copiar" e cole o código no "body" do HTML da sua página.</h6><br>
 </mat-dialog-content>
 
 <mat-dialog-actions>
   <button mat-raised-button mat-dialog-close>Cancelar</button>
   <button *ngIf="appSource==='enterprise'" mat-raised-button (click)="confirmDeploy()" class="deploy-button">Confirmar</button>
   <button *ngIf="appSource==='open'" mat-raised-button (click)="confirmDeploy()" class="deploy-button-black">Confirmar</button>
+  <button mat-raised-button (click)="copyScriptToClipboard()" class="float-right">Copiar</button>
 </mat-dialog-actions>
