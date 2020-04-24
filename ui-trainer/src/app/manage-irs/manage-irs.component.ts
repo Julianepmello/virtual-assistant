@@ -136,7 +136,7 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
     });
   }
 
-  intentUpload(){
+  intentsUpload(){
     const dialogRef = this.dialog.open(AddIntentUploadComponent, {
       height: '345px',
       width: '345px',

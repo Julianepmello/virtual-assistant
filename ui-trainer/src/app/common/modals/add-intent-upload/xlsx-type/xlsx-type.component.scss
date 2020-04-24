@@ -1,3 +1,13 @@
+.upload-button {
+    background-color: #0968B5;
+    color: #FFFFFF;
+}
+
+.upload-button-black {
+    background-color: #2B2B2B;
+    color: #FFFFFF;
+}
+
 .mat-table {
     table-layout: auto;
     width: 100%;
@@ -33,7 +43,15 @@
     border-top: 1px solid #e0e0e0;
 }
 
-div {
+.dataTable {
     height: 75%;
     overflow-y: auto;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-evenly;
+    padding: 3.5% 37% 0 37%;
 }

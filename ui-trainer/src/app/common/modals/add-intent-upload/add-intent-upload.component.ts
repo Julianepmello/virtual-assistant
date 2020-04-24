@@ -4,7 +4,6 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { XlsxTypeComponent } from './xlsx-type/xlsx-type.component';
 import { ReadFileService } from '../../services/read-file.service';
-import { IntentUpload } from '../../models/intent_upload';
 
 @Component({
   selector: 'app-add-intent-upload',
@@ -32,7 +31,7 @@ export class AddIntentUploadComponent implements OnInit {
 
     this.newUploadForm.get("archiveType").valueChanges.subscribe(fileType => {
       // console.log(this.tipoArq);
-      this.tipoArq = "application/vnd.ms-excel.xlsx"//fileType;
+      this.tipoArq = fileType;
       if(this.newUploadForm.get("selArchive").disabled){
         this.newUploadForm.controls["selArchive"].enable();
       }
@@ -47,12 +46,11 @@ export class AddIntentUploadComponent implements OnInit {
   }
 
   nextStep(){
-    const intents: IntentUpload[] = this.uploadedFile.readXlsx(this.arquivo);
-    console.log(intents.length);
+    this.uploadedFile.readXlsx(this.arquivo);
     const dialogRef = this.dialog.open(XlsxTypeComponent, {
       height: "700px",
       width: "1100px",
-      data: { projectObjectId: this.data.projectObjectId, domainObjectId: this.data.domainObjectId, uploadedIntent: intents },
+      data: { projectObjectId: this.data.projectObjectId, domainObjectId: this.data.domainObjectId, uploadedIntents: this.uploadedFile.intentsSub },
     });
   }
 
