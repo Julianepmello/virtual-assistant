@@ -71,7 +71,7 @@
                   <mat-icon svgIcon="editDis"></mat-icon>
                 </button>
               </div>
-              <div *ngIf="project.state === ''">
+              <div *ngIf="project.edit === 'enabled'">
                 <button mat-icon-button (click)="editProject(project._id.$oid, project.project_name, project.project_description)">
                   <mat-icon *ngIf="appSource==='enterprise'" svgIcon="edit"></mat-icon>
                   <mat-icon *ngIf="appSource==='open'" svgIcon="edit-black"></mat-icon>
@@ -88,7 +88,7 @@
                   <mat-icon svgIcon="deleteDis"></mat-icon>
                 </button>
               </div>
-              <div *ngIf="project.state === ''">
+              <div *ngIf="project.edit === 'enabled'">
                 <button mat-icon-button (click)="deleteProject(project._id.$oid)">
                   <mat-icon *ngIf="appSource==='enterprise'" svgIcon="delete"></mat-icon>
                   <mat-icon *ngIf="appSource==='open'" svgIcon="delete-black"></mat-icon>
