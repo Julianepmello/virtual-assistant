@@ -61,7 +61,6 @@ export class AddIntentUploadComponent implements OnInit, OnDestroy {
       data: { projectObjectId: this.data.projectObjectId, domainObjectId: this.data.domainObjectId, uploadedIntents: this.uploadedFile.intentsSub },
     });
     this.dialogSub = dialogRef.afterClosed().subscribe((response) => {
-      console.log(response);
       if(response){
         this.webSocketService.createIntentsFromUpload(response, "domain_" + this.data.domainObjectId);
       }

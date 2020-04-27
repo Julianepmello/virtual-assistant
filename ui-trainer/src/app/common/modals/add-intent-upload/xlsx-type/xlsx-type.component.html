@@ -40,6 +40,10 @@
   </table>
 </mat-dialog-content>
 <mat-dialog-actions>
+  <mat-form-field>
+    <mat-label> Filtrar por nome, exemplo... </mat-label>
+    <input matInput (keyup)="filter($event.target.value)" placeholder="Filtrar">
+  </mat-form-field>
   <div class="buttons">
       <button *ngIf="appSource==='enterprise'" type="button" class="upload-button" mat-raised-button [disabled]="selectedIntents.length == 0" (click)="toJson()"> Upload </button>
       <button *ngIf="appSource==='open'" type="button" class="upload-button-black" mat-raised-button [disabled]="selectedIntents.length == 0" (click)="toJson()"> Upload </button>

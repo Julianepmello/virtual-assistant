@@ -31,6 +31,10 @@ export class XlsxTypeComponent implements OnInit, OnDestroy {
       (error) => console.error(error),
       () => this.dataSource.data = this.intentsData,
     );
+
+    this.dataSource.filterPredicate = (data: IntentUpload, filter: string) =>
+      data.intent_name.toLowerCase().includes(filter, 0) || data.intent_display.toLowerCase().includes(filter, 0) ||
+      data.text_entities[0].text.toLowerCase().includes(filter, 0);
   }
 
   ngOnDestroy() {
@@ -78,8 +82,13 @@ export class XlsxTypeComponent implements OnInit, OnDestroy {
       this.selectedIntents[i].project_id = this.data.projectObjectId;
       intents.push(this.selectedIntents[i]); // objetos já filtrados
     }
-    let intentsJson: string = JSON.stringify(intents);
+    let aux: string = JSON.stringify(intents);
+    let intentsJson: IntentUpload[] = JSON.parse(aux);
     this.dialogRef.close(intentsJson);
+  }
+
+  filter(str: string){
+    this.dataSource.filter = str.trim().toLowerCase();
   }
 
 }
