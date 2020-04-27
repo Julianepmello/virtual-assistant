@@ -540,7 +540,7 @@ class IntentsModel:
         intent_detail = await self.get_intent_details({"object_id": object_id})
         return {"status": "Success", "message": "Intent text Removed "}, intent_detail
 
-        async def create_intents_from_upload(self, records):
+    async def create_intents_from_upload(self, records):
 
         json_records = json.loads(json.dumps(records))
 
@@ -564,7 +564,7 @@ class IntentsModel:
                 query = {"_id": ObjectId("{}".format(object_id))}
                 txt_entities = val_res.get('text_entities')
                 txt_entities = txt_entities + json_record['text_entities']
-                result = await db.intents.update_one(query, {"$set": {"text_entities": txt_entities})
+                result = await db.intents.update_one(query, {"$set": {"text_entities": txt_entities}})
                 print('Intent already exists')
                 message = {"status": "Error", "message": "Algumas intenções já existem. Foram inseridas apenas as que não existem."}
             else:

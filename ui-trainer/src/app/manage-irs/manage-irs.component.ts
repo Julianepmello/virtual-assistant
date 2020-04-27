@@ -142,7 +142,6 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
       width: '345px',
       data: { projectObjectId: this.projectObjectId, domainObjectId: this.domainObjectId },
     });
-    // parte restante
   }
 
   editIntent(intentObjectId: string, intentDisplay: string, intentName: string, intentDescription: string,) {

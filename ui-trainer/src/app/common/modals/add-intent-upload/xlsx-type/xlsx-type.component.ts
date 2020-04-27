@@ -79,7 +79,7 @@ export class XlsxTypeComponent implements OnInit, OnDestroy {
       intents.push(this.selectedIntents[i]); // objetos já filtrados
     }
     let intentsJson: string = JSON.stringify(intents);
-    console.log(intentsJson);
+    this.dialogRef.close(intentsJson);
   }
 
 }

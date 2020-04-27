@@ -192,7 +192,7 @@ async def create_intent_from_upload(sid, data, room_name):
 
     print("---------- Request from Session {} -- with record {} -- and room {} ----------  ".format(sid, data, room_name))
 
-    message, intents_list = await IntentsModel.create_intent_from_upload(data)
+    message, intents_list = await IntentsModel.create_intents_from_upload(data)
     await sio.emit('intentResponse', message, namespace='/dashboard', room=sid)
 
     if intents_list is not None:
