@@ -1,28 +1,28 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import { environment } from '../../../../environments/environment';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ReadFileService } from '../../services/read-file.service';
+import { environment } from 'src/environments/environment';
 import { WebSocketService } from '../../services/web-socket.service';
+import { ReadFileService } from '../../services/read-file.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { XlsxIntentComponent } from './xlsx-intent/xlsx-intent.component';
+import { XlsxResponseComponent } from './xlsx-response/xlsx-response.component';
 
 @Component({
-  selector: 'app-add-intent-upload',
-  templateUrl: './add-intent-upload.component.html',
-  styleUrls: ['./add-intent-upload.component.scss']
+  selector: 'app-add-response-upload',
+  templateUrl: './add-response-upload.component.html',
+  styleUrls: ['./add-response-upload.component.scss']
 })
-export class AddIntentUploadComponent implements OnInit, OnDestroy {
+export class AddResponseUploadComponent implements OnInit, OnDestroy {
   appSource: string;
   tipoArq: string = "";
-  private arquivo: File;
-  private subs: Subscription = new Subscription();
   newUploadForm: FormGroup;
+  private subs: Subscription = new Subscription();
+  private arquivo: File;
 
   constructor(public webSocketService: WebSocketService,
               public uploadedFile: ReadFileService,
               public dialog: MatDialog,
-              public dialogRef: MatDialogRef<AddIntentUploadComponent>,
+              public dialogRef: MatDialogRef<AddResponseUploadComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
@@ -52,17 +52,19 @@ export class AddIntentUploadComponent implements OnInit, OnDestroy {
   }
 
   nextStep(){
-    this.uploadedFile.readIntentsXlsx(this.arquivo);
-    const dialogRef = this.dialog.open(XlsxIntentComponent, {
+    this.uploadedFile.readResponsesXlsx(this.arquivo);
+    const dialogRef = this.dialog.open(XlsxResponseComponent, {
       height: "800px",
       width: "1100px",
-      data: { projectObjectId: this.data.projectObjectId, domainObjectId: this.data.domainObjectId, uploadedIntents: this.uploadedFile.intentsSub },
+      data: { projectObjectId: this.data.projectObjectId, domainObjectId: this.data.domainObjectId, uploadedResponses: this.uploadedFile.responsesSub },
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response){
-        this.webSocketService.createIntentsFromUpload(response, "domain_" + this.data.domainObjectId);
+        console.log(response);
+        this.webSocketService.createResponsesFromUpload(response, "domain_" + this.data.domainObjectId);
       }
     });
+
   }
 
 }

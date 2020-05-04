@@ -60,7 +60,10 @@ import { EditActionComponent } from './common/modals/edit-action/edit-action.com
 import { DeleteActionComponent } from './common/modals/delete-action/delete-action.component';
 import { AddIntentUploadComponent } from './common/modals/add-intent-upload/add-intent-upload.component';
 import { NgxMatFileInputModule } from '@angular-material-components/file-input';
-import { XlsxTypeComponent } from './common/modals/add-intent-upload/xlsx-type/xlsx-type.component';
+import { XlsxIntentComponent } from './common/modals/add-intent-upload/xlsx-intent/xlsx-intent.component';
+import { AddResponseUploadComponent } from './common/modals/add-response-upload/add-response-upload.component';
+import { XlsxResponseComponent } from './common/modals/add-response-upload/xlsx-response/xlsx-response.component';
+
 
 @NgModule({
   declarations: [
@@ -108,7 +111,9 @@ import { XlsxTypeComponent } from './common/modals/add-intent-upload/xlsx-type/x
     EditActionComponent,
     DeleteActionComponent,
     AddIntentUploadComponent,
-    XlsxTypeComponent,
+    XlsxIntentComponent,
+    AddResponseUploadComponent,
+    XlsxResponseComponent
   ],
   entryComponents: [
     AddEntityComponent,
@@ -140,7 +145,9 @@ import { XlsxTypeComponent } from './common/modals/add-intent-upload/xlsx-type/x
     EditActionComponent,
     DeleteActionComponent,
     AddIntentUploadComponent,
-    XlsxTypeComponent
+    XlsxIntentComponent,
+    AddResponseUploadComponent,
+    XlsxResponseComponent
   ],
   imports: [
     BrowserModule,

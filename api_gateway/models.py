@@ -551,7 +551,7 @@ class IntentsModel:
                 "domain_id": json_record['domain_id'],
                 "intent_name": json_record['intent_name'],
                 "intent_display": json_record['intent_display'],
-                "intent_description": json_record['intent_description'],
+                "intent_description": "Upload Excel",
                 "text_entities": json_record['text_entities']
             }
 
@@ -726,6 +726,42 @@ class ResponseModel:
 
         response_detail = await self.get_response_details({"object_id": object_id})
         return {"status": "Success", "message": "Response text Removed "}, response_detail
+
+    async def create_responses_from_upload(self, records):
+
+        json_records = json.loads(json.dumps(records))
+
+        for json_record in json_records:
+
+            insert_record = {
+                "project_id": json_record['project_id'],
+                "domain_id": json_record['domain_id'],
+                "response_name": json_record['response_name'],
+                "response_display": json_record['response_display'],
+                "response_description": "Upload Excel",
+                "text_entities": json_record['text_entities']
+            }
+
+            val_res = await db.responses.find_one({"project_id": json_record['project_id'],
+                                                #"domain_id": json_record['domain_id'],
+                                                "response_name": json_record['response_name']})
+
+            if val_res is not None:
+                object_id = val_res.get('_id')
+                query = {"_id": ObjectId("{}".format(object_id))}
+                txt_entities = val_res.get('text_entities')
+                txt_entities = txt_entities + json_record['text_entities']
+                result = await db.responses.update_one(query, {"$set": {"text_entities": txt_entities}})
+                print('Response already exists')
+                message = {"status": "Error", "message": "Algumas respostas já existem. Foram inseridas as que não existem e atualizadas as que existem."}
+            else:
+                result = await db.responses.insert_one(json.loads(json.dumps(insert_record)))
+                message = {"status": "Success", "message": "Respostas carregadas com sucesso."}
+
+                get_responses = {"project_id": json_record['project_id'], "domain_id": json_record['domain_id']}
+                responses_list = await self.get_responses(get_responses)
+
+        return message, responses_list
 
 
 # noinspection PyMethodMayBeStatic

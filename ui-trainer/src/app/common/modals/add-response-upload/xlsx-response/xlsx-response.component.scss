@@ -15,28 +15,29 @@
     max-height: 100%;
 }
 
-.mat-column-intentDisplay {
-    border-left: 1px solid #e0e0e0;
-    padding-left: 5px;
-    padding-right: 5px;
+.mat-column-select {
+    width: 6%;
+    padding-top: 6px;
 }
 
-.mat-column-intentName {
+.mat-column-responseDisplay {
     border-left: 1px solid #e0e0e0;
     padding-left: 5px;
     padding-right: 5px;
+    width: 27%;
 }
 
-.mat-column-description {
+.mat-column-responseName {
     border-left: 1px solid #e0e0e0;
     padding-left: 5px;
     padding-right: 5px;
+    width: 27%;
 }
 
-.mat-column-example {
+.mat-column-response {
     border-left: 1px solid #e0e0e0;
     padding-left: 5px;
-    padding-right: 5px;
+    width: 40%;
 }
 
 .mat-table-sticky {
@@ -56,6 +57,6 @@
     padding: 0 37% 0 37%;
 }
 
-mat-form-field {
-    width: 100%;
+.header-center {
+    text-align: center;
 }

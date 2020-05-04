@@ -188,7 +188,7 @@ async def create_intent(sid, data, room_name):
 
 
 @sio.on('createIntentsFromUpload', namespace='/dashboard')
-async def create_intent_from_upload(sid, data, room_name):
+async def create_intents_from_upload(sid, data, room_name):
 
     print("---------- Request from Session {} -- with record {} -- and room {} ----------  ".format(sid, data, room_name))
 
@@ -283,6 +283,18 @@ async def create_response(sid, data, room_name):
 
     message, responses_list = await ResponseModel.create_response(data)
 
+    await sio.emit('respResponse', message, namespace='/dashboard', room=sid)
+
+    if responses_list is not None:
+        await sio.emit('allResponses', responses_list, namespace='/dashboard', room=room_name)
+
+
+@sio.on('createResponsesFromUpload', namespace='/dashboard')
+async def create_responses_from_upload(sid, data, room_name):
+
+    print("---------- Request from Session {} -- with record {} -- and room {} ----------  ".format(sid, data, room_name))
+
+    message, responses_list = await ResponseModel.create_responses_from_upload(data)
     await sio.emit('respResponse', message, namespace='/dashboard', room=sid)
 
     if responses_list is not None:

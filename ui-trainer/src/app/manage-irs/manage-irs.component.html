@@ -85,6 +85,9 @@
           <button mat-mini-fab matTooltip="Add Response" [ngClass]="(appSource==='open')?'add-irs-button-black':'add-irs-button-color'" (click)="addNewResponse()">
             <mat-icon>add</mat-icon>
           </button>
+          <button mat-mini-fab matTooltip="Upload response" [ngClass]="(appSource==='open')?'add-irs-button-black':'add-irs-button-color'" (click)="responsesUpload()">
+            <mat-icon> arrow_upward </mat-icon>
+          </button>
         </div>
       </div>
       <div *ngIf="responses_json.length===0" class="row empty-responses">

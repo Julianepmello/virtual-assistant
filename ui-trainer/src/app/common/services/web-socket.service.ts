@@ -214,6 +214,10 @@ export class WebSocketService {
     this.socket.emit(constant.IRS_RESPONSES_DELETE, delete_response_stub, irs_room);
   }
 
+  createResponsesFromUpload(new_response_stub: any, irs_room: string) {
+    this.socket.emit(constant.IRS_RESPONSES_CREATE_FROM_UPLOAD, new_response_stub, irs_room);
+  }
+
   getStories(project_domain_ids: any, irs_room: string) {
     this.socket.emit(constant.IRS_STORIES_URL, project_domain_ids, irs_room);
     return Observable.create((observer) => {

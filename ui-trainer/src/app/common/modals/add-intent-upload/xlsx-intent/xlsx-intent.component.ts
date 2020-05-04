@@ -5,21 +5,20 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { environment } from '../../../../../environments/environment';
 
 @Component({
-  selector: 'app-xlsx-type',
-  templateUrl: './xlsx-type.component.html',
-  styleUrls: ['./xlsx-type.component.scss']
+  selector: 'app-xlsx-intent',
+  templateUrl: './xlsx-intent.component.html',
+  styleUrls: ['./xlsx-intent.component.scss']
 })
-
-export class XlsxTypeComponent implements OnInit, OnDestroy {
+export class XlsxIntentComponent implements OnInit, OnDestroy {
   @ViewChild(MatTable) datatable: MatTable<any>;
   appSource: string;
-  columnsOrder: string[] = ["select", "intentDisplay", "intentName", "description", "example"];
+  columnsOrder: string[] = ["select", "intentDisplay", "intentName", "example"];
   intentsData: IntentUpload[] = [];
   selectedIntents: IntentUpload[] = [];
   dataSource: MatTableDataSource<IntentUpload> = new MatTableDataSource<IntentUpload>(this.intentsData);
   selection: SelectionModel<IntentUpload> = new SelectionModel<IntentUpload>(true, []);
 
-  constructor(public dialogRef: MatDialogRef<XlsxTypeComponent>,
+  constructor(public dialogRef: MatDialogRef<XlsxIntentComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
@@ -47,13 +46,13 @@ export class XlsxTypeComponent implements OnInit, OnDestroy {
       this.selection.clear();
     }
     else {
-      this.dataSource.data.forEach(checkbox => this.selection.select(checkbox));
+      this.dataSource.filteredData.forEach((checkbox) => this.selection.select(checkbox));
     }
   }
 
   allSelected(){
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this.dataSource.filteredData.length;
     return numSelected === numRows;
   }
 
@@ -62,7 +61,7 @@ export class XlsxTypeComponent implements OnInit, OnDestroy {
       return `${this.allSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.intent_display}`;
-  };
+  }
 
   toJson(){
     let intents: IntentUpload[] = [], jump: number[] = [];

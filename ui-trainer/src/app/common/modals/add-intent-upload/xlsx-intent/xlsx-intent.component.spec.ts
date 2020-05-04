@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { XlsxTypeComponent } from './xlsx-type.component';
+import { XlsxIntentComponent } from './xlsx-intent.component';
 
-describe('XlsxTypeComponent', () => {
-  let component: XlsxTypeComponent;
-  let fixture: ComponentFixture<XlsxTypeComponent>;
+describe('XlsxIntentComponent', () => {
+  let component: XlsxIntentComponent;
+  let fixture: ComponentFixture<XlsxIntentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ XlsxTypeComponent ]
+      declarations: [ XlsxIntentComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(XlsxTypeComponent);
+    fixture = TestBed.createComponent(XlsxIntentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

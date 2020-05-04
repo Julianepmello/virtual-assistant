@@ -41,6 +41,7 @@ export const constant = {
     IRS_RESPONSES_CREATE: 'createResponse',
     IRS_RESPONSES_UPDATE: 'updateResponse',
     IRS_RESPONSES_DELETE: 'deleteResponse',
+    IRS_RESPONSES_CREATE_FROM_UPLOAD: 'createResponsesFromUpload',
     IRS_STORIES_URL: 'getStories',
     IRS_STORIES_LISTEN: 'allStories',
     IRS_STORIES_RESPONSE: 'storyResponse',

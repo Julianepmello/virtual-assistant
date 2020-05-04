@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
 import { SharedDataService } from '../common/services/shared-data.service';
 import { constant } from '../../environments/constants';
 import { environment } from '../../environments/environment';
+import { AddResponseUploadComponent } from '../common/modals/add-response-upload/add-response-upload.component';
 
 @Component({
   selector: 'app-manage-irs',
@@ -203,6 +204,14 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
         this.webSocketService.createResponse(response, 'domain_' + this.domainObjectId);
       }
     });
+  }
+
+  responsesUpload(){
+    const dialogRef = this.dialog.open(AddResponseUploadComponent, {
+      height: "345px",
+      width: "345px",
+      data: { projectObjectId: this.projectObjectId, domainObjectId: this.projectObjectId }
+    })
   }
 
   editResponse(responseObjectId: string, responseDisplay:string, responseName: string, responseDescription: string) {

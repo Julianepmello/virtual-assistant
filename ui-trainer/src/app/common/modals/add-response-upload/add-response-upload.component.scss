@@ -1,0 +1,19 @@
+@import '../../../../scss/styles';
+
+.dialog-full-width {
+    width: $dialog-input-width;
+    font-size: $dialog-input-font-size;
+    line-height: $dialog-input-line-height;
+    color: $text-color-1;
+}
+.cancel-button {
+    color: $text-color-1;
+}
+.submit-button {
+    background-color: $primary-color-3;
+    color: $primary-white;
+}
+.submit-button-black {
+    background-color: $primary-color-8;
+    color: $primary-white;
+}
