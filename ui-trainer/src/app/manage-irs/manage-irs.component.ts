@@ -18,6 +18,7 @@ import { SharedDataService } from '../common/services/shared-data.service';
 import { constant } from '../../environments/constants';
 import { environment } from '../../environments/environment';
 import { AddResponseUploadComponent } from '../common/modals/add-response-upload/add-response-upload.component';
+import { AddStoryUploadComponent } from '../common/modals/add-story-upload/add-story-upload.component';
 
 @Component({
   selector: 'app-manage-irs',
@@ -40,10 +41,10 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
   @ViewChild('responsesPaginator', {read: MatPaginator}) responsesPaginator: MatPaginator;
   @ViewChild('storiesPaginator', {read: MatPaginator}) storiesPaginator: MatPaginator;
 
-  intentsDisplayedColumns: string[] = ['icon', 'intent_name', 'intent_description', 'edit', 'delete'];
+  intentsDisplayedColumns: string[] = ['icon', 'intent_name', 'intent_example', 'edit', 'delete'];
   intents_json: Array<object>;
   intentsDataSource: any;
-  responsesDisplayedColumns: string[] = ['icon', 'response_name', 'response_description', 'edit', 'delete'];
+  responsesDisplayedColumns: string[] = ['icon', 'response_name', 'response_example', 'edit', 'delete'];
   responses_json: Array<object>;
   responsesDataSource: any;
   storiesDisplayedColumns: string[] = ['icon', 'story_name', 'story_description', 'edit', 'delete'];
@@ -51,12 +52,14 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
   storiesDataSource: any;
   activeTabIndex: any;
   appSource: string;
+  intents_responses: Array<any>;
 
   ngOnInit() {
     this.appSource = environment.app_source;
     this.intents_json = new Array<object>();
     this.responses_json = new Array<object>();
     this.stories_json = new Array<object>();
+    this.intents_responses = new Array<any>();
     this.activeTabIndex = this.sharedDataService.getSharedData('activeTabIndex', constant.MODULE_COMMON);
     if (this.activeTabIndex === undefined) {
       this.activeTabIndex = '0';
@@ -77,6 +80,7 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
     const project_domain_ids = {project_id: this.projectObjectId, domain_id: this.domainObjectId};
     this.webSocketService.getIntents(project_domain_ids, 'domain_' + this.domainObjectId).subscribe(intents => {
       this.intents_json = intents;
+      this.intents_responses[0] = intents;
       this.intentsDataSource = new MatTableDataSource(intents);
       this.intentsDataSource.paginator = this.intentsPaginator;
     },
@@ -94,6 +98,7 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
     const project_domain_ids = {project_id: this.projectObjectId, domain_id: this.domainObjectId};
     this.webSocketService.getResponses(project_domain_ids, 'domain_' + this.domainObjectId).subscribe(responses => {
       this.responses_json = responses;
+      this.intents_responses[1] = responses;
       this.responsesDataSource = new MatTableDataSource(responses);
       this.responsesDataSource.paginator = this.responsesPaginator;
     },
@@ -126,7 +131,7 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
 
   addNewIntent() {
     const dialogRef = this.dialog.open(AddIntentComponent, {
-      height: '450px',
+      height: '345px',
       width: '345px',
       data: {projectObjectId: this.projectObjectId, domainObjectId: this.domainObjectId}
     });
@@ -145,9 +150,9 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
     });
   }
 
-  editIntent(intentObjectId: string, intentDisplay: string, intentName: string, intentDescription: string,) {
+  editIntent(intentObjectId: string, intentDisplay: string, intentName: string) {
     const dialogRef = this.dialog.open(EditIntentComponent, {
-      height: '450px',
+      height: '345px',
       width: '345px',
       data: {
         projectObjectId: this.projectObjectId,
@@ -155,7 +160,6 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
         intentObjectId: intentObjectId,
         intentDisplay: intentDisplay,
         intentName: intentName,
-        intentDescription: intentDescription
       }
     });
     dialogRef.afterClosed().subscribe(response => {
@@ -195,7 +199,7 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
 
   addNewResponse() {
     const dialogRef = this.dialog.open(AddResponseComponent, {
-      height: '450px',
+      height: '345px',
       width: '345px',
       data: {projectObjectId: this.projectObjectId, domainObjectId: this.domainObjectId}
     });
@@ -210,21 +214,20 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(AddResponseUploadComponent, {
       height: "345px",
       width: "345px",
-      data: { projectObjectId: this.projectObjectId, domainObjectId: this.projectObjectId }
+      data: { projectObjectId: this.projectObjectId, domainObjectId: this.domainObjectId }
     })
   }
 
-  editResponse(responseObjectId: string, responseDisplay:string, responseName: string, responseDescription: string) {
+  editResponse(responseObjectId: string, responseDisplay:string, responseName: string) {
     const dialogRef = this.dialog.open(EditResponseComponent, {
-      height: '450px',
+      height: '345px',
       width: '345px',
       data: {
         projectObjectId: this.projectObjectId,
         domainObjectId: this.domainObjectId,
         responseObjectId: responseObjectId,
         responseDisplay: responseDisplay,
-        responseName: responseName,
-        responseDescription: responseDescription
+        responseName: responseName
       }
     });
     dialogRef.afterClosed().subscribe(response => {
@@ -273,6 +276,14 @@ export class ManageIrsComponent implements OnInit, OnDestroy {
         this.webSocketService.createStory(response, 'domain_' + this.domainObjectId);
       }
     });
+  }
+
+  storiesUpload(){
+    const dialogRef = this.dialog.open(AddStoryUploadComponent, {
+      height: "345px",
+      width: "345px",
+      data: { projectObjectId: this.projectObjectId, domainObjectId: this.domainObjectId, intents_responses: this.intents_responses }
+    })
   }
 
   editStory(storyObjectId: string, storyDisplay: string, storyName: string, storyDescription: string) {

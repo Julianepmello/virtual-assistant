@@ -1,18 +1,18 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { environment } from 'src/environments/environment';
 import { WebSocketService } from '../../services/web-socket.service';
 import { ReadFileService } from '../../services/read-file.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { XlsxResponseComponent } from './xlsx-response/xlsx-response.component';
+import { environment } from 'src/environments/environment';
+import { XlsxStoryComponent } from './xlsx-story/xlsx-story.component';
 
 @Component({
-  selector: 'app-add-response-upload',
-  templateUrl: './add-response-upload.component.html',
-  styleUrls: ['./add-response-upload.component.scss']
+  selector: 'app-add-story-upload',
+  templateUrl: './add-story-upload.component.html',
+  styleUrls: ['./add-story-upload.component.scss']
 })
-export class AddResponseUploadComponent implements OnInit, OnDestroy {
+export class AddStoryUploadComponent implements OnInit, OnDestroy {
   appSource: string;
   tipoArq: string = "";
   newUploadForm: FormGroup;
@@ -22,11 +22,10 @@ export class AddResponseUploadComponent implements OnInit, OnDestroy {
   constructor(public webSocketService: WebSocketService,
               public uploadedFile: ReadFileService,
               public dialog: MatDialog,
-              public dialogRef: MatDialogRef<AddResponseUploadComponent>,
+              public dialogRef: MatDialogRef<AddStoryUploadComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-    console.log(this.data);
     this.appSource = environment.app_source;
     this.newUploadForm = new FormGroup({
       archiveType: new FormControl('', Validators.required),
@@ -53,18 +52,17 @@ export class AddResponseUploadComponent implements OnInit, OnDestroy {
   }
 
   nextStep(){
-    this.uploadedFile.readResponsesXlsx(this.arquivo);
-    const dialogRef = this.dialog.open(XlsxResponseComponent, {
+    this.uploadedFile.readStoriesXlsx(this.arquivo, this.data.intents_responses);
+    const dialogRef = this.dialog.open(XlsxStoryComponent, {
       height: "800px",
       width: "1100px",
-      data: { projectObjectId: this.data.projectObjectId, domainObjectId: this.data.domainObjectId, uploadedResponses: this.uploadedFile.responsesSub },
+      data: { projectObjectId: this.data.projectObjectId, domainObjectId: this.data.domainObjectId, uploadedStories: this.uploadedFile.storiesSub },
     });
     dialogRef.afterClosed().subscribe((response) => {
       if(response){
-        this.webSocketService.createResponsesFromUpload(response, "domain_" + this.data.domainObjectId);
+        console.log(response);
       }
     });
-
   }
 
 }

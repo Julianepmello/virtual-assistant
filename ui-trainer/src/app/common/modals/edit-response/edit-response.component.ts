@@ -20,8 +20,7 @@ export class EditResponseComponent implements OnInit {
     this.appSource = environment.app_source;
     this.editResponseForm = new FormGroup({
       responseDisplay: new FormControl(this.data.responseDisplay, Validators.required),
-      responseName: new FormControl({value: this.data.responseName, disabled: true}, Validators.required),
-      responseDescription: new FormControl(this.data.responseDescription, Validators.required)
+      responseName: new FormControl({value: this.data.responseName, disabled: true}, Validators.required)
     });
     console.log(this.editResponseForm.valid);
     console.log(this.editResponseForm);
@@ -35,7 +34,7 @@ export class EditResponseComponent implements OnInit {
         object_id: this.data.responseObjectId,
         response_display: this.editResponseForm.value.responseDisplay,
         response_name: this.data.responseName,
-        response_description: this.editResponseForm.value.responseDescription
+      response_description: "Upload Excel"
       });
     }
   }

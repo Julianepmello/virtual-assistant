@@ -1,0 +1,52 @@
+<h1 mat-dialog-title> Selecione as histórias desejadas </h1>
+<mat-dialog-content class="dataTable">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <ng-container matColumnDef="select">
+      <th mat-header-cell *matHeaderCellDef>
+        <mat-checkbox (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && allSelected()"
+                      [indeterminate]="selection.hasValue() && !allSelected()"
+                      [aria-label]="label()"
+                      color="primary">
+        </mat-checkbox>
+      </th>
+      <td mat-cell *matCellDef="let row">
+        <mat-checkbox (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(row) : null"
+                      [checked]="selection.isSelected(row)"
+                      [aria-label]="label(row)"
+                      color="primary">
+        </mat-checkbox>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="storyDisplay">
+      <th mat-header-cell *matHeaderCellDef class="header-center"> Nome da história </th>
+      <td mat-cell *matCellDef="let data"> {{ data.story_display }} </td>
+    </ng-container>
+    <ng-container matColumnDef="storyName">
+      <th mat-header-cell *matHeaderCellDef class="header-center"> Nome técnico </th>
+      <td mat-cell *matCellDef="let data"> {{ data.story_name }} </td>
+    </ng-container>
+    <ng-container matColumnDef="intentDisplay">
+      <th mat-header-cell *matHeaderCellDef class="header-center"> Intenção </th>
+      <td mat-cell *matCellDef="let data"> {{ data.intent_display }} </td>
+    </ng-container>
+    <ng-container matColumnDef="responseDisplay">
+      <th mat-header-cell *matHeaderCellDef class="header-center"> Resposta </th>
+      <td mat-cell *matCellDef="let data"> {{ data.response_display }} </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsOrder; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsOrder" (click)="selection.toggle(row)"></tr>
+  </table>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <mat-form-field style="width: 100%;">
+    <mat-label> Filtrar por nome, intenção, resposta... </mat-label>
+    <input matInput (keyup)="filter($event.target.value)" placeholder="Filtrar">
+  </mat-form-field>
+  <div class="buttons">
+      <button *ngIf="appSource==='enterprise'" type="button" class="upload-button" mat-raised-button [disabled]="selectedStories.length == 0" (click)="toJson()"> Upload </button>
+      <button *ngIf="appSource==='open'" type="button" class="upload-button-black" mat-raised-button [disabled]="selectedStories.length == 0" (click)="toJson()"> Upload </button>
+      <button mat-raised-button mat-dialog-close class="cancel-button"> Cancelar </button>
+  </div>
+</mat-dialog-actions>

@@ -63,6 +63,8 @@ import { NgxMatFileInputModule } from '@angular-material-components/file-input';
 import { XlsxIntentComponent } from './common/modals/add-intent-upload/xlsx-intent/xlsx-intent.component';
 import { AddResponseUploadComponent } from './common/modals/add-response-upload/add-response-upload.component';
 import { XlsxResponseComponent } from './common/modals/add-response-upload/xlsx-response/xlsx-response.component';
+import { AddStoryUploadComponent } from './common/modals/add-story-upload/add-story-upload.component';
+import { XlsxStoryComponent } from './common/modals/add-story-upload/xlsx-story/xlsx-story.component';
 
 
 @NgModule({
@@ -113,7 +115,9 @@ import { XlsxResponseComponent } from './common/modals/add-response-upload/xlsx-
     AddIntentUploadComponent,
     XlsxIntentComponent,
     AddResponseUploadComponent,
-    XlsxResponseComponent
+    XlsxResponseComponent,
+    AddStoryUploadComponent,
+    XlsxStoryComponent
   ],
   entryComponents: [
     AddEntityComponent,
@@ -147,7 +151,9 @@ import { XlsxResponseComponent } from './common/modals/add-response-upload/xlsx-
     AddIntentUploadComponent,
     XlsxIntentComponent,
     AddResponseUploadComponent,
-    XlsxResponseComponent
+    XlsxResponseComponent,
+    AddStoryUploadComponent,
+    XlsxStoryComponent
   ],
   imports: [
     BrowserModule,

@@ -23,8 +23,7 @@ export class AddResponseComponent implements OnInit {
     this.appSource = environment.app_source;
     this.newResponseForm = new FormGroup({
       responseDisplay: new FormControl('', Validators.required),
-      responseName: new FormControl('', Validators.required),
-      responseDescription: new FormControl('', Validators.required)
+      responseName: new FormControl('', Validators.required)
     });
     this.responseDisplayInput.focus();
   }
@@ -44,7 +43,6 @@ export class AddResponseComponent implements OnInit {
         responseName: this.valueName,
       });
     }
-    // console.log(this.newResponseForm.value.responseName);
   }
 
   closeDialog() {
@@ -53,8 +51,8 @@ export class AddResponseComponent implements OnInit {
         project_id: this.data.projectObjectId,
         domain_id: this.data.domainObjectId,
         response_display: this.newResponseForm.value.responseDisplay,
-        response_name: 'utter_' + this.newResponseForm.value.responseName,
-        response_description: this.newResponseForm.value.responseDescription
+        response_name: this.newResponseForm.value.responseName,
+        response_description: "Exemplo"
       });
     }
   }

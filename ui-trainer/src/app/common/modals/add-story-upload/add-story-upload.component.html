@@ -3,8 +3,8 @@
     <h1 mat-dialog-title> Upload de arquivo </h1>
   </div>
   <div class="col-md-3 text-right">
-    <mat-icon *ngIf="appSource==='enterprise'" svgIcon="intent"></mat-icon>
-    <mat-icon *ngIf="appSource==='open'" svgIcon="intent-black"></mat-icon>
+    <mat-icon *ngIf="appSource==='enterprise'" svgIcon="story"></mat-icon>
+    <mat-icon *ngIf="appSource==='open'" svgIcon="story-black"></mat-icon>
   </div>
 </div>
 <form [formGroup]="newUploadForm" (ngSubmit)="nextStep()">
@@ -36,4 +36,3 @@
       </div>
   </mat-dialog-actions>
 </form>
-

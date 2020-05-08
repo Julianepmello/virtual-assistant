@@ -21,8 +21,7 @@ export class EditIntentComponent implements OnInit {
     this.appSource = environment.app_source;
     this.editIntentForm = new FormGroup({
       intentDisplay: new FormControl(this.data.intentDisplay, Validators.required),
-      intentName: new FormControl({value: this.data.intentName, disabled: true}, Validators.required),
-      intentDescription: new FormControl(this.data.intentDescription, Validators.required),
+      intentName: new FormControl({value: this.data.intentName, disabled: true}, Validators.required)
     });
   }
 
@@ -34,7 +33,7 @@ export class EditIntentComponent implements OnInit {
         object_id: this.data.intentObjectId,
         intent_display: this.editIntentForm.value.intentDisplay,
         intent_name: this.data.intentName,
-        intent_description: this.editIntentForm.value.intentDescription
+        intent_description: "Upload Excel"
       });
     }
   }

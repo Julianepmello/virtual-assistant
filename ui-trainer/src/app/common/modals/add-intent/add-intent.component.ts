@@ -22,14 +22,10 @@ export class AddIntentComponent implements OnInit {
   ngOnInit() {
     this.appSource = environment.app_source;
 
-    // define os valores iniciais dos inputs e como obrigatórios
     this.newIntentForm = new FormGroup({
       intentDisplay: new FormControl('', Validators.required),
-      intentName: new FormControl('', Validators.required),
-      intentDescription: new FormControl('', Validators.required)
+      intentName: new FormControl('', Validators.required)
     });
-
-    // coloca o foco no input "nome técnico"
     this.intentDisplayInput.focus();
   }
 
@@ -48,18 +44,16 @@ export class AddIntentComponent implements OnInit {
         intentName: this.valueName,
       });
     }
-    // console.log(this.newIntentForm.value.intentName);
   }
 
   closeDialog() {
-    // console.log(this.newIntentForm.value.intentName);
     if (this.newIntentForm.valid) {
       this.dialogRef.close({
         project_id: this.data.projectObjectId,
         domain_id: this.data.domainObjectId,
         intent_name: this.newIntentForm.value.intentName,
         intent_display: this.newIntentForm.value.intentDisplay,
-        intent_description: this.newIntentForm.value.intentDescription
+        intent_description: "Exemplo"
       });
     }
   }

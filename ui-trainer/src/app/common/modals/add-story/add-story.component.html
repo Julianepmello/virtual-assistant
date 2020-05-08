@@ -24,9 +24,8 @@
     <textarea matInput maxlength="140" formControlName="storyDescription"></textarea>
   </mat-form-field>
 </mat-dialog-content>
-
 <mat-dialog-actions>
-  <div class="row" style="width: 100%;">
+  <div class="row" style="width: 100%; padding-top: 20px;">
     <div class="col-md-6 text-right">
       <button *ngIf="appSource==='enterprise'" mat-raised-button type="submit" class="submit-button" [disabled]="!newStoryForm.valid">Confirmar</button>
       <button *ngIf="appSource==='open'" mat-raised-button type="submit" class="submit-button-black" [disabled]="!newStoryForm.valid">Confirmar</button>

@@ -42,8 +42,7 @@ export class AddStoryComponent implements OnInit {
       this.valueName += value.replace(/ /g, '_');
       this.newStoryForm.patchValue({
         storyName: this.valueName,
-      })
-      console.log(this.newStoryForm.value.storyName);
+      });
   }
 }
 

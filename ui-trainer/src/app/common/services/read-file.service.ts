@@ -3,6 +3,7 @@ import { IntentUpload } from '../models/intent_upload';
 import * as Excel from 'xlsx';
 import { Subject } from 'rxjs';
 import { ResponseUpload } from '../models/response_upload';
+import { StoryUpload } from '../models/story_upload';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import { ResponseUpload } from '../models/response_upload';
 export class ReadFileService {
   public intentsSub: Subject<IntentUpload>;
   public responsesSub: Subject<ResponseUpload[]>;
+  public storiesSub: Subject<StoryUpload[]>;
 
   constructor() {
   }
@@ -83,9 +85,84 @@ export class ReadFileService {
         res = cell.v;
         responses.push({ domain_id: "", project_id: "", response_name: name, response_display: display, text_entities: [res] });
       }
-      console.log(responses);
       this.responsesSub.next(responses);
       this.responsesSub.complete();
+    }
+  }
+
+  readStoriesXlsx(file: File, intents_responses): void {
+    this.storiesSub = new Subject<StoryUpload[]>();
+    let stories: StoryUpload[] = [];
+    let storyDisplay: string, storyName: string, intentDisplay: string, responseDisplay: string;
+    let fr = new FileReader();
+    fr.readAsArrayBuffer(file);
+    fr.onload = (ev) => {
+      let ab: any = fr.result;
+      let data = new Uint8Array(ab);
+      let vet = new Array();
+      for(let i=0; i<data.length; i++){
+        vet[i] = String.fromCharCode(data[i]);
+      }
+      let arq = vet.join("");
+      let wb: Excel.WorkBook = Excel.read(arq, { type: "binary" });
+      let ws: Excel.WorkSheet = wb.Sheets[wb.SheetNames[0]];
+      let k: number = ws["!ref"].indexOf(":");
+      k = k + 2;
+      let numRows: number = parseInt(ws["!ref"].slice(k));
+      let cell: any, addrCell: string;
+      for(let R=1; R<numRows; R++){
+        addrCell = Excel.utils.encode_cell({ c: 0, r: R });
+        cell = ws[addrCell];
+        storyDisplay = cell.v;
+        storyName = storyDisplay.replace(/ /g, '_');
+        storyName = "story_" + storyName.toLowerCase();
+        addrCell = Excel.utils.encode_cell({ c: 1, r: R });
+        cell = ws[addrCell];
+        intentDisplay = cell.v;
+        addrCell = Excel.utils.encode_cell({ c: 2, r: R });
+        cell = ws[addrCell];
+        responseDisplay = cell.v;
+        stories.push({ domain_id: "", project_id: "", story_display: storyDisplay, story_name: storyName, intent_display: intentDisplay, response_display: responseDisplay });
+      }
+      this.validateStory(stories, intents_responses).then(() => {
+        this.storiesSub.next(stories);
+        this.storiesSub.complete();
+      })
+    }
+  }
+
+  async validateStory(stories: StoryUpload[], intents_responses) {
+    let del: number[] = [];
+    let bool: boolean = false;
+    const length = stories.length;
+    for(let i=0; i<stories.length; i++){
+      for(let z=0; z<intents_responses[0].length; z++){
+        if(stories[i].intent_display == intents_responses[0][z].intent_display){
+          bool = true;
+          break;
+        }
+      }
+      for(let k=0; k<intents_responses[1].length; k++){
+        if(stories[i].response_display == intents_responses[1][k].response_display){
+          bool = true;
+          break;
+        }
+      }
+      if(!bool){
+        del.push(i);
+        console.log(`A história ${stories[i].story_display} não foi carregada pois sua intenção e/ou resposta não existe no projeto.` +
+                    ` Adicione-a(s) para que possa realizar o upload da história.`);
+      }
+      bool = false;
+    }
+    while(del.length){
+      stories.splice(del.pop(), 1);
+    }
+    if(stories.length != length && stories.length != 0){
+      console.log("Demais histórias carregadas com sucesso!");
+    }
+    else if(stories.length == 0){
+      console.log("Não há histórias que possam ser carregadas");
     }
   }
 }
